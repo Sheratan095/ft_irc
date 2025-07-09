@@ -6,12 +6,12 @@
 class	Server
 {
 	private:
-		const unsigned short	port;
-		const std::string		password;
+		const int			port;
+		const std::string	password;
 
 
 	public:
-		Server(const unsigned short port, const std::string &password);
+		Server(const int port, const std::string &password);
 		~Server();
 
 		bool	start_server();

@@ -1,10 +1,15 @@
 #include "Server.hpp"
 
-Server::Server(const unsigned short port, const std::string &password):port(port), password(password)
+Server::Server(const int port, const std::string &password): port(port), password(password)
 {
 	if (password.empty())
 		throw std::invalid_argument("Password cannot be empty.");
 
+	// 0 - 1024 are well-known ports and are used for standard services.
+	// 1024 - 49151 are registered ports and can be used by user applications
+	// 49152 - 65535 are dynamic or private ports and can be used for ephemeral(effimera) connections.
+	if (port < 1024 || port > 65535)
+		throw std::out_of_range("Port must be between 1024 and 65535.");
 
 	std::cout << "Server created with port: " << port << " and password: '" << password << "'" << std::endl;
 }

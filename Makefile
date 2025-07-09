@@ -20,7 +20,10 @@ fclean: clean
 
 re: fclean all
 
-arg = 
+PORT = 6667
+PASSWORD = password
+
+arg = $(PORT) $(PASSWORD)
 
 test: all
 	./$(NAME) $(arg)

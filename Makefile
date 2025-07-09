@@ -1,5 +1,7 @@
 NAME = ircserv
 
+TESTFOLDER = test/bircd
+
 CC = c++ -std=c++98 -g -Iincludes/
 # CC += -Wall -Wextra -Werror
 
@@ -8,14 +10,20 @@ SRCS = src/main.cpp src/Server.cpp
 all: $(NAME)
 
 $(NAME): $(SRCS)
+	@$(MAKE) -s -C $(TESTFOLDER) all
+	@echo "$(BLUE)[$(NAME)]:\t TESTER COMPILED$(RESET)"
 	@$(CC) $(SRCS) -o $(NAME)
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
 
 clean:
+	@$(MAKE) -s -C $(TESTFOLDER) clean
+	@echo "$(RED)[Tester]:\t CLEAN$(RESET)"
 	@echo "$(RED)[$(NAME)]:\t CLEAN$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
+	@$(MAKE) -s -C $(TESTFOLDER) fclean
+	@echo "$(RED)[Tester]:\t FCLEAN$(RESET)"
 	@echo "$(RED)[$(NAME)]:\t FCLEAN$(RESET)"
 
 re: fclean all
@@ -27,6 +35,7 @@ arg = $(PORT) $(PASSWORD)
 
 test: all
 	./$(NAME) $(arg)
+
 
 val: all
 	valgrind ./$(NAME) $(arg)

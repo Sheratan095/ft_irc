@@ -1,4 +1,3 @@
-./*.o
 ./ircserv
 ./test/bircd/*.o
 ./test/bircd/bircd

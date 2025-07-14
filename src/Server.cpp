@@ -23,9 +23,24 @@ Server::~Server()
 
 bool	Server::start_server()
 {
-	std::cout << "Server is listening on port " << port << " and the password is '" << password << "'" << std::endl;
-	// Here you would implement the logic to start the server.
-	// For now, we just return true to indicate success.
+	// std::cout << "Server is listening on port " << port << " and the password is '" << password << "'" << std::endl;
+
+	// int	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+
+	// // Allow quick reuse of the port
+	// int opt = 1;
+	// setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+
+	// // Bind to port
+	// struct sockaddr_in	addr;
+	// memset(&addr, 0, sizeof(addr));
+	// addr.sin_family = AF_INET;
+	// addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	// addr.sin_port = htons(port);
+	// bind(socket_fd, (struct sockaddr*)&addr, sizeof(addr));
+
+	// // Start listening
+	// listen(socket_fd, SOMAXCONN);
 
 	return (true);
 }

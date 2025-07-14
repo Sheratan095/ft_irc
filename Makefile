@@ -3,9 +3,9 @@ NAME = ircserv
 TESTFOLDER = test/bircd
 
 CC = c++ -std=c++98 -g -Iincludes/
-# CC += -Wall -Wextra -Werror
+CC += -Wall -Wextra -Werror
 
-SRCS = src/main.cpp src/Server.cpp
+SRCS = src/main.cpp src/Server.cpp src/parsing.cpp
 
 all: $(NAME)
 

@@ -3,6 +3,8 @@
 
 #include "Utils.hpp"
 
+extern bool SERVER_RUNNING;
+
 class	Server
 {
 	private:

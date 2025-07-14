@@ -5,7 +5,7 @@ TESTFOLDER = test/bircd
 CC = c++ -std=c++98 -g -Iincludes/
 CC += -Wall -Wextra -Werror
 
-SRCS = src/main.cpp src/Server.cpp src/parsing.cpp
+SRCS = src/main.cpp src/Server.cpp src/Utils.cpp
 
 all: $(NAME)
 

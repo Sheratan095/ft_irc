@@ -1,5 +1,7 @@
 #include "Server.hpp"
 
+bool SERVER_RUNNING = true;
+
 Server::Server(const int port, const std::string &password): port(port), password(password)
 {
 	if (password.empty())
@@ -23,6 +25,16 @@ Server::~Server()
 
 bool	Server::start_server()
 {
+	signal(SIGINT, handleSigInt);
+
+	while (SERVER_RUNNING != false)
+	{
+		// Here you would typically accept incoming connections and handle them.
+		// For now, we just print a message to indicate the server is running.
+		std::cout << "Server is running on port " << port << " with password '" << password << "'" << std::endl;
+		
+	}
+	
 	// std::cout << "Server is listening on port " << port << " and the password is '" << password << "'" << std::endl;
 
 	// int	socket_fd = socket(AF_INET, SOCK_STREAM, 0);

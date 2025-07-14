@@ -4,8 +4,12 @@
 #include <iostream>
 #include <cstring>
 #include <stdlib.h>
+#include <csignal>
 #include "Server.hpp"
 
-int	parse_input(int argc, char **argv);
+int		parseInput(int argc, char **argv);
+
+void	handleSigInt(int sig);
+
 
 #endif

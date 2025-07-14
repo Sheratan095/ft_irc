@@ -1,6 +1,14 @@
 #include "Utils.hpp"
 
-int	parse_input(int argc, char **argv)
+void	handleSigInt(int sig)
+{
+	if (sig	==	SIGINT)
+	{
+		std::cout << "Interrupt signal received. Exiting..." << std::endl;
+		SERVER_RUNNING = false;
+	}
+}
+int	parseInput(int argc, char **argv)
 {
 	if (argc != 3)
 	{
@@ -33,3 +41,4 @@ int	parse_input(int argc, char **argv)
 
 	return (portnm);
 }
+

@@ -36,44 +36,9 @@ void	Server::startServer()
 	if (!startListening())
 		throw (ListenException());
 
-	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl;
-
-	// Configure socket timeout to prevent accept() from blocking indefinitely
-	// This allows the server to periodically check SERVER_RUNNING flag
-	struct timeval	timeout;
-	timeout.tv_sec = 1;		// 1 second timeout
-	timeout.tv_usec = 0;	// 0 microseconds
-	setsockopt(_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-
-	while (SERVER_RUNNING)
-	{
-		// Prepare client address structure to store incoming connection info
-		struct sockaddr_in	client_addr;
-		socklen_t			client_len = sizeof(client_addr);
-
-		// Accept incoming client connection (blocks until connection or timeout)
-		int	client_fd = accept(_socket_fd, (struct sockaddr*)&client_addr, &client_len);
-		
-		// Check if accept() failed, it could be due to timeout to check SERVER_RUNNING
-		if (client_fd == -1)
-		{
-			// check if the server has been stopped
-			if (!SERVER_RUNNING)
-			{
-				std::cout << "Server shutting down..." << std::endl;
-				break;
-			}
-	
-			// If it's just a timeout or other error, continue listening
-			continue;
-		}
-
-		// Handle the connected client
-		handleClient(client_fd);
-	}
+	Listen();
 	
 	close(_socket_fd);
-
 }
 
 bool	Server::createSocket()

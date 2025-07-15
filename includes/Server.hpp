@@ -20,6 +20,7 @@ class	Server
 		bool	createSocket();
 		bool	bindSocket();
 		bool	startListening();
+		void	Listen();
 		void	handleClient(int client_fd);
 
 	public:

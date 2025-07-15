@@ -63,33 +63,11 @@ void	Server::handleClient(int client_fd)
 		if (bytes_received > 0)
 		{
 			buffer[bytes_received] = '\0';
-			
-			// Debug: Print raw bytes received and message length
-			std::cout << "Bytes received: " << bytes_received << std::endl;
-			std::cout << "Raw message (with escape chars): ";
-			for (int i = 0; i < bytes_received; i++)
-			{
-				if (buffer[i] == '\n')
-					std::cout << "\\n";
-				else if (buffer[i] == '\r')
-					std::cout << "\\r";
-				else
-					std::cout << buffer[i];
-			}
-			std::cout << std::endl;
+
+			printRawMessage(bytes_received, buffer);
 
 			// Send a proper IRC response - Method 1: Using + operator
 			std::string response = getResponseByCode(RPL_WELCOME);
-
-			// Alternative Method 2: Using stringstream
-			// std::ostringstream oss;
-			// oss << ":server " << RPL_WELCOME << " :Welcome to the IRC Network\r\n";
-			// std::string response = oss.str();
-			
-			// Alternative Method 3: Using append()
-			// std::string response = ":server ";
-			// response.append(RPL_WELCOME);
-			// response.append(" :Welcome to the IRC Network\r\n");
 
 			ssize_t sent = send(client_fd, response.c_str(), response.length(), 0);
 			if (sent == -1)

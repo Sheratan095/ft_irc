@@ -2,10 +2,10 @@
 
 bool	Server::startListening()
 {
-	if (listen(socket_fd, SOMAXCONN) == -1)
+	if (listen(_socket_fd, SOMAXCONN) == -1)
 	{
 		// FAILED TO LISTEN ON SOCKET
-		close(socket_fd);
+		close(_socket_fd);
 		return (false);
 	}
 	return (true);
@@ -41,7 +41,7 @@ void	Server::handleClient(int client_fd)
 
 			// Send a proper IRC response - Method 1: Using + operator
 			std::string response = getResponseByCode(RPL_WELCOME);
-			
+
 			// Alternative Method 2: Using stringstream
 			// std::ostringstream oss;
 			// oss << ":server " << RPL_WELCOME << " :Welcome to the IRC Network\r\n";
@@ -80,3 +80,13 @@ void	Server::handleClient(int client_fd)
 	close(client_fd);
 	std::cout << "Client connection closed" << std::endl;
 }
+
+// void	Server::switchCommand()
+// {
+// 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+// 	if (socket_fd == -1)
+// 	{
+// 		// SOCKET CREATION FAILED
+// 		throw SocketException();
+// 	}
+// }

@@ -12,9 +12,10 @@ extern bool SERVER_RUNNING;
 class	Server
 {
 	private:
-		const int			port;
-		const std::string	password;
-		int					socket_fd;
+		const int			_port;
+		std::string			_ip;
+		const std::string	_password;
+		int					_socket_fd;
 
 		bool	createSocket();
 		bool	bindSocket();

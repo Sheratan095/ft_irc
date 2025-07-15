@@ -2,7 +2,7 @@
 
 bool SERVER_RUNNING = true;
 
-Server::Server(const int port, const std::string &password): port(port), password(password)
+Server::Server(const int port, const std::string &password): _port(port), _password(password)
 {
 	if (password.empty())
 		throw std::invalid_argument("Password cannot be empty.");
@@ -36,14 +36,14 @@ void	Server::startServer()
 	if (!startListening())
 		throw (ListenException());
 
-	std::cout << "Server is listening on port " << port << std::endl;
+	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl;
 
 	// Configure socket timeout to prevent accept() from blocking indefinitely
 	// This allows the server to periodically check SERVER_RUNNING flag
 	struct timeval	timeout;
 	timeout.tv_sec = 1;		// 1 second timeout
 	timeout.tv_usec = 0;	// 0 microseconds
-	setsockopt(socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	setsockopt(_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
 	while (SERVER_RUNNING)
 	{
@@ -52,7 +52,7 @@ void	Server::startServer()
 		socklen_t			client_len = sizeof(client_addr);
 
 		// Accept incoming client connection (blocks until connection or timeout)
-		int	client_fd = accept(socket_fd, (struct sockaddr*)&client_addr, &client_len);
+		int	client_fd = accept(_socket_fd, (struct sockaddr*)&client_addr, &client_len);
 		
 		// Check if accept() failed, it could be due to timeout to check SERVER_RUNNING
 		if (client_fd == -1)
@@ -72,7 +72,7 @@ void	Server::startServer()
 		handleClient(client_fd);
 	}
 	
-	close(socket_fd);
+	close(_socket_fd);
 
 }
 
@@ -82,8 +82,8 @@ bool	Server::createSocket()
 	// AF_INET: Address family for IPv4
 	// SOCK_STREAM: TCP socket type (reliable, connection-oriented)
 	// 0: Protocol (0 = default protocol for the socket type, which is TCP)
-	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (socket_fd == -1)
+	_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (_socket_fd == -1)
 	{
 		// Socket creation failed - could be due to system limits or permissions
 		return (false);
@@ -93,37 +93,37 @@ bool	Server::createSocket()
 	// This prevents "Address already in use" error when restarting the server
 	// SOL_SOCKET: Socket level option (not protocol specific)
 	int	opt = 1;
-	if (setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
+	if (setsockopt(_socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
 	{
 		// Failed to set socket options - close the socket to prevent resource leak
-		close(socket_fd);
+		close(_socket_fd);
 		return (false);
 	}
 
-	return (socket_fd);
+	return (true);
 }
 
 bool	Server::bindSocket()
 {
 	// Create and configure the server address structure
-	struct sockaddr_in	addr;
-
-	// Clear the entire structure to avoid garbage values
-	memset(&addr, 0, sizeof(addr));
+	struct sockaddr_in	addr = {};
 
 	// Configure the address structure:
 	addr.sin_family = AF_INET;						// IPv4 address family
-	addr.sin_addr.s_addr = inet_addr("0.0.0.0");	// Accept connections from any IP using inet_addr()
-	addr.sin_port = htons(port);					// Convert port to network byte order
+	//htonl  converts a 32-bit (long) integer from your machine’s native byte order (host order) to network byte order (big-endian)
+	// INADDR_ANY is 0x00000000
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);		// Accept connections from any IP
+	addr.sin_port = htons(_port);					// Convert port to network byte order
 
 	// Bind the socket to the specified address and port
 	// This associates the socket with a specific network interface and port
 	// After binding, the socket can listen for incoming connections on this address
-	if (bind(socket_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
+	if (bind(_socket_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
 	{
 		// Binding failed - port might be already in use or insufficient permissions
-		close(socket_fd);
+		close(_socket_fd);
 		return (false);
 	}
+
 	return (true);
 }

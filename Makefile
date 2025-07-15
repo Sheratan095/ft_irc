@@ -5,7 +5,10 @@ TESTFOLDER = test/bircd
 CC = c++ -std=c++98 -g -Iincludes/
 CC += -Wall -Wextra -Werror
 
-SRCS = src/main.cpp src/Server.cpp src/Utils.cpp
+SRCS = src/main.cpp \
+	src/Server/Server.cpp \
+	src/Server/ServerListening.cpp \
+	src/Utils.cpp
 
 all: $(NAME)
 
@@ -29,7 +32,7 @@ fclean: clean
 re: fclean all
 
 PORT = 6667
-PASSWORD = password
+PASSWORD = psw
 
 arg = $(PORT) $(PASSWORD)
 

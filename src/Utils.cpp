@@ -4,10 +4,11 @@ void	handleSigInt(int sig)
 {
 	if (sig	==	SIGINT)
 	{
-		std::cout << "Interrupt signal received. Exiting..." << std::endl;
+		std::cout << "\nInterrupt signal received. Shutting down server..." << std::endl;
 		SERVER_RUNNING = false;
 	}
 }
+
 int	parseInput(int argc, char **argv)
 {
 	if (argc != 3)

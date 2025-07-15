@@ -1,5 +1,5 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef IRC_HPP
+#define IRC_HPP
 
 #include <iostream>
 #include <cstring>
@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <map>
+#include "Utils.hpp"
 #include "Channel.hpp"
 #include "Client.hpp"
 #include "Server.hpp"
@@ -19,11 +20,5 @@
 class	Channel;
 class	Client;
 class	Server;
-
-int		parseInput(int argc, char **argv);
-
-void	handleSigInt(int sig);
-
-void	printRawMessage(int bytes_received, char *buffer);
 
 #endif

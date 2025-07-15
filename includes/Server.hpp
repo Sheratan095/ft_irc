@@ -4,8 +4,8 @@
 #include "Irc.hpp"
 
 // Forward declarations
-class Channel;
-class Client;
+class	Channel;
+class	Client;
 
 extern bool SERVER_RUNNING;
 

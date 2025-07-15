@@ -39,8 +39,19 @@ void	Server::handleClient(int client_fd)
 			}
 			std::cout << std::endl;
 
-			// Send a proper IRC response instead of echoing
-			std::string response = ":server 0001 :Welcome to the IRC Network\r\n";
+			// Send a proper IRC response - Method 1: Using + operator
+			std::string response = getResponseByCode(RPL_WELCOME);
+			
+			// Alternative Method 2: Using stringstream
+			// std::ostringstream oss;
+			// oss << ":server " << RPL_WELCOME << " :Welcome to the IRC Network\r\n";
+			// std::string response = oss.str();
+			
+			// Alternative Method 3: Using append()
+			// std::string response = ":server ";
+			// response.append(RPL_WELCOME);
+			// response.append(" :Welcome to the IRC Network\r\n");
+
 			ssize_t sent = send(client_fd, response.c_str(), response.length(), 0);
 			if (sent == -1)
 			{

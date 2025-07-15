@@ -8,7 +8,8 @@ CC += -Wall -Wextra -Werror
 SRCS = src/main.cpp \
 	src/Server/Server.cpp \
 	src/Server/ServerListening.cpp \
-	src/Utils.cpp
+	src/Utils.cpp \
+	src/ResponseCode.cpp
 
 all: $(NAME)
 

@@ -1,4 +1,4 @@
-#include "Utils.hpp"
+#include "Irc.hpp"
 
 void	handleSigInt(int sig)
 {

@@ -7,6 +7,7 @@
 #include <csignal>
 #include <cerrno>
 #include "Server.hpp"
+#include "ReponseCode.hpp"
 
 int		parseInput(int argc, char **argv);
 

@@ -6,6 +6,7 @@ CC = c++ -std=c++98 -g -Iincludes/
 CC += -Wall -Wextra -Werror
 
 SRCS = src/main.cpp \
+	src/Channel/Channel.cpp \
 	src/Server/Server.cpp \
 	src/Server/ServerListening.cpp \
 	src/Utils.cpp \

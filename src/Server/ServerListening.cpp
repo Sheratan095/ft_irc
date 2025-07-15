@@ -69,8 +69,8 @@ void	Server::handleClient(int client_fd)
 			// Send a proper IRC response - Method 1: Using + operator
 			std::string response = getResponseByCode(RPL_WELCOME);
 
-			ssize_t sent = send(client_fd, response.c_str(), response.length(), 0);
-			if (sent == -1)
+			ssize_t bytes_sent = send(client_fd, response.c_str(), response.length(), 0);
+			if (bytes_sent == -1)
 			{
 				std::cout << "Failed to send response to client" << std::endl;
 				break;

@@ -2,20 +2,21 @@
 #define SERVER_HPP
 
 #include "Irc.hpp"
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+
+// Forward declarations
+class Channel;
+class Client;
 
 extern bool SERVER_RUNNING;
 
 class	Server
 {
 	private:
-		const int			_port;
-		std::string			_ip;
-		const std::string	_password;
-		int					_socket_fd;
+		const int					_port;
+		std::string					_ip;
+		const std::string			_password;
+		int							_socket_fd;
+		std::map<std::string, Channel*>	_channels; // Use pointer instead
 
 		bool	createSocket();
 		bool	bindSocket();

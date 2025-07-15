@@ -6,7 +6,7 @@
 class	Client
 {
 	private:
-		int			_socket_fd;
+		int			_socketFd;
 
 	public:
 		Client(int socket_fd);

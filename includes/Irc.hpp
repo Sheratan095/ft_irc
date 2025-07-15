@@ -21,4 +21,6 @@ class	Channel;
 class	Client;
 class	Server;
 
+typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
+
 #endif

@@ -15,8 +15,10 @@ class	Server
 		const int						_port;
 		std::string						_ip;
 		const std::string				_password;
-		int								_socket_fd;
-		std::map<std::string, Channel*>	_channels; // Use pointer instead
+		SocketFd						_socketFd;
+
+		std::map<SocketFd, Client*>		_clients;
+		std::map<std::string, Channel*>	_channels;
 
 		bool	createSocket();
 		bool	bindSocket();

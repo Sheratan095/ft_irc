@@ -2,10 +2,10 @@
 
 bool	Server::startListening()
 {
-	if (listen(_socket_fd, SOMAXCONN) == -1)
+	if (listen(_socketFd, SOMAXCONN) == -1)
 	{
 		// FAILED TO LISTEN ON SOCKET
-		close(_socket_fd);
+		close(_socketFd);
 		return (false);
 	}
 	return (true);
@@ -20,7 +20,7 @@ void	Server::Listen()
 	struct timeval	timeout;
 	timeout.tv_sec = 1;		// 1 second timeout
 	timeout.tv_usec = 0;	// 0 microseconds
-	setsockopt(_socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	setsockopt(_socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
 	while (SERVER_RUNNING)
 	{
@@ -29,7 +29,7 @@ void	Server::Listen()
 		socklen_t			client_len = sizeof(client_addr);
 
 		// Accept incoming client connection (blocks until connection or timeout)
-		int	client_fd = accept(_socket_fd, (struct sockaddr*)&client_addr, &client_len);
+		int	client_fd = accept(_socketFd, (struct sockaddr*)&client_addr, &client_len);
 		
 		// Check if accept() failed, it could be due to timeout to check SERVER_RUNNING
 		if (client_fd == -1)

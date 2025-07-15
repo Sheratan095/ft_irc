@@ -38,7 +38,7 @@ void	Server::startServer()
 
 	Listen();
 	
-	close(_socket_fd);
+	close(_socketFd);
 }
 
 bool	Server::createSocket()
@@ -47,8 +47,8 @@ bool	Server::createSocket()
 	// AF_INET: Address family for IPv4
 	// SOCK_STREAM: TCP socket type (reliable, connection-oriented)
 	// 0: Protocol (0 = default protocol for the socket type, which is TCP)
-	_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (_socket_fd == -1)
+	_socketFd = socket(AF_INET, SOCK_STREAM, 0);
+	if (_socketFd == -1)
 	{
 		// Socket creation failed - could be due to system limits or permissions
 		return (false);
@@ -58,10 +58,10 @@ bool	Server::createSocket()
 	// This prevents "Address already in use" error when restarting the server
 	// SOL_SOCKET: Socket level option (not protocol specific)
 	int	opt = 1;
-	if (setsockopt(_socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
+	if (setsockopt(_socketFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
 	{
 		// Failed to set socket options - close the socket to prevent resource leak
-		close(_socket_fd);
+		close(_socketFd);
 		return (false);
 	}
 
@@ -83,10 +83,10 @@ bool	Server::bindSocket()
 	// Bind the socket to the specified address and port
 	// This associates the socket with a specific network interface and port
 	// After binding, the socket can listen for incoming connections on this address
-	if (bind(_socket_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
+	if (bind(_socketFd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
 	{
 		// Binding failed - port might be already in use or insufficient permissions
-		close(_socket_fd);
+		close(_socketFd);
 		return (false);
 	}
 

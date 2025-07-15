@@ -5,6 +5,7 @@
 #include <cstring>
 #include <stdlib.h>
 #include <csignal>
+#include <cerrno>
 #include "Server.hpp"
 
 int		parseInput(int argc, char **argv);

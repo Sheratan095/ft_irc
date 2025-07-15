@@ -38,28 +38,37 @@ void	Server::startServer()
 
 	std::cout << "Server is listening on port " << port << std::endl;
 
-	// Set socket timeout to allow periodic checking of SERVER_RUNNING
-	struct timeval timeout;
-	timeout.tv_sec = 1;
-	timeout.tv_usec = 0;
+	// Configure socket timeout to prevent accept() from blocking indefinitely
+	// This allows the server to periodically check SERVER_RUNNING flag
+	struct timeval	timeout;
+	timeout.tv_sec = 1;		// 1 second timeout
+	timeout.tv_usec = 0;	// 0 microseconds
 	setsockopt(socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
 	while (SERVER_RUNNING)
 	{
-		struct sockaddr_in client_addr;
-		socklen_t client_len = sizeof(client_addr);
-		int client_fd = accept(socket_fd, (struct sockaddr*)&client_addr, &client_len);
+		// Prepare client address structure to store incoming connection info
+		struct sockaddr_in	client_addr;
+		socklen_t			client_len = sizeof(client_addr);
+
+		// Accept incoming client connection (blocks until connection or timeout)
+		int	client_fd = accept(socket_fd, (struct sockaddr*)&client_addr, &client_len);
 		
+		// Check if accept() failed, it could be due to timeout to check SERVER_RUNNING
 		if (client_fd == -1)
 		{
+			// check if the server has been stopped
 			if (!SERVER_RUNNING)
 			{
 				std::cout << "Server shutting down..." << std::endl;
 				break;
 			}
+	
+			// If it's just a timeout or other error, continue listening
 			continue;
 		}
 
+		// Handle the connected client
 		handleClient(client_fd);
 	}
 	
@@ -69,17 +78,24 @@ void	Server::startServer()
 
 bool	Server::createSocket()
 {
+	// Create a TCP socket using IPv4
+	// AF_INET: Address family for IPv4
+	// SOCK_STREAM: TCP socket type (reliable, connection-oriented)
+	// 0: Protocol (0 = default protocol for the socket type, which is TCP)
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_fd == -1)
 	{
-		// FAILED TO CREATE SOCKET
+		// Socket creation failed - could be due to system limits or permissions
 		return (false);
 	}
 
+	// Set socket option SO_REUSEADDR to allow immediate reuse of the port
+	// This prevents "Address already in use" error when restarting the server
+	// SOL_SOCKET: Socket level option (not protocol specific)
 	int	opt = 1;
 	if (setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
 	{
-		// FAILED TO SET SOCKET OPTIONS
+		// Failed to set socket options - close the socket to prevent resource leak
 		close(socket_fd);
 		return (false);
 	}
@@ -89,17 +105,23 @@ bool	Server::createSocket()
 
 bool	Server::bindSocket()
 {
+	// Create and configure the server address structure
 	struct sockaddr_in	addr;
 
+	// Clear the entire structure to avoid garbage values
 	memset(&addr, 0, sizeof(addr));
 
-	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	addr.sin_port = htons(port);
+	// Configure the address structure:
+	addr.sin_family = AF_INET;						// IPv4 address family
+	addr.sin_addr.s_addr = inet_addr("0.0.0.0");	// Accept connections from any IP using inet_addr()
+	addr.sin_port = htons(port);					// Convert port to network byte order
 
+	// Bind the socket to the specified address and port
+	// This associates the socket with a specific network interface and port
+	// After binding, the socket can listen for incoming connections on this address
 	if (bind(socket_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
 	{
-		// FAILED TO BIND SOCKET
+		// Binding failed - port might be already in use or insufficient permissions
 		close(socket_fd);
 		return (false);
 	}

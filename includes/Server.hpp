@@ -18,7 +18,7 @@ class	Server
 		SocketFd						_socketFd;
 
 		std::map<SocketFd, Client*>		_clients;
-		std::vector<pollfd>		_pollFds;
+		std::vector<pollfd>				_pollFds;
 
 		std::map<std::string, Channel*>	_channels;
 
@@ -27,6 +27,8 @@ class	Server
 		bool	startListening();
 		void	Listen();
 		void	handleClient(int client_fd);
+		bool	checkPoll(int poolResult) const;
+
 
 	public:
 		Server(const int port, const std::string &password);

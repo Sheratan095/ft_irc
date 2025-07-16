@@ -15,12 +15,7 @@ void	Server::Listen()
 {
 	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl;
 
-	// Configure socket timeout to prevent accept() from blocking indefinitely
-	// This allows the server to periodically check SERVER_RUNNING flag
-	struct timeval	timeout;
-	timeout.tv_sec = 1;		// 1 second timeout
-	timeout.tv_usec = 0;	// 0 microseconds
-	setsockopt(_socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+	int	poolResult;
 
 	while (SERVER_RUNNING)
 	{
@@ -28,20 +23,17 @@ void	Server::Listen()
 		struct sockaddr_in	client_addr;
 		socklen_t			client_len = sizeof(client_addr);
 
-		// Accept incoming client connection (blocks until connection or timeout)
+		// Wait for incoming connections or timeout
+		poolResult = poll(_pollFds.data(), _pollFds.size(), 1000); // 1000 ms timeout
+		if (checkPoll(poolResult))
+			break; // Exit if poll indicates an error or server is shutting down
+
+		// Accept incoming client connection
 		int	client_fd = accept(_socketFd, (struct sockaddr*)&client_addr, &client_len);
 		
-		// Check if accept() failed, it could be due to timeout to check SERVER_RUNNING
+		// Check if accept() failed
 		if (client_fd == -1)
 		{
-			// check if the server has been stopped
-			if (!SERVER_RUNNING)
-			{
-				std::cout << "Server shutting down..." << std::endl;
-				break;
-			}
-	
-			// If it's just a timeout or other error, continue listening
 			continue;
 		}
 
@@ -50,60 +42,24 @@ void	Server::Listen()
 	}
 }
 
-void	Server::handleClient(int client_fd)
+// Check if the poll result indicates an error or if the server is still running
+// false: Continue waiting for new connections
+// true: Stop the server
+bool	Server::checkPoll(int poolResult) const
 {
-	std::cout << std::endl << "Client connected" << std::endl;
-
-	// Keep connection open and handle multiple messages
-	while (true)
+	if (poolResult < 0)
 	{
-		char	buffer[1024];
-		ssize_t	bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
-
-		if (bytes_received > 0)
+		std::cerr << "Poll error: " << strerror(errno) << std::endl;
+		return (false); // Continue listening on error
+	}
+	else if (poolResult == 0) // Timeout occurred, no new connections
+	{
+		if (!SERVER_RUNNING)
 		{
-			buffer[bytes_received] = '\0';
-
-			printRawMessage(bytes_received, buffer);
-
-			// Send a proper IRC response - Method 1: Using + operator
-			std::string response = getResponseByCode(RPL_WELCOME);
-
-			ssize_t bytes_sent = send(client_fd, response.c_str(), response.length(), 0);
-			if (bytes_sent == -1)
-			{
-				std::cout << "Failed to send response to client" << std::endl;
-				break;
-			}
-		}
-		else if (bytes_received == 0)
-		{
-			std::cout << "Client disconnected gracefully" << std::endl;
-			break;  // Client closed connection
-		}
-		else
-		{
-			// Check if it's just a timeout (errno 11 = EAGAIN/EWOULDBLOCK)
-			if (errno == EAGAIN || errno == EWOULDBLOCK)
-			{
-				// Timeout occurred, continue waiting for data
-				continue;
-			}
-			std::cout << "Error receiving data, errno: " << errno << " (" << strerror(errno) << ")" << std::endl;
-			break;  // Actual error occurred, close connection
+			std::cout << "Server shutting down..." << std::endl;
+			return (true); // Stop the server
 		}
 	}
-	
-	close(client_fd);
-	std::cout << "Client connection closed" << std::endl;
-}
 
-// void	Server::switchCommand()
-// {
-// 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-// 	if (socket_fd == -1)
-// 	{
-// 		// SOCKET CREATION FAILED
-// 		throw SocketException();
-// 	}
-// }
+	return (false); // Continue listening for new connections
+}

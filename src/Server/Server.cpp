@@ -39,10 +39,10 @@ void	Server::startServer()
 	serverFd.events = POLLIN;     // watch for readability (incoming connections)
 	_pollFds.push_back(serverFd); // add to the poll list
 
-	if (!startListening())
+	if (!startSocketListening())
 		throw (ListenException());
 
-	Listen();
+	run();
 	
 	close(_socketFd);
 }
@@ -96,5 +96,16 @@ bool	Server::bindSocket()
 		return (false);
 	}
 
+	return (true);
+}
+
+bool	Server::startSocketListening()
+{
+	if (listen(_socketFd, SOMAXCONN) == -1)
+	{
+		// FAILED TO LISTEN ON SOCKET
+		close(_socketFd);
+		return (false);
+	}
 	return (true);
 }

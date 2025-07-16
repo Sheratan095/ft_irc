@@ -10,6 +10,7 @@ SRCS = src/main.cpp \
 	src/Channel/ChannelGettersSetters.cpp \
 	src/Server/Server.cpp \
 	src/Server/ServerListening.cpp \
+	src/Server/HandleRequest.cpp \
 	src/Utils.cpp \
 	src/ResponseCode.cpp
 

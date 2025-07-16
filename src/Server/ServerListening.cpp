@@ -1,17 +1,6 @@
 #include "Server.hpp"
 
-bool	Server::startListening()
-{
-	if (listen(_socketFd, SOMAXCONN) == -1)
-	{
-		// FAILED TO LISTEN ON SOCKET
-		close(_socketFd);
-		return (false);
-	}
-	return (true);
-}
-
-void	Server::Listen()
+void	Server::run()
 {
 	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl;
 
@@ -28,17 +17,17 @@ void	Server::Listen()
 		if (checkPoll(poolResult))
 			break; // Exit if poll indicates an error or server is shutting down
 
-		// Accept incoming client connection
-		int	client_fd = accept(_socketFd, (struct sockaddr*)&client_addr, &client_len);
-		
-		// Check if accept() failed
-		if (client_fd == -1)
+		// Loop through the poll file descriptors
+		for (size_t i = 0; i < _pollFds.size(); ++i)
 		{
-			continue;
+			if (_pollFds[i].revents & POLLIN) // Check if the socket is ready for reading
+			{
+				if (_pollFds[i].fd == _socketFd) // If it's the server socket
+					handleConnectionRequest(client_addr, client_len); // Handle new client connection
+				else // If it's a client socket
+					handleClient(_pollFds[i].fd); // Handle existing client communication
+			}
 		}
-
-		// Handle the connected client
-		handleClient(client_fd);
 	}
 }
 
@@ -62,4 +51,21 @@ bool	Server::checkPoll(int poolResult) const
 	}
 
 	return (false); // Continue listening for new connections
+}
+
+void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t client_len)
+{
+	// Accept incoming client connection
+	int	client_fd = accept(_socketFd, (struct sockaddr*)&client_addr, &client_len);
+	
+	if (client_fd == -1)
+		std::cerr << "Error accepting client connection: " << strerror(errno) << std::endl;
+
+	// Add new client to the poll list
+	pollfd	clientPollFd = {};
+	clientPollFd.fd = client_fd;
+	clientPollFd.events = POLLIN;
+	_pollFds.push_back(clientPollFd);
+
+	handleClient(client_fd); // Handle the connected client
 }

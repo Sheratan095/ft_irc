@@ -18,6 +18,7 @@ Server::Server(const int port, const std::string &password): _port(port), _passw
 
 Server::~Server()
 {
+	close(_socketFd);
 	std::cout << "Server destroyed." << std::endl;
 }
 
@@ -32,6 +33,11 @@ void	Server::startServer()
 
 	if (!bindSocket())
 		throw (BindException());
+
+	pollfd	serverFd = {};
+	serverFd.fd = _socketFd;      // set your listening socket
+	serverFd.events = POLLIN;     // watch for readability (incoming connections)
+	_pollFds.push_back(serverFd); // add to the poll list
 
 	if (!startListening())
 		throw (ListenException());

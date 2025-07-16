@@ -18,6 +18,8 @@ class	Server
 		SocketFd						_socketFd;
 
 		std::map<SocketFd, Client*>		_clients;
+		std::vector<pollfd>		_pollFds;
+
 		std::map<std::string, Channel*>	_channels;
 
 		bool	createSocket();

@@ -11,16 +11,22 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <map>
+#include <list>
+#include <vector>
+#include <algorithm> // For std::find
 #include "Utils.hpp"
-#include "Channel.hpp"
-#include "Client.hpp"
-#include "Server.hpp"
 #include "ReponseCode.hpp"
+
+#define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
+
+typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 
 class	Channel;
 class	Client;
 class	Server;
 
-typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
+#include "Server.hpp"
+#include "Client.hpp"
+#include "Channel.hpp"
 
 #endif

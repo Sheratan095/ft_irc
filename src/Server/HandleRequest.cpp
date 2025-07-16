@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-void	Server::handleClient(int client_fd)
+void	Server::handleRequest(int client_fd)
 {
 	std::cout << std::endl << "Client connected" << std::endl;
 

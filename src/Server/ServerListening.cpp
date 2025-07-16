@@ -17,16 +17,16 @@ void	Server::run()
 		if (checkPoll(poolResult))
 			break; // Exit if poll indicates an error or server is shutting down
 
-		// Loop through the poll file descriptors
-		for (size_t i = 0; i < _pollFds.size(); ++i)
+		// Check if the server socket is ready for reading => new connection
+		if (_pollFds[0].revents & POLLIN)
+			handleConnectionRequest(client_addr, client_len);
+
+		for (size_t i = 1; i < _pollFds.size(); ++i)
 		{
-			if (_pollFds[i].revents & POLLIN) // Check if the socket is ready for reading
-			{
-				if (_pollFds[i].fd == _socketFd) // If it's the server socket
-					handleConnectionRequest(client_addr, client_len); // Handle new client connection
-				else // If it's a client socket
-					handleClient(_pollFds[i].fd); // Handle existing client communication
-			}
+			if (_pollFds[i].revents & POLLIN) // Check if client socket is ready for reading
+				handleRequest(_pollFds[i].fd);
+			else if (_pollFds[i].revents & POLLHUP) // Check if client disconnected
+				handleDisconnection(_pollFds[i].fd);
 		}
 	}
 }
@@ -38,8 +38,16 @@ bool	Server::checkPoll(int poolResult) const
 {
 	if (poolResult < 0)
 	{
-		std::cerr << "Poll error: " << strerror(errno) << std::endl;
-		return (false); // Continue listening on error
+		if (errno == EINTR)
+		{
+			std::cerr << "Poll interrupted by signal" << std::endl;
+			return (false); // Continue listening
+		}
+		else
+		{
+			std::cerr << "Poll error: " << strerror(errno) << std::endl;
+			return (true); // Stop the server on error
+		}
 	}
 	else if (poolResult == 0) // Timeout occurred, no new connections
 	{
@@ -53,6 +61,7 @@ bool	Server::checkPoll(int poolResult) const
 	return (false); // Continue listening for new connections
 }
 
+// TO DO
 void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t client_len)
 {
 	// Accept incoming client connection
@@ -67,5 +76,19 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	clientPollFd.events = POLLIN;
 	_pollFds.push_back(clientPollFd);
 
-	handleClient(client_fd); // Handle the connected client
+	// handleClient(client_fd); // Handle the connected client
+}
+
+// TO DO
+void	Server::handleDisconnection(int client_fd)
+{
+	(void)client_fd; // Suppress unused parameter warning (just for temporary compilation)
+
+	// std::cout << "Client disconnected" << std::endl;
+	// close(client_fd); // Close the client socket
+	// // Remove the client from the poll list
+	// std::vector<pollfd>::iterator it = std::remove_if(_pollFds.begin(), _pollFds.end(), [client_fd](const pollfd& pfd) { return pfd.fd == client_fd; });
+
+	// _pollFds.erase(it, _pollFds.end());
+
 }

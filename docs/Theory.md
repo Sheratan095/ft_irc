@@ -12,11 +12,16 @@ Where to store the result (revents).
 
 For a listening socket, you are interested in:
 POLLIN: means there is something to read.
+POLLOU: watch for writing (socket is ready to write)
+POLLERR: watch for errors
+POLLHUP: whtch for hang-up (peer closed connection)
 For a server socket, that means: “There is an incoming connection waiting to accept()
 
 
 The poll() function provides applications with a mechanism for multiplexing input/output over a set of file descriptors. For each member of the array pointed to by fds, poll() shall examine the given file descriptor for the event(s) specified in events. The number of pollfd structures in the fds array is specified by nfds. The poll() function shall identify those file descriptors on which an application can read or write data, or on which certain events have occurred.
 Upon successful completion, poll() shall return a non-negative value. A positive value indicates the total number of file descriptors that have been selected (that is, file descriptors for which the revents member is non-zero). A value of 0 indicates that the call timed out and no file descriptors have been selected. Upon failure, poll() shall return -1 and set errno to indicate the error.
+
+
 
 ----------------------------------------------------------------------------------------------------------------------------------
 

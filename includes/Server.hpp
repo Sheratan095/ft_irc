@@ -25,10 +25,13 @@ class	Server
 		bool	createSocket();
 		bool	bindSocket();
 		bool	startSocketListening();
+
 		void	run();
-		void	handleClient(int client_fd);
 		bool	checkPoll(int poolResult) const;
+
 		void	handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t client_len);
+		void	handleDisconnection(int client_fd);
+		void	handleRequest(int client_fd);
 
 
 	public:

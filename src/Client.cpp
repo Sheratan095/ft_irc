@@ -8,9 +8,14 @@ Client::~Client()
 
 //--------------------------------------------------------------------------------
 
-bool	Client::isRegistered() const
+bool	Client::checkRegistration()
 {
-	return (!_username.empty() && !_nickname.empty() && _isAuthenticated);
+	if (_username.empty() || _nickname.empty() || !_isAuthenticated)
+		return (false);
+
+	_isRegistered = true; // Mark as registered if all conditions are met
+
+	return (true);
 }
 
 void	Client::setUsername(const std::string& username)

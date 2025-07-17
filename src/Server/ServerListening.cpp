@@ -87,7 +87,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	clientPollFd.fd = client_fd;
 	clientPollFd.events = POLLIN;
 
-	std::cout << "New connection incoming with fd: " << client_fd << std::endl << std::endl;
+	std::cout << "New connection incoming with fd: " << client_fd << std::endl;
 
 	// Try to add the new client to the server's client list
 	if (addClient(clientPollFd) == false)
@@ -103,15 +103,10 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 
 	// Successfully added the client, now handle the connection	
 
-	std::cout << "New client connected with fd: " << client_fd << std::endl;
+	std::cout << "Connection accepted, new client created with fd: " << client_fd << std::endl << std::endl;
 
-	// Add the client to the _pollFds vector
-	_pollFds.push_back(clientPollFd);
-
-	// Notify the client that they are connected
-	sendResponse(client_fd, RPL_WELCOME);
-
-	handleRequest(client_fd);
+	// Handle the initial request from the new client (the welcome message is sent when the client is FULL registered)
+	// handleRequest(client_fd);
 }
 
 // TO DO

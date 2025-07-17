@@ -7,7 +7,7 @@ void	Server::handleRequest(int client_fd)
 	if (!message.empty())
 	{
 		messages = parseMessage(message);
-		// printRawMessage(messages);
+		printRawMessage(messages);
 	}
 
 	// std::cout << std::endl << "Client connected" << std::endl;

@@ -66,6 +66,9 @@ void	Server::printRawMessage(const std::vector<IRCMessage> &messages) const
 
 			std::cout << std::endl;
 		}
+
+		std::cout << std::endl;
+
 	}
 
 }

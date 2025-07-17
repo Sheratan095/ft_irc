@@ -5,7 +5,7 @@ bool SERVER_RUNNING = true;
 Server::Server(const int port, const std::string &password): _port(port), _password(password)
 {
 	if (password.empty())
-		throw std::invalid_argument("Password cannot be empty.");
+		throw (std::invalid_argument("Password cannot be empty."));
 
 	// 0 - 1024 are well-known ports and are used for standard services.
 	// 1024 - 49151 are registered ports and can be used by user applications

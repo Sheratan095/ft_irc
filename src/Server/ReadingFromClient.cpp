@@ -11,6 +11,7 @@ std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
 			continue;
 		std::cout << "Parsing line: " << lines[i] << std::endl;
 	}
+	std::cout << std::endl;
 
 	return (messages);
 }

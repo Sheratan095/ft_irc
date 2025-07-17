@@ -3,7 +3,7 @@
 void	Server::handleRequest(int client_fd)
 {
 	std::vector<IRCMessage>	messages;
-	std::string	message = readMessageFromClient(client_fd);
+	std::string				message = readMessageFromClient(client_fd);
 	if (!message.empty())
 	{
 		messages = parseMessage(message);

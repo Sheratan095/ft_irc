@@ -90,13 +90,16 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 // TO DO
 void	Server::handleDisconnection(int client_fd)
 {
-	(void)client_fd; // Suppress unused parameter warning (just for temporary compilation)
+	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl;
 
-	// std::cout << "Client disconnected" << std::endl;
-	// close(client_fd); // Close the client socket
-	// // Remove the client from the poll list
-	// std::vector<pollfd>::iterator it = std::remove_if(_pollFds.begin(), _pollFds.end(), [client_fd](const pollfd& pfd) { return pfd.fd == client_fd; });
+	close(client_fd); // Close the client socket
 
-	// _pollFds.erase(it, _pollFds.end());
-
+	for (std::vector<pollfd>::iterator it = _pollFds.begin(); it != _pollFds.end(); ++it)
+	{
+		if (it->fd == client_fd)
+		{
+			_pollFds.erase(it);
+			break;
+		}
+	}
 }

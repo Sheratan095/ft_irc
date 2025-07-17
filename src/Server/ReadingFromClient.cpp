@@ -9,9 +9,18 @@ std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
 	{
 		if (lines[i].empty())
 			continue;
-		std::cout << "Parsing line: " << lines[i] << std::endl;
+
+		IRCMessage	msg;
+		size_t	pos = lines[i].find(' ');
+		if (pos != std::string::npos)
+		{
+			msg.command = lines[i].substr(0, pos);
+			std::string params = lines[i].substr(pos + 1);
+			msg.parameters = split(params, " ");
+		}
+
+		messages.push_back(msg);
 	}
-	std::cout << std::endl;
 
 	return (messages);
 }
@@ -37,14 +46,26 @@ void	Server::printRawMessage(const std::vector<IRCMessage> &messages) const
 	{
 		const IRCMessage	&msg = messages[i];
 
-		std::cout << "Command: " << msg.command;
-		std::cout << "Prefix: " << msg.prefix << ", Command: " << msg.command;
+		if (msg.prefix.empty())
+			std::cout << "No prefix, " << std::endl;
+		else
+			std::cout << "Prefix: " << msg.prefix << ", " << std::endl;
 
-		std::cout << ", Parameters: ";
-		for (size_t i = 0; i < msg.parameters.size(); ++i)
-			std::cout << msg.parameters[i] << " ";
+		if (msg.command.empty())
+			std::cout << "No command " << std::endl;
+		else
+			std::cout << "Command: " << msg.command << std::endl;
 
-		std::cout << std::endl;
+		if (msg.parameters.empty())
+			std::cout << "No parameters " << std::endl;
+		else
+		{
+			std::cout << "Parameters: ";
+			for (size_t i = 0; i < msg.parameters.size(); ++i)
+				std::cout << msg.parameters[i] << " " ;
+
+			std::cout << std::endl;
+		}
 	}
 
 }

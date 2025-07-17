@@ -8,12 +8,12 @@ char	*Server::readMessageFromClient(int client_fd)
 	if (bytes_received < 0)
 	{
 		std::cerr << "Error receiving data: " << strerror(errno) << std::endl;
-		return NULL; // Error occurred
+		return (NULL); // Error occurred
 	}
 	else if (bytes_received == 0)
 	{
 		std::cout << "Client disconnected gracefully" << std::endl;
-		return NULL; // Client closed connection
+		return (NULL); // Client closed connection
 	}
 
 	buffer[bytes_received] = '\0'; // Null-terminate the received string

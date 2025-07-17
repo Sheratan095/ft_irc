@@ -31,4 +31,6 @@ class	Server;
 #include "Client.hpp"
 #include "Channel.hpp"
 
+char	*readMessageFromClient(int client_fd);
+
 #endif

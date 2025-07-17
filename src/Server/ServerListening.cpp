@@ -76,6 +76,9 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	clientPollFd.events = POLLIN;
 	_pollFds.push_back(clientPollFd);
 
+	char	*message = readMessageFromClient(client_fd);
+	printRawMessage(strlen(message), message);
+
 	// handleClient(client_fd); // Handle the connected client
 }
 

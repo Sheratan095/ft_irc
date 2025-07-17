@@ -33,6 +33,9 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
+		char	*readMessageFromClient(int client_fd);
+		void	printRawMessage(int bytes_received, char *buffer);
+
 
 	public:
 		Server(const int port, const std::string &password);

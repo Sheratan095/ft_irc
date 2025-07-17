@@ -42,22 +42,3 @@ int	parseInput(int argc, char **argv)
 
 	return (portnm);
 }
-
-void	printRawMessage(int bytes_received, char *buffer)
-{
-	// Debug: Print raw bytes received and message length
-	std::cout << "Bytes received: " << bytes_received << std::endl;
-	std::cout << "Raw message (with escape chars): ";
-
-	for (int i = 0; i < bytes_received; i++)
-	{
-		if (buffer[i] == '\n')
-			std::cout << "\\n";
-		else if (buffer[i] == '\r')
-			std::cout << "\\r";
-		else
-			std::cout << buffer[i];
-	}
-
-	std::cout << std::endl;
-}

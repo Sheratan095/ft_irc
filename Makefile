@@ -12,6 +12,7 @@ SRCS = src/main.cpp \
 	src/Server/ServerListening.cpp \
 	src/Server/HandleRequest.cpp \
 	src/Server/ResponseCode.cpp \
+	src/Server/ReadingFromClient.cpp \
 	src/Utils.cpp \
 
 all: $(NAME)

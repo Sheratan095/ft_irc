@@ -4,7 +4,9 @@ Client::Client(int socket_fd): _socketFd(socket_fd)
 {}
 
 Client::~Client()
-{}
+{
+	close(_socketFd);
+}
 
 //--------------------------------------------------------------------------------
 

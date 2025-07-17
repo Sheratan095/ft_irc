@@ -19,6 +19,22 @@ Server::Server(const int port, const std::string &password): _port(port), _passw
 Server::~Server()
 {
 	close(_socketFd);
+
+	for (size_t i = 0; i < _pollFds.size(); ++i)
+	{
+		if (_pollFds[i].fd != -1)
+			close(_pollFds[i].fd);
+	}
+
+	for (size_t i = 0; i < _clients.size(); ++i)
+	{
+		if (_clients[i] != NULL)
+		{
+			delete _clients[i];
+			_clients[i] = NULL;
+		}
+	}
+
 	std::cout << "Server destroyed." << std::endl;
 }
 

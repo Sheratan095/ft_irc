@@ -2,7 +2,7 @@
 
 void	Server::run()
 {
-	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl;
+	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl << std::endl;
 
 	int	poolResult;
 
@@ -68,20 +68,35 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	int	client_fd = accept(_socketFd, (struct sockaddr*)&client_addr, &client_len);
 	
 	if (client_fd == -1)
+	{
 		std::cerr << "Error accepting client connection: " << strerror(errno) << std::endl;
+		return; // Handle error, but continue accepting new connections
+	}
+
+	// Set the client socket to non-blocking mode
+	// I don't override the existing flags, just add O_NONBLOCK
+	int	flags = fcntl(client_fd, F_GETFL, 0);
+	if (flags == -1 || fcntl(client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
+	{
+		close(client_fd);
+		return ;
+	}
 
 	//Create a pollfd structure for the new client
 	pollfd	clientPollFd = {};
 	clientPollFd.fd = client_fd;
 	clientPollFd.events = POLLIN;
 
+	std::cout << "New connection incoming with fd: " << client_fd << std::endl << std::endl;
+
 	// Try to add the new client to the server's client list
 	if (addClient(clientPollFd) == false)
 	{
 		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
-		close(client_fd); // Close the socket if adding failed
 
-		// TO DO send error message to client
+		sendErrorResponse(client_fd, "Server is full or client already exists");
+
+		close(client_fd);
 
 		return;
 	}

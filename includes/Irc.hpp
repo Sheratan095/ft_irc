@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <map>
+#include <fcntl.h> 
 #include <list>
 #include <vector>
 #include <sstream>
@@ -20,6 +21,8 @@
 #include "Response.hpp"
 
 #define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
+
+#define	MAX_CLIENTS 1000
 
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 

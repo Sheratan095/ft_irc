@@ -9,6 +9,12 @@ bool	Server::addClient(pollfd clientPollFd)
 		return (false);
 	}
 
+	if (_clients.size() >= MAX_CLIENTS)
+	{
+		std::cerr << "Maximum number of clients reached. Cannot add new client." << std::endl;
+		return (false);
+	}
+
 	// Create a new Client object and add it to the map
 	Client*	newClient = new Client(clientPollFd.fd);
 	_clients[clientPollFd.fd] = newClient;

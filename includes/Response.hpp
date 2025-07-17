@@ -10,6 +10,8 @@ enum	ResponseCode
 
 bool	sendResponse(int client_fd, ResponseCode code);
 
+bool	sendErrorResponse(int client_fd, std::string reason);
+
 std::string	getResponseMessage(ResponseCode code);
 
 std::string	composeResponse(ResponseCode code, const std::string &message);

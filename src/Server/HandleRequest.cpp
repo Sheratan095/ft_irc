@@ -2,12 +2,20 @@
 
 void	Server::handleRequest(int client_fd)
 {
-	std::cout << std::endl << "Client connected" << std::endl;
+	std::vector<IRCMessage>	messages;
+	std::string	message = readMessageFromClient(client_fd);
+	if (!message.empty())
+	{
+		messages = parseMessage(message);
+		// printRawMessage(messages);
+	}
 
-	// Keep connection open and handle multiple messages
+	// std::cout << std::endl << "Client connected" << std::endl;
+
+	// // Keep connection open and handle multiple messages
 	
-	close(client_fd);
-	std::cout << "Client connection closed" << std::endl;
+	// close(client_fd);
+	// std::cout << "Client connection closed" << std::endl;
 }
 
 // void	Server::switchCommand()

@@ -81,7 +81,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	if (!message.empty())
 	{
 		messages = parseMessage(message);
-		printRawMessage(messages);
+		// printRawMessage(messages);
 	}
 
 	// handleClient(client_fd); // Handle the connected client

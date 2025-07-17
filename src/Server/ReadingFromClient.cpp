@@ -3,7 +3,14 @@
 std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
 {
 	std::vector<IRCMessage>	messages;
-	(void)message;
+	
+	std::vector<std::string>	lines = split(message, "\r\n");
+	for (size_t i = 0; i < lines.size() ; i++)
+	{
+		if (lines[i].empty())
+			continue;
+		std::cout << "Parsing line: " << lines[i] << std::endl;
+	}
 
 	return (messages);
 }

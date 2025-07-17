@@ -37,6 +37,8 @@ class	Server
 		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 
+		bool	addClient(pollfd clientPollFd);
+
 
 	public:
 		Server(const int port, const std::string &password);

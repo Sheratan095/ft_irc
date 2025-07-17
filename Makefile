@@ -13,7 +13,9 @@ SRCS = src/main.cpp \
 	src/Server/HandleRequest.cpp \
 	src/Server/ResponseCode.cpp \
 	src/Server/ReadingFromClient.cpp \
+	src/Server/Cmds/AddClient.cpp \
 	src/Utils.cpp \
+	src/Client.cpp \
 
 all: $(NAME)
 

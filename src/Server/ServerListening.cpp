@@ -70,23 +70,29 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	if (client_fd == -1)
 		std::cerr << "Error accepting client connection: " << strerror(errno) << std::endl;
 
-	// Add new client to the poll list
+	//Create a pollfd structure for the new client
 	pollfd	clientPollFd = {};
 	clientPollFd.fd = client_fd;
 	clientPollFd.events = POLLIN;
-	_pollFds.push_back(clientPollFd);
 
-	std::vector<IRCMessage>	messages;
-	std::string	message = readMessageFromClient(client_fd);
-	if (!message.empty())
+	// Try to add the new client to the server's client list
+	if (addClient(clientPollFd) == false)
 	{
-		messages = parseMessage(message);
-		if (!messages.empty())
-			printRawMessage(messages); // Print the parsed messages to console
-		// printRawMessage(messages);
+		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
+		close(client_fd); // Close the socket if adding failed
+
+		// TO DO send error message to client
+
+		return;
 	}
 
-	// handleClient(client_fd); // Handle the connected client
+	// Successfully added the client, now handle the connection	
+
+	// Add the client to the _pollFds vector
+	_pollFds.push_back(clientPollFd);
+
+
+	handleRequest(client_fd);
 }
 
 // TO DO

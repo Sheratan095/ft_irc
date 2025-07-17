@@ -7,17 +7,21 @@ class	Client
 {
 	private:
 		int			_socketFd;
-		std::string	_nickname;
+
 		std::string	_username;
-		std::string	_realname;
-		std::string	_hostname;
-		std::string	_password;
-		bool		_isRegistered;
+		std::string	_nickname;
+		bool		_isAuthenticated;
+
 
 	public:
 		Client(int socket_fd);
 		~Client();
 
+		bool	isRegistered() const;
+
+		void	setUsername(const std::string& username);
+		void	setNickname(const std::string& nickname);
+		void	setAuthenticated();
 };
 
 #endif

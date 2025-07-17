@@ -27,6 +27,13 @@ class	Channel;
 class	Client;
 class	Server;
 
+struct	IRCMessage
+{
+	std::string					prefix;      // Optional, starts with ':'
+	std::string					command;
+	std::vector<std::string>	parameters;  // Command parameters
+};
+
 #include "Server.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"

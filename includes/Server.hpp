@@ -33,8 +33,9 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
-		char	*readMessageFromClient(int client_fd);
-		void	printRawMessage(int bytes_received, char *buffer);
+		std::string				readMessageFromClient(int client_fd) const;
+		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
+		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 
 
 	public:

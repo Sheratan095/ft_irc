@@ -1,41 +1,42 @@
 #include "Server.hpp"
 
-char	*Server::readMessageFromClient(int client_fd)
+std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
+{
+	std::vector<IRCMessage>	messages;
+	(void)message;
+
+	return (messages);
+}
+
+std::string	Server::readMessageFromClient(int client_fd) const
 {
 	static char	buffer[1024];
 	ssize_t	bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
 	if (bytes_received < 0)
-	{
 		std::cerr << "Error receiving data: " << strerror(errno) << std::endl;
-		return (NULL); // Error occurred
-	}
 	else if (bytes_received == 0)
-	{
 		std::cout << "Client disconnected gracefully" << std::endl;
-		return (NULL); // Client closed connection
-	}
 
 	buffer[bytes_received] = '\0'; // Null-terminate the received string
 
-	return (buffer); // Return the received message
+	return (std::string(buffer));
 }
 
-void	Server::printRawMessage(int bytes_received, char *buffer)
+void	Server::printRawMessage(const std::vector<IRCMessage> &messages) const
 {
-	// Debug: Print raw bytes received and message length
-	std::cout << "Bytes received: " << bytes_received << std::endl;
-	std::cout << "Raw message (with escape chars): ";
-
-	for (int i = 0; i < bytes_received; i++)
+	for (size_t i = 0; i < messages.size(); ++i)
 	{
-		if (buffer[i] == '\n')
-			std::cout << "\\n";
-		else if (buffer[i] == '\r')
-			std::cout << "\\r";
-		else
-			std::cout << buffer[i];
+		const IRCMessage	&msg = messages[i];
+
+		std::cout << "Command: " << msg.command;
+		std::cout << "Prefix: " << msg.prefix << ", Command: " << msg.command;
+
+		std::cout << ", Parameters: ";
+		for (size_t i = 0; i < msg.parameters.size(); ++i)
+			std::cout << msg.parameters[i] << " ";
+
+		std::cout << std::endl;
 	}
 
-	std::cout << std::endl;
 }

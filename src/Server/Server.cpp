@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-bool SERVER_RUNNING = true;
+bool	SERVER_RUNNING = true;
 
 Server::Server(const int port, const std::string &password): _port(port), _password(password)
 {

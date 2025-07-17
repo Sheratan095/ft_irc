@@ -13,10 +13,11 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <sstream>
 #include <poll.h>
 #include <algorithm> // For std::find
 #include "Utils.hpp"
-#include "ReponseCode.hpp"
+#include "Response.hpp"
 
 #define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
 

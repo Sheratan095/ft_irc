@@ -1,5 +1,19 @@
-#include "ReponseCode.hpp"
-#include <sstream>
+#include "Response.hpp"
+
+bool	sendResponse(int client_fd, ResponseCode code)
+{
+	std::string	response = composeResponse(code, getResponseMessage(code));
+
+	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
+
+	if (bytesSent < 0)
+	{
+		std::cerr << "Error sending response to client: " << strerror(errno) << std::endl;
+		return (false);
+	}
+
+	return (true);
+}
 
 std::string	getResponseMessage(ResponseCode code)
 {

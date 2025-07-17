@@ -1,5 +1,5 @@
-#ifndef REPONSECODE_HPP
-#define REPONSECODE_HPP
+#ifndef RESPONSE_HPP
+#define RESPONSE_HPP
 
 #include "Irc.hpp" 
 
@@ -7,6 +7,8 @@ enum	ResponseCode
 {
 	RPL_WELCOME = 001
 };
+
+bool	sendResponse(int client_fd, ResponseCode code);
 
 std::string	getResponseMessage(ResponseCode code);
 

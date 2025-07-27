@@ -5,14 +5,16 @@
 
 enum	ResponseCode
 {
-	RPL_WELCOME = 001
+	RPL_WELCOME = 001,
+
+	ERR_UNKNOWNCOMMAND = 421
 };
 
 bool	sendResponse(int client_fd, ResponseCode code);
 
-bool	sendErrorResponse(int client_fd, std::string reason);
+bool	sendErrorResponse(int client_fd, ResponseCode code);
 
-std::string	getResponseMessage(ResponseCode code);
+bool	sendErrorResponse(int client_fd, std::string reason);
 
 std::string	composeResponse(ResponseCode code, const std::string &message);
 

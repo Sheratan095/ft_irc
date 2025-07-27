@@ -10,20 +10,47 @@ void	Server::handleRequest(int client_fd)
 		printRawMessage(messages);
 	}
 
-	// std::cout << std::endl << "Client connected" << std::endl;
+	messages = parseMessage(message);
+	if (messages.empty())
+	{
+		std::cerr << "Error: No valid messages parsed from client fd: " << client_fd << std::endl;
+		return;
+	}
 
-	// // Keep connection open and handle multiple messages
-	
-	// close(client_fd);
-	// std::cout << "Client connection closed" << std::endl;
+	for (size_t i = 0; i < messages.size(); ++i)
+		switchCommand(messages[i], client_fd);
+
+
 }
 
-// void	Server::switchCommand()
-// {
-// 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-// 	if (socket_fd == -1)
-// 	{
-// 		// SOCKET CREATION FAILED
-// 		throw SocketException();
-// 	}
-// }
+bool	Server::switchCommand(const IRCMessage &message, int client_fd)
+{
+	if (message.command == "CAP")
+	{
+		sendErrorResponse(client_fd, "CAP command not supported");
+		// Handle JOIN command
+		return (true);
+	}
+
+	if (message.command == "PASS")
+	{
+		// Handle PASS command
+		return (true);
+	}
+
+	if (message.command == "NICK")
+	{
+		// Handle NICK command
+		return (true);
+	}
+
+	if (message.command == "USER")
+	{
+		// Handle JOIN command
+		return (true);
+	}
+
+	sendErrorResponse(client_fd, ERR_UNKNOWNCOMMAND);
+
+	return (false);
+}

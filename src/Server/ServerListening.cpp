@@ -12,7 +12,7 @@ void	Server::run()
 		struct sockaddr_in	client_addr;
 		socklen_t			client_len = sizeof(client_addr);
 
-		// Wait for incoming connections or timeout
+		// Wait for incoming connections or timeout (blocking call)
 		poolResult = poll(_pollFds.data(), _pollFds.size(), 1000); // 1000 ms timeout
 		if (checkPoll(poolResult))
 			break; // Exit if poll indicates an error or server is shutting down

@@ -19,8 +19,10 @@ class	Client
 		Client(int socket_fd);
 		~Client();
 
-		bool	checkRegistration();
-
+		bool		checkRegistration();
+		int			getSocketFd() const;
+		std::string	getNickname() const;
+	
 		void	setUsername(const std::string& username);
 		void	setNickname(const std::string& nickname);
 		void	setAuthenticated();

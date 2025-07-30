@@ -34,3 +34,13 @@ void	Client::setAuthenticated()
 {
 	_isAuthenticated = true;
 }
+
+int	Client::getSocketFd() const
+{
+	return (_socketFd);
+}
+
+std::string	Client::getNickname() const
+{
+	return (_nickname);
+}

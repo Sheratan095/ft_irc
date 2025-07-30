@@ -33,7 +33,7 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
-		bool	switchCommand(const IRCMessage &message, int client_fd);
+		bool	switchCommand(const IRCMessage &message, Client &client);
 
 
 		std::string				readMessageFromClient(int client_fd) const;

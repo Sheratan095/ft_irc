@@ -2,7 +2,7 @@
 
 bool	sendResponse(int client_fd, ResponseCode code)
 {
-	std::string	response = composeResponse(code, getResponseByCode(code));
+	std::string	response = getResponseByCode(code, "");
 
 	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
 
@@ -14,19 +14,11 @@ bool	sendResponse(int client_fd, ResponseCode code)
 
 	return (true);
 }
-
-bool	sendErrorResponse(int client_fd, ResponseCode code)
+bool	sendErrorResponse(int client_fd, ResponseCode code, std::string targetName)
 {
-	std::string	errorMessage = getResponseByCode(code);
+	std::string	response = getResponseByCode(code, targetName);
 
-	if (errorMessage.empty())
-	{
-		std::cerr << "Error composing error response." << std::endl;
-		return (false);
-	}
-
-	// Send the error message to the client
-	ssize_t	bytesSent = send(client_fd, errorMessage.c_str(), errorMessage.size(), 0);
+	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
 
 	if (bytesSent < 0)
 	{
@@ -62,11 +54,14 @@ bool	sendErrorResponse(int client_fd, std::string reason)
 }
 
 
-std::string	composeResponse(ResponseCode code, const std::string &message)
+std::string	composeResponse(ResponseCode code, const std::string &message, const std::string &targetName)
 {
 	std::ostringstream	oss;
 
-	oss << ":server " << code << " : " << message << "\r\n";
+	oss << ":server"
+		<< " " << code
+		<< " " << (targetName.empty() ? "*" : targetName)
+		<< " :" << message << "\r\n";
 
 	std::string	response = oss.str();
 
@@ -74,15 +69,15 @@ std::string	composeResponse(ResponseCode code, const std::string &message)
 	return (response);
 }
 
-std::string	getResponseByCode(ResponseCode code)
+std::string	getResponseByCode(ResponseCode code, const std::string &targetName)
 {
-	switch (code)
+	switch (code)	
 	{
 		case RPL_WELCOME:
-			return composeResponse(RPL_WELCOME, "Welcome to the IRC Network");
+			return composeResponse(RPL_WELCOME, "Welcome to the IRC Network", targetName);
 		case ERR_UNKNOWNCOMMAND:
-			return composeResponse(ERR_UNKNOWNCOMMAND, "Unknown command");
+			return composeResponse(ERR_UNKNOWNCOMMAND, "Unknown command", targetName);
 		default:
-			return composeResponse(code, "Unknown response code");
+			return composeResponse(code, "Unknown response code", targetName);
 	}
 }

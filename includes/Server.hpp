@@ -40,8 +40,10 @@ class	Server
 		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 
-		bool	addClient(pollfd clientPollFd);
-		void	removeClient(Client *client);
+		// commands
+		bool	addClient(pollfd clientPollFd); // first connection
+		void	removeClient(Client *client); //quit or POLLHUP
+		void	userCmd(Client &client, const IRCMessage &message);
 
 
 	public:

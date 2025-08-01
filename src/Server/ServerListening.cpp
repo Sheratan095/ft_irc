@@ -94,7 +94,8 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	{
 		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
 
-		sendErrorResponse(client_fd, "Server is full or client already exists");
+		// TO DO
+		// sendErrorResponse(client_fd, ERR_SRVFULL);
 
 		close(client_fd);
 

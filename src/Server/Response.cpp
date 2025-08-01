@@ -1,83 +1,47 @@
 #include "Response.hpp"
 
-bool	sendResponse(int client_fd, ResponseCode code)
+bool sendResponse(const Client &client, ResponseCode code, const std::vector<std::string> &params)
 {
-	std::string	response = getResponseByCode(code, "");
+	std::string	response = composeResponse(code, client.getNickname(), params);
 
-	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
+	ssize_t	bytesSent = send(client.getSocketFd(), response.c_str(), response.size(), 0);
 
 	if (bytesSent < 0)
 	{
-		std::cerr << "Error sending response to client: " << strerror(errno) << std::endl;
-		return (false);
+		std::cerr << "Error sending response to client fd: " << client.getSocketFd() << std::endl;
+		return false;
 	}
 
-	return (true);
-}
-bool	sendErrorResponse(int client_fd, ResponseCode code, std::string targetName)
-{
-	std::string	response = getResponseByCode(code, targetName);
-
-	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
-
-	if (bytesSent < 0)
-	{
-		std::cerr << "Error sending error response to client: " << strerror(errno) << std::endl;
-		return (false);
-	}
-
-	return (true);
+	return true;
 }
 
-// Mostly used to send error during first connection
-bool	sendErrorResponse(int client_fd, std::string reason)
-{
-	std::string	errorMessage = "ERROR :" + reason + "\r\n";
-
-	if (errorMessage.empty())
-	{
-		std::cerr << "Error composing error response." << std::endl;
-		return (false);
-	}
-
-	// Send the error message to the client
-
-	ssize_t	bytesSent = send(client_fd, errorMessage.c_str(), errorMessage.size(), 0);
-
-	if (bytesSent < 0)
-	{
-		std::cerr << "Error sending error response to client: " << strerror(errno) << std::endl;
-		return (false);
-	}
-
-	return (true);
-}
-
-
-std::string	composeResponse(ResponseCode code, const std::string &message, const std::string &targetName)
+std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::vector<std::string> &params)
 {
 	std::ostringstream	oss;
 
-	oss << ":server"
+	oss << ":" SERVER_NAME
 		<< " " << code
-		<< " " << (targetName.empty() ? "*" : targetName)
-		<< " :" << message << "\r\n";
+		<< " " << (targetName.empty() ? "*" : targetName);
 
-	std::string	response = oss.str();
+		for (size_t i = 0; i < params.size(); ++i)
+			oss << " " << params[i];
 
+		oss << "\r\n";
 
-	return (response);
+	return (oss.str());
 }
 
-std::string	getResponseByCode(ResponseCode code, const std::string &targetName)
+std::string	getResponseByCode(ResponseCode code)
 {
-	switch (code)	
+	switch (code)
 	{
 		case RPL_WELCOME:
-			return composeResponse(RPL_WELCOME, "Welcome to the IRC Network", targetName);
+			return ("Welcome to the IRC Network");
+		case ERR_SRVFULL:
+			return ("Server is full");
 		case ERR_UNKNOWNCOMMAND:
-			return composeResponse(ERR_UNKNOWNCOMMAND, "Unknown command", targetName);
+			return ("Unknown command");
 		default:
-			return composeResponse(code, "Unknown response code", targetName);
+			return ("Unknown response code");
 	}
 }

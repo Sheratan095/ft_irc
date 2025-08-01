@@ -25,10 +25,14 @@ void	Server::handleRequest(int client_fd)
 
 bool	Server::switchCommand(const IRCMessage &message, Client &client)
 {
+	// TO DO remove it
+	(void)client;
+
 	if (message.command == "CAP")
 	{
-		sendErrorResponse(client.getSocketFd(), "CAP command not supported");
-		// Handle JOIN command
+		// TO DO
+		// sendCustomErrorResponse(client.getSocketFd(), "CAP command not supported");
+
 		return (true);
 	}
 
@@ -50,7 +54,8 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 		return (true);
 	}
 
-	sendErrorResponse(client.getSocketFd(), ERR_UNKNOWNCOMMAND, client.getNickname());
+	// TO DO
+	// sendErrorResponse(client.getSocketFd(), ERR_UNKNOWNCOMMAND, client.getNickname());
 
 	return (false);
 }

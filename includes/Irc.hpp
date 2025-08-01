@@ -20,6 +20,8 @@
 #include "Utils.hpp"
 #include "Response.hpp"
 
+#define SERVER_NAME "ircServer"
+
 #define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
 
 #define	MAX_CLIENTS 2

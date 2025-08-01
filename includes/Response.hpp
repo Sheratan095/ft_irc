@@ -1,25 +1,30 @@
 #ifndef RESPONSE_HPP
 #define RESPONSE_HPP
 
-#include "Irc.hpp" 
+#include "Irc.hpp"
 
+class Client; // Forward declaration
+
+//IRC numeric replies must always be 3 digits.
 enum	ResponseCode
 {
 	RPL_WELCOME = 001,
 
-	ERR_UNKNOWNCOMMAND = 4216995
+	ERR_SRVFULL = 463,
+	ERR_UNKNOWNCOMMAND = 421
 };
 
-bool	sendResponse(int client_fd, ResponseCode code);
+// Response format:
+//:server.name <numeric> <target / *> <extra params> :<message>\r\n
 
-bool	sendErrorResponse(int client_fd, ResponseCode code);
+bool	sendResponse(const Client &client, ResponseCode code, const std::vector<std::string> &params);
 
-bool	sendErrorResponse(int client_fd, ResponseCode code, std::string targetName);
+bool	sendErrorResponse(int client_fd, ResponseCode code, const std::string &targetName = "", const std::string &extraParams = "");
 
-bool	sendErrorResponse(int client_fd, std::string reason);
+std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::vector<std::string> &params);
 
-std::string	composeResponse(ResponseCode code, const std::string &message, const std::string &targetName);
+// bool	sendCustomErrorResponse(int client_fd, std::string customError);
 
-std::string	getResponseByCode(ResponseCode code, const std::string &targetName);
+std::string	getResponseByCode(ResponseCode code);
 
 #endif

@@ -50,6 +50,12 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 		return (true);
 	}
 
+	if (message.command == "QUIT")
+	{
+		removeClient(client.getSocketFd());
+		return (true);
+	}
+
 	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 
 	return (false);

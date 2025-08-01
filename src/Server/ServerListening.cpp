@@ -26,7 +26,7 @@ void	Server::run()
 			if (_pollFds[i].revents & POLLIN) // Check if client socket is ready for reading
 				handleRequest(_pollFds[i].fd);
 			else if (_pollFds[i].revents & POLLHUP) // Check if client disconnected
-				handleDisconnection(_pollFds[i].fd);
+				removeClient(_pollFds[i].fd);
 		}
 	}
 }
@@ -106,21 +106,4 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 
 	// Handle the initial request from the new client (the welcome message is sent when the client is FULL registered)
 	// handleRequest(client_fd);
-}
-
-// TO DO
-void	Server::handleDisconnection(int client_fd)
-{
-	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl;
-
-	close(client_fd); // Close the client socket
-
-	for (std::vector<pollfd>::iterator it = _pollFds.begin(); it != _pollFds.end(); ++it)
-	{
-		if (it->fd == client_fd)
-		{
-			_pollFds.erase(it);
-			break;
-		}
-	}
 }

@@ -41,6 +41,7 @@ class	Server
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 
 		bool	addClient(pollfd clientPollFd);
+		void	removeClient(int client_fd);
 
 
 	public:

@@ -30,6 +30,6 @@ Configure socket timeout to prevent accept() from blocking indefinitely
 This allows the server to periodically check SERVER_RUNNING flag
 struct timeval	timeout;
 timeout.tv_sec = 1;		// 1 second timeout
-timeout.tv_usec = 0;	// 0 microseconds TO DO remove the microseconds part if not needed?
+timeout.tv_usec = 0;	// 0 microseconds could be removed
 setsockopt(_socketFd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 

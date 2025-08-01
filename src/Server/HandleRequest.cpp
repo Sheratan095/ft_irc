@@ -20,18 +20,14 @@ void	Server::handleRequest(int client_fd)
 	for (size_t i = 0; i < messages.size(); ++i)
 		switchCommand(messages[i], *_clients[client_fd]);
 
-
 }
 
 bool	Server::switchCommand(const IRCMessage &message, Client &client)
 {
-	// TO DO remove it
-	(void)client;
 
 	if (message.command == "CAP")
 	{
-		// TO DO
-		// sendCustomErrorResponse(client.getSocketFd(), "CAP command not supported");
+		sendResponse(client, ERR_UNKNOWNCOMMAND, "CAP command not supported");
 
 		return (true);
 	}
@@ -54,8 +50,7 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 		return (true);
 	}
 
-	// TO DO
-	// sendErrorResponse(client.getSocketFd(), ERR_UNKNOWNCOMMAND, client.getNickname());
+	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 
 	return (false);
 }

@@ -61,7 +61,6 @@ bool	Server::checkPoll(int poolResult) const
 	return (false); // Continue listening for new connections
 }
 
-// TO DO
 void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t client_len)
 {
 	// Accept incoming client connection
@@ -94,8 +93,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	{
 		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
 
-		// TO DO
-		// sendErrorResponse(client_fd, ERR_SRVFULL);
+		sendResponse(*_clients[client_fd], ERR_SRVFULL, "");
 
 		close(client_fd);
 

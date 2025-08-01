@@ -17,11 +17,11 @@ enum	ResponseCode
 // Response format:
 //:server.name <numeric> <target / *> <extra params> :<message>\r\n
 
-bool	sendResponse(const Client &client, ResponseCode code, const std::vector<std::string> &params);
+bool	sendResponse(const Client &client, ResponseCode code, const std::string &params);
 
-bool	sendErrorResponse(int client_fd, ResponseCode code, const std::string &targetName = "", const std::string &extraParams = "");
+bool	sendCustomResponse(const int client_fd, const std::string &response);
 
-std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::vector<std::string> &params);
+std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params);
 
 // bool	sendCustomErrorResponse(int client_fd, std::string customError);
 

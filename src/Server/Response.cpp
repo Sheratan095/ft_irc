@@ -1,6 +1,6 @@
 #include "Response.hpp"
 
-bool sendResponse(const Client &client, ResponseCode code, const std::vector<std::string> &params)
+bool sendResponse(const Client &client, ResponseCode code, const std::string &params)
 {
 	std::string	response = composeResponse(code, client.getNickname(), params);
 
@@ -15,18 +15,28 @@ bool sendResponse(const Client &client, ResponseCode code, const std::vector<std
 	return true;
 }
 
-std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::vector<std::string> &params)
+bool	sendCustomResponse(const int client_fd, const std::string &response)
+{
+	ssize_t	bytesSent = send(client_fd, response.c_str(), response.size(), 0);
+
+	if (bytesSent < 0)
+	{
+		std::cerr << "Error sending custom response to client fd: " << client_fd << std::endl;
+		return (false);
+	}
+
+	return (true);
+}
+
+std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params)
 {
 	std::ostringstream	oss;
 
 	oss << ":" SERVER_NAME
 		<< " " << code
-		<< " " << (targetName.empty() ? "*" : targetName);
-
-		for (size_t i = 0; i < params.size(); ++i)
-			oss << " " << params[i];
-
-		oss << "\r\n";
+		<< " " << (targetName.empty() ? "*" : targetName)
+		<< " " << params
+		<< "\r\n";
 
 	return (oss.str());
 }

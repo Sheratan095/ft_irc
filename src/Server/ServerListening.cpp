@@ -26,7 +26,7 @@ void	Server::run()
 			if (_pollFds[i].revents & POLLIN) // Check if client socket is ready for reading
 				handleRequest(_pollFds[i].fd);
 			else if (_pollFds[i].revents & POLLHUP) // Check if client disconnected
-				removeClient(_pollFds[i].fd);
+				removeClient(_clients[_pollFds[i].fd]);
 		}
 	}
 }

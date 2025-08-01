@@ -52,7 +52,7 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 
 	if (message.command == "QUIT")
 	{
-		removeClient(client.getSocketFd());
+		removeClient(&client);
 		return (true);
 	}
 

@@ -1,8 +1,11 @@
-
 #include "Server.hpp"
 
-void	Server::removeClient(int client_fd)
+void	Server::removeClient(Client *client)
 {
+	if (!client)
+		return;
+
+	int	client_fd = client->getSocketFd();
 	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl;
 
 	for (std::vector<pollfd>::iterator it = _pollFds.begin(); it != _pollFds.end(); ++it)
@@ -14,11 +17,6 @@ void	Server::removeClient(int client_fd)
 		}
 	}
 
-
-	if (_clients.find(client_fd) != _clients.end())
-	{
-		delete (_clients[client_fd]); // Free the memory allocated for the client
-
-		_clients.erase(client_fd); // Remove the client from the map
-	}
+	delete (client); // Free the memory allocated for the client
+	_clients.erase(client_fd); // Remove the client from the map
 }

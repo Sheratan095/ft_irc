@@ -12,14 +12,11 @@ class	Client
 		std::string	_nickname;
 		bool		_isAuthenticated;
 
-		bool		_isRegistered;
-
-
 	public:
 		Client(int socket_fd);
 		~Client();
 
-		bool		checkRegistration();
+		bool		isRegistered() const;
 		int			getSocketFd() const;
 		std::string	getNickname() const;
 	

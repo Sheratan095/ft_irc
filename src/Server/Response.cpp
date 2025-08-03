@@ -51,6 +51,8 @@ std::string	getResponseByCode(ResponseCode code)
 			return ("Server is full");
 		case ERR_UNKNOWNCOMMAND:
 			return ("Unknown command");
+		case ERR_PASSWDMISMATCH:
+			return ("Password incorrect");
 		default:
 			return ("Unknown response code");
 	}

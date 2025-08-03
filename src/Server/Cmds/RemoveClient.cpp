@@ -6,7 +6,7 @@ void	Server::removeClient(Client *client)
 		return;
 
 	int	client_fd = client->getSocketFd();
-	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl;
+	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl << std::endl;
 
 	for (std::vector<pollfd>::iterator it = _pollFds.begin(); it != _pollFds.end(); ++it)
 	{

@@ -9,9 +9,10 @@ void	Server::userCmd(Client &client, const IRCMessage &message)
 		return;
 	}
 
-	if (client.checkRegistration())
+	// if the client is already registered before the message: error
+	if (client.isRegistered())
 	{
-		sendResponse(client, ERR_ALREADYREGISTERED, "You are already registered");
+		sendResponse(client, ERR_ALREADYREGISTERED, "");
 		return;
 	}
 
@@ -21,5 +22,11 @@ void	Server::userCmd(Client &client, const IRCMessage &message)
 	// the third parameter is the server name, which we ignore
 	client.setNickname(message.parameters[3]);
 
-	sendResponse(client, RPL_WELCOME, "Welcome to the IRC server!");
+	// if the client is now FULL registered, send a welcome message
+	if (client.isRegistered())
+	{
+		sendResponse(client, RPL_WELCOME, "");
+
+		return;
+	}
 }

@@ -10,12 +10,10 @@ Client::~Client()
 
 //--------------------------------------------------------------------------------
 
-bool	Client::checkRegistration()
+bool	Client::isRegistered() const
 {
 	if (_username.empty() || _nickname.empty() || !_isAuthenticated)
 		return (false);
-
-	_isRegistered = true; // Mark as registered if all conditions are met
 
 	return (true);
 }

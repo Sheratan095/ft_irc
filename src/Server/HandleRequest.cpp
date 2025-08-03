@@ -27,13 +27,13 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 
 	if (message.command == "CAP")
 	{
-		sendResponse(client, ERR_UNKNOWNCOMMAND, "CAP command not supported");
+		sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 		return (true);
 	}
 
 	if (message.command == "PASS")
 	{
-		// Handle PASS command
+		passCmd(client, message);
 		return (true);
 	}
 

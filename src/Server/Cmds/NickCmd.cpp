@@ -20,13 +20,6 @@ void	Server::nickCmd(Client &client, const IRCMessage &message)
 		return;
 	}
 
-	// if the client is already registered before the message: error
-	if (client.isRegistered())
-	{
-		sendResponse(client, ERR_ALREADYREGISTERED, "");
-		return;
-	}
-
 	const std::string	&new_nickname = message.parameters[0];
 
 	if (isValidNickname(new_nickname) == false)
@@ -55,7 +48,7 @@ void	Server::nickCmd(Client &client, const IRCMessage &message)
 	}
 	else
 	{
-		//TO DO send message to all clients connected to the same channels that the nickname is changed
+		//TO DO send message to all clients (also the sender) connected to the same channels that the nickname is changed
 		
 	}
 

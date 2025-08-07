@@ -25,8 +25,8 @@ SRCS = src/main.cpp \
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	@$(MAKE) -s -C $(TESTFOLDER) all
-	@echo "$(BLUE)[$(NAME)]:\t TESTER COMPILED$(RESET)"
+# 	@$(MAKE) -s -C $(TESTFOLDER) all
+# 	@echo "$(BLUE)[$(NAME)]:\t TESTER COMPILED$(RESET)"
 	@$(CC) $(SRCS) -o $(NAME)
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
 

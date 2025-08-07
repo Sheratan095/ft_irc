@@ -42,8 +42,3 @@ std::string	Client::getNickname() const
 {
 	return (_nickname);
 }
-
-void	Client::joinChannel(Channel *channel)
-{
-	_joinedChannels.push_back(channel);
-}

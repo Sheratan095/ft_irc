@@ -43,10 +43,15 @@ void	Server::nickCmd(Client &client, const IRCMessage &message)
 
 	client.setNickname(new_nickname);
 
+	// if the client was not registered before the message
 	if (firstConnection)
 	{
-		client.setAuthenticated();
-		sendResponse(client, RPL_WELCOME, "");
+		// if now the registration is complete
+		if (client.isRegistered())
+		{
+			client.setAuthenticated();
+			sendResponse(client, RPL_WELCOME, "");
+		}
 	}
 	else
 	{

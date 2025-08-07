@@ -47,4 +47,6 @@ struct	IRCMessage
 
 char	*readMessageFromClient(int client_fd);
 
+void	sendMessage(SocketFd socketFfd, const std::string &message);
+
 #endif

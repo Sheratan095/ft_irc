@@ -43,7 +43,7 @@ class	Channel
 		bool	addOperator(SocketFd client_fd);
 		bool	removeOperator(SocketFd client_fd);
 
-		bool	sendMessageToAll(const std::string &message, Client *sender);
+		void	broadcastMessage(Client *sender, const std::string &message);
 };
 
 #endif

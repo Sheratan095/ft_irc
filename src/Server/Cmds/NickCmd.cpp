@@ -56,6 +56,7 @@ void	Server::nickCmd(Client &client, const IRCMessage &message)
 	else
 	{
 		//TO DO send message to all clients connected to the same channels that the nickname is changed
+		
 	}
 
 }

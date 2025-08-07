@@ -1,5 +1,6 @@
 #include "Server.hpp"
 
+// Used JUST for new connections
 bool	Server::addClient(pollfd clientPollFd)
 {
 	// Check if the client already exists

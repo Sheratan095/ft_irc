@@ -17,6 +17,8 @@ enum	ResponseCode
 
 	ERR_NEEDMOREPARAMS = 461,
 	ERR_ALREADYREGISTERED = 462,
+	ERR_NICKNAMEINUSE = 433,
+	ERR_ERRONEUSNICKNAME = 432, // Invalid nickname
 };
 
 // Response format:

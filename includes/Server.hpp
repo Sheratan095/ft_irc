@@ -39,12 +39,15 @@ class	Server
 		std::string				readMessageFromClient(int client_fd) const;
 		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
+		Client*					findClientByName(const std::string &nickname) const;
+
 
 		// commands
 		bool	addClient(pollfd clientPollFd); // first connection
 		void	removeClient(Client *client); //quit or POLLHUP
 		void	userCmd(Client &client, const IRCMessage &message);
 		void	passCmd(Client &client, const IRCMessage &message);
+		void	nickCmd(Client &client, const IRCMessage &message);
 
 
 

@@ -51,6 +51,22 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " :Password incorrect";
 			break;
 
+		case ERR_NEEDMOREPARAMS:
+			oss << " " << params << " :Not enough parameters";
+			break;
+
+		case ERR_ALREADYREGISTERED:
+			oss << " :You are already registered";
+			break;
+		
+		case ERR_NICKNAMEINUSE:
+			oss << " " << params << " :Nickname is already in use";
+			break;
+
+		case ERR_ERRONEUSNICKNAME:
+			oss << " " << params << " :Erroneous nickname";
+			break;
+		
 		default:
 			oss << " :Unknown response code";
 			break;

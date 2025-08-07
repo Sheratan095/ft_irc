@@ -21,6 +21,7 @@
 #include "Response.hpp"
 
 #define SERVER_NAME "ircServer"
+#define MAX_NICKNAME_LENGTH 9 // Maximum length of a nickname
 
 #define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
 

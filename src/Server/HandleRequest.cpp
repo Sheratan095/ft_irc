@@ -39,13 +39,13 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 
 	if (message.command == "NICK")
 	{
-		// Handle NICK command
+		nickCmd(client, message);
 		return (true);
 	}
 
 	if (message.command == "USER")
 	{
-		// Handle JOIN command
+		userCmd(client, message);
 		return (true);
 	}
 

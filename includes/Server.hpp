@@ -44,7 +44,7 @@ class	Server
 
 		// commands
 		bool	addClient(pollfd clientPollFd); // first connection
-		void	removeClient(Client *client); //quit or POLLHUP
+		void	quitCmd(Client *client); //quit or POLLHUP
 		void	userCmd(Client &client, const IRCMessage &message);
 		void	passCmd(Client &client, const IRCMessage &message);
 		void	nickCmd(Client &client, const IRCMessage &message);

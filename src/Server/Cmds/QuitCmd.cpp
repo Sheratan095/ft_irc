@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-void	Server::removeClient(Client *client)
+void	Server::quitCmd(Client *client)
 {
 	if (!client)
 		return;

@@ -47,3 +47,21 @@ IRCMessage::IRCMessage(SocketFd senderSocketFd, const std::string &line): _sende
 
 IRCMessage::~IRCMessage()
 {}
+
+std::string	IRCMessage::toString() const
+{
+	std::ostringstream	oss;
+
+	if (!prefix.empty())
+		oss << ":" << prefix << " ";
+
+	oss << command;
+
+	for (const auto &param : parameters)
+		oss << " " << param;
+
+	if (!trailing.empty())
+		oss << " :" << trailing;
+
+	return (oss.str());
+}

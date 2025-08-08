@@ -18,6 +18,8 @@ class	IRCMessage
 
 		~IRCMessage();
 
+		std::string	toString() const;
+
 	//-------------------------EXCEPTIONS-------------------------
 
 	class InvalidIRCMessageException : public std::exception

@@ -16,6 +16,11 @@ Server::Server(const int port, const std::string &password): _port(port), _passw
 	std::cout << "Server created with port: " << port << " and password: '" << password << "'" << std::endl;
 }
 
+void	Server::addIrcMessage(IRCMessage *message)
+{
+	_messagesHistory.push_back(message);
+}
+
 Server::~Server()
 {
 	close(_socketFd);
@@ -30,10 +35,13 @@ Server::~Server()
 	{
 		if (_clients[i] != NULL)
 		{
-			delete _clients[i];
+			delete (_clients[i]);
 			_clients[i] = NULL;
 		}
 	}
+
+	for (std::list<IRCMessage*>::iterator it = _messagesHistory.begin(); it != _messagesHistory.end(); ++it)
+		delete (*it);
 
 	std::cout << "Server destroyed." << std::endl;
 }
@@ -50,9 +58,11 @@ void	Server::startServer()
 	if (!bindSocket())
 		throw (BindException());
 
-	pollfd	serverFd = {};
-	serverFd.fd = _socketFd;      // set your listening socket
-	serverFd.events = POLLIN;     // watch for readability (incoming connections)
+	// C++98‐style pollfd init
+	pollfd	serverFd;
+	serverFd.fd      = _socketFd;
+	serverFd.events  = POLLIN;
+	serverFd.revents = 0;
 	_pollFds.push_back(serverFd); // add to the poll list
 
 	if (!startSocketListening())

@@ -19,8 +19,8 @@ class	Server
 
 		std::map<SocketFd, Client*>		_clients;
 		std::vector<pollfd>				_pollFds;
-
 		std::map<std::string, Channel*>	_channels;
+		std::list<IRCMessage*>			_messagesHistory; // List of IRC messages
 
 		bool	createSocket();
 		bool	bindSocket();
@@ -33,11 +33,12 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
+		void	addIrcMessage(IRCMessage *message);
 		bool	switchCommand(const IRCMessage &message, Client &client);
 
 
 		std::string				readMessageFromClient(int client_fd) const;
-		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
+		std::vector<IRCMessage>	parseMessage(const std::string &message);
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 		Client*					findClientByName(const std::string &nickname) const;
 

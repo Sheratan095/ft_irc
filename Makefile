@@ -20,6 +20,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/UserCmd.cpp \
 	src/Server/Cmds/PassCmd.cpp \
 	src/Server/Cmds/NickCmd.cpp \
+	src/IRCMessage.cpp \
 	src/Utils.cpp \
 	src/Client.cpp \
 

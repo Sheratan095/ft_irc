@@ -33,15 +33,9 @@ typedef int	SocketFd; // Define SocketFd as an alias for int, representing a soc
 class	Channel;
 class	Client;
 class	Server;
+class	IRCMessage;
 
-struct	IRCMessage
-{
-	std::string					prefix;      // Optional, starts with ':'
-	std::string					command;
-	std::vector<std::string>	parameters;  // Command parameters
-	std::string					trailing;    // Trailing parameter, if any
-};
-
+#include "IRCMessage.hpp"
 #include "Server.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"

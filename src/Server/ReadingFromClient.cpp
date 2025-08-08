@@ -1,69 +1,22 @@
 #include "Server.hpp"
 
-std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
+std::vector<IRCMessage> Server::parseMessage(const std::string &message)
 {
 	std::vector<IRCMessage> messages;
 	std::vector<std::string> lines = split(message, "\r\n");
 
+	IRCMessage	*newIrcMessage;
+
 	for (size_t i = 0; i < lines.size(); ++i)
 	{
-		const std::string &line = lines[i];
-		if (line.empty())
+		if (lines[i].empty())
 			continue;
 
-		IRCMessage msg;
-		size_t pos = 0;
-		std::string rest = line;
+		newIrcMessage = new IRCMessage(_pollFds[0].fd, lines[i]); // Assuming _pollFds[0].fd is the sender's socket fd
 
-		// 1. Parse prefix
-		if (rest[0] == ':')
-		{
-			pos = rest.find(' ');
-			if (pos == std::string::npos)
-				continue; // Invalid
-			msg.prefix = rest.substr(1, pos - 1);
-			rest = rest.substr(pos + 1);
-		}
+		messages.push_back(*newIrcMessage);
 
-		// 2. Parse command
-		pos = rest.find(' ');
-		if (pos == std::string::npos)
-		{
-			msg.command = rest;
-			messages.push_back(msg);
-			continue;
-		}
-		msg.command = rest.substr(0, pos);
-		rest = rest.substr(pos + 1);
-
-		// 3. Parse parameters
-		std::vector<std::string> params;
-		while (!rest.empty())
-		{
-			if (rest[0] == ' ')
-			{
-				rest = rest.substr(1);
-				continue;
-			}
-			if (rest[0] == ':')
-			{
-				// Trailing param — take the rest
-				msg.trailing = rest.substr(1);
-				break;
-			}
-			// Middle param
-			pos = rest.find(' ');
-			if (pos == std::string::npos)
-			{
-				params.push_back(rest);
-				break;
-			}
-			params.push_back(rest.substr(0, pos));
-			rest = rest.substr(pos + 1);
-		}
-
-		msg.parameters = params;
-		messages.push_back(msg);
+		addIrcMessage(newIrcMessage);
 	}
 
 	return messages;

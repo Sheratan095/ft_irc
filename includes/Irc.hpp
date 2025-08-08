@@ -39,6 +39,7 @@ struct	IRCMessage
 	std::string					prefix;      // Optional, starts with ':'
 	std::string					command;
 	std::vector<std::string>	parameters;  // Command parameters
+	std::string					trailing;    // Trailing parameter, if any
 };
 
 #include "Server.hpp"

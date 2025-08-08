@@ -30,8 +30,9 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " :Password incorrect";
 			break;
 
+		// TO DO create a usage for each command?
 		case ERR_NEEDMOREPARAMS:
-			oss << " " << params << " :Not enough parameters";
+			oss << " " << params << " :Wrong number of parameters";
 			break;
 
 		case ERR_ALREADYREGISTERED:

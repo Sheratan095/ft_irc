@@ -3,7 +3,7 @@
 
 void	Server::userCmd(Client &client, const IRCMessage &message)
 {
-	if (message.parameters.size() != 4)
+	if (message.parameters.size() + (!message.trailing.empty()) < 4)
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "USER");
 		return;

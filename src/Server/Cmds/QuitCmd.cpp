@@ -1,9 +1,14 @@
 #include "Server.hpp"
 
-void	Server::quitCmd(Client *client)
+void	Server::quitCmd(Client *client, const IRCMessage &message)
 {
 	if (!client)
 		return;
+
+	if (message.parameters.size() > 0)
+		notifyQuit(client, message.trailing);
+	else
+		notifyQuit(client, "");
 
 	int	client_fd = client->getSocketFd();
 	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl << std::endl;

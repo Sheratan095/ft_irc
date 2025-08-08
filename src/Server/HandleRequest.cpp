@@ -51,7 +51,7 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 
 	if (message.command == "QUIT")
 	{
-		quitCmd(&client);
+		quitCmd(&client, message);
 		return (true);
 	}
 

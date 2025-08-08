@@ -1,29 +1,74 @@
 #include "Server.hpp"
 
-std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
+std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 {
-	std::vector<IRCMessage>	messages;
-	
-	std::vector<std::string>	lines = split(message, "\r\n");
-	for (size_t i = 0; i < lines.size() ; i++)
+	std::vector<IRCMessage> messages;
+	std::vector<std::string> lines = split(message, "\r\n");
+
+	for (size_t i = 0; i < lines.size(); ++i)
 	{
-		if (lines[i].empty())
+		const std::string &line = lines[i];
+		if (line.empty())
 			continue;
 
-		IRCMessage	msg;
-		size_t	pos = lines[i].find(' ');
-		if (pos != std::string::npos)
+		IRCMessage msg;
+		size_t pos = 0;
+		std::string rest = line;
+
+		// 1. Parse prefix
+		if (rest[0] == ':')
 		{
-			msg.command = lines[i].substr(0, pos);
-			std::string params = lines[i].substr(pos + 1);
-			msg.parameters = split(params, " ");
+			pos = rest.find(' ');
+			if (pos == std::string::npos)
+				continue; // Invalid
+			msg.prefix = rest.substr(1, pos - 1);
+			rest = rest.substr(pos + 1);
 		}
 
+		// 2. Parse command
+		pos = rest.find(' ');
+		if (pos == std::string::npos)
+		{
+			msg.command = rest;
+			messages.push_back(msg);
+			continue;
+		}
+		msg.command = rest.substr(0, pos);
+		rest = rest.substr(pos + 1);
+
+		// 3. Parse parameters
+		std::vector<std::string> params;
+		while (!rest.empty())
+		{
+			if (rest[0] == ' ')
+			{
+				rest = rest.substr(1);
+				continue;
+			}
+			if (rest[0] == ':')
+			{
+				// Trailing param — take the rest
+				msg.trailing = rest.substr(1);
+				break;
+			}
+			// Middle param
+			pos = rest.find(' ');
+			if (pos == std::string::npos)
+			{
+				params.push_back(rest);
+				break;
+			}
+			params.push_back(rest.substr(0, pos));
+			rest = rest.substr(pos + 1);
+		}
+
+		msg.parameters = params;
 		messages.push_back(msg);
 	}
 
-	return (messages);
+	return messages;
 }
+
 
 std::string	Server::readMessageFromClient(int client_fd) const
 {
@@ -66,6 +111,9 @@ void	Server::printRawMessage(const std::vector<IRCMessage> &messages) const
 
 			std::cout << std::endl;
 		}
+
+		if (!msg.trailing.empty())
+			std::cout << "Trailing: " << msg.trailing << std::endl;
 
 		std::cout << std::endl;
 

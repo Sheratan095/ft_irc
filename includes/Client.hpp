@@ -6,25 +6,27 @@
 class	Client
 {
 	private:
-		int			_socketFd;
+		SocketFd				_socketFd;
 
 		std::string				_username;
 		std::string				_nickname;
 		bool					_isAuthenticated;
 
+		std::string				_ipAddress;
+
 	public:
-		Client(int socket_fd);
+		Client(SocketFd socket_fd, const std::string &ipAddress);
 		~Client();
 
 		bool		isRegistered() const;
 		int			getSocketFd() const;
 		std::string	getNickname() const;
-
+		std::string	getIpAddress() const;
+		std::string	getPrefix() const;
 
 		void	setUsername(const std::string& username);
 		void	setNickname(const std::string& nickname);
 		void	setAuthenticated();
-
 
 };
 

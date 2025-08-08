@@ -43,7 +43,7 @@ class	Channel
 		bool	addOperator(SocketFd client_fd);
 		bool	removeOperator(SocketFd client_fd);
 
-		void	broadcastMessage(Client *sender, const std::string &command, Channel *channel, const std::string &message) const;
+		void	broadcastMessage(Client *sender, const std::string &command, const std::string &message) const;
 };
 
 #endif

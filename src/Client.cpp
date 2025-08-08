@@ -1,6 +1,6 @@
 #include "Client.hpp"
 
-Client::Client(int socket_fd): _socketFd(socket_fd)
+Client::Client(SocketFd socket_fd, const std::string &ipAddress): _socketFd(socket_fd), _ipAddress(ipAddress)
 {}
 
 Client::~Client()
@@ -41,4 +41,14 @@ int	Client::getSocketFd() const
 std::string	Client::getNickname() const
 {
 	return (_nickname);
+}
+
+std::string	Client::getIpAddress() const
+{
+	return (_ipAddress);
+}
+
+std::string	Client::getPrefix() const
+{
+	return (_nickname + "!" + _username + "@" + _ipAddress);
 }

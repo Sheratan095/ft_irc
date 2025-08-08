@@ -5,7 +5,11 @@
 // PRIVMSG	Command
 // #channel	Target (channel name)
 // :Hello everyone!	Message text (trailing parameter)
-void	Channel::broadcastMessage(Client *sender, const std::string &command, Channel *channel, const std::string &message) const
+void	Channel::broadcastMessage(Client *sender, const std::string &command, const std::string &message) const
 {
+	std::string fullMessage = ":" + sender->getPrefix() + " " + command + " " + _name + " :" + message;
+
+	for (std::map<SocketFd, Client*>::const_iterator it = _members.begin(); it != _members.end(); ++it)
+		sendMessage(it->first, fullMessage);
 
 }

@@ -69,8 +69,3 @@ bool	Channel::removeOperator(SocketFd client_fd)
 
 	return (false); // Client is not an operator
 }
-
-void	Channel::broadcastMessage(Client *sender, const std::string &message)
-{
-	sendMessage(sender->getSocketFd(), message);
-}

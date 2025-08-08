@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 // Used JUST for new connections
-bool	Server::addClient(pollfd clientPollFd)
+bool	Server::addClient(pollfd clientPollFd, const std::string &ip_str)
 {
 	// Check if the client already exists
 	if (_clients.find(clientPollFd.fd) != _clients.end())
@@ -17,7 +17,7 @@ bool	Server::addClient(pollfd clientPollFd)
 	}
 
 	// Create a new Client object and add it to the map
-	Client*	newClient = new Client(clientPollFd.fd);
+	Client*	newClient = new Client(clientPollFd.fd, ip_str);
 	_clients[clientPollFd.fd] = newClient;
 
 	// Add the client pollfd to the poll list

@@ -88,8 +88,11 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 
 	std::cout << "New connection incoming with fd: " << client_fd << std::endl;
 
+	// Get the IP address as a string
+	std::string	ip_str = inet_ntoa(client_addr.sin_addr);
+
 	// Try to add the new client to the server's client list
-	if (addClient(clientPollFd) == false)
+	if (addClient(clientPollFd, ip_str) == false)
 	{
 		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
 

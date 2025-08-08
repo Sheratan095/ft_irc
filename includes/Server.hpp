@@ -43,7 +43,7 @@ class	Server
 
 
 		// commands
-		bool	addClient(pollfd clientPollFd); // first connection
+		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
 		void	quitCmd(Client *client); //quit or POLLHUP
 		void	userCmd(Client &client, const IRCMessage &message);
 		void	passCmd(Client &client, const IRCMessage &message);

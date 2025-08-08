@@ -49,7 +49,8 @@ class	Server
 		void	passCmd(Client &client, const IRCMessage &message);
 		void	nickCmd(Client &client, const IRCMessage &message);
 
-
+		void	notifyNickChange(Client *sender, const std::string &newNickname) const;
+		void	notifyQuit(Client *sender, const std::string &reason) const;
 
 	public:
 		Server(const int port, const std::string &password);

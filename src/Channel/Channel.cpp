@@ -69,3 +69,8 @@ bool	Channel::removeOperator(SocketFd client_fd)
 
 	return (false); // Client is not an operator
 }
+
+bool	Channel::isClientInChannel(SocketFd client_fd) const
+{
+	return (_members.find(client_fd) != _members.end());
+}

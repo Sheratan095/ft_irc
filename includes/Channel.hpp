@@ -24,7 +24,6 @@ class	Channel
 		std::list<SocketFd>				_operators; // List of operator file descriptors
 		std::list<SocketFd>				_invited; // List of invited clients
 
-
 	public:
 		Channel(const std::string &name);
 		~Channel();
@@ -42,6 +41,8 @@ class	Channel
 		bool	inviteClient(SocketFd client_fd);
 		bool	addOperator(SocketFd client_fd);
 		bool	removeOperator(SocketFd client_fd);
+
+		bool	isClientInChannel(SocketFd client_fd) const;
 
 		void	broadcastMessage(Client *sender, const std::string &command, const std::string &message) const;
 };

@@ -56,6 +56,8 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 
 	targetChannel->addClient(client->getSocketFd(), client);
 
+	notifyJoin(client, channelName);
+
 	// TO DO notify other clients in the channel
 	// send topic to the just connected client?
 	// send name list to the just connected client?

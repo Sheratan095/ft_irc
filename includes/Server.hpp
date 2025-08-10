@@ -33,7 +33,7 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
-		bool	switchCommand(const IRCMessage &message, Client &client);
+		bool	switchCommand(const IRCMessage &message, Client *client);
 
 
 		std::string				readMessageFromClient(int client_fd) const;
@@ -45,9 +45,9 @@ class	Server
 		// commands
 		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
 		void	quitCmd(Client *client, const IRCMessage &message);
-		void	userCmd(Client &client, const IRCMessage &message);
-		void	passCmd(Client &client, const IRCMessage &message);
-		void	nickCmd(Client &client, const IRCMessage &message);
+		void	userCmd(Client *client, const IRCMessage &message);
+		void	passCmd(Client *client, const IRCMessage &message);
+		void	nickCmd(Client *client, const IRCMessage &message);
 
 		void	notifyNickChange(Client *sender, const std::string &newNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;

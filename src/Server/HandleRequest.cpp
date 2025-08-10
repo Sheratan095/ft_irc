@@ -18,11 +18,11 @@ void	Server::handleRequest(int client_fd)
 	}
 
 	for (size_t i = 0; i < messages.size(); ++i)
-		switchCommand(messages[i], *_clients[client_fd]);
+		switchCommand(messages[i], _clients[client_fd]);
 
 }
 
-bool	Server::switchCommand(const IRCMessage &message, Client &client)
+bool	Server::switchCommand(const IRCMessage &message, Client *client)
 {
 
 	if (message.command == "CAP")
@@ -51,7 +51,7 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 
 	if (message.command == "QUIT")
 	{
-		quitCmd(&client, message);
+		quitCmd(client, message);
 		return (true);
 	}
 

@@ -1,7 +1,7 @@
 
 #include "Server.hpp"
 
-void	Server::userCmd(Client &client, const IRCMessage &message)
+void	Server::userCmd(Client *client, const IRCMessage &message)
 {
 	if (message.parameters.size() + (!message.trailing.empty()) < 4)
 	{
@@ -10,19 +10,19 @@ void	Server::userCmd(Client &client, const IRCMessage &message)
 	}
 
 	// if the client is already registered before the message: error
-	if (client.isRegistered())
+	if (client->isRegistered())
 	{
 		sendResponse(client, ERR_ALREADYREGISTERED, "");
 		return;
 	}
 
 
-	client.setUsername(message.parameters[0]);
+	client->setUsername(message.parameters[0]);
 	// the second parameter is the hostname, which we ignore
 	// the third parameter is the server name, which we ignore
-	// client.setNickname(message.parameters[3]);
+	// client->setNickname(message.parameters[3]);
 
 	// if the client is now FULL registered, send a welcome message
-	if (client.isRegistered())
+	if (client->isRegistered())
 		sendResponse(client, RPL_WELCOME, "");
 }

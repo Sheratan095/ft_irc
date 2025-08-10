@@ -1,10 +1,10 @@
 #include "Response.hpp"
 
-void sendResponse(const Client &client, ResponseCode code, const std::string &params)
+void	sendResponse(Client *client, ResponseCode code, const std::string &params)
 {
-	std::string	response = composeResponse(code, client.getNickname(), params);
+	std::string	response = composeResponse(code, client->getNickname(), params);
 
-	sendMessage(client.getSocketFd(), response);
+	sendMessage(client->getSocketFd(), response);
 }
 
 std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params)

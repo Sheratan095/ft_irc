@@ -9,10 +9,10 @@ static bool isValidNickname(const std::string &nickname);
 // - special characters: '_'
 // must start with a letter
 // must not be longer than MAX_NICKNAME_LENGTH
-void	Server::nickCmd(Client &client, const IRCMessage &message)
+void	Server::nickCmd(Client *client, const IRCMessage &message)
 {
 	// used to send welcome or notify other users about the new nickname
-	bool	firstConnection = (client.getNickname().empty());
+	bool	firstConnection = (client->getNickname().empty());
 
 	if (message.parameters.size() != 1)
 	{
@@ -34,21 +34,22 @@ void	Server::nickCmd(Client &client, const IRCMessage &message)
 		return;
 	}
 
-	client.setNickname(new_nickname);
+	client->setNickname(new_nickname);
 
 	// if the client was not registered before the message
 	if (firstConnection)
 	{
 		// if now the registration is complete
-		if (client.isRegistered())
+		if (client->isRegistered())
 		{
-			client.setAuthenticated();
+			client->setAuthenticated();
 			sendResponse(client, RPL_WELCOME, "");
 		}
 	}
 	else
 	{
 		//TO DO send message to all clients (also the sender) connected to the same channels that the nickname is changed
+		notifyNickChange(client, new_nickname);
 	}
 
 }

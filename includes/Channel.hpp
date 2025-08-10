@@ -44,7 +44,7 @@ class	Channel
 
 		bool	isClientInChannel(SocketFd client_fd) const;
 
-		void	broadcastMessage(Client *sender, const std::string &command, const std::string &message) const;
+		void	broadcastMessage(const std::string &message) const;
 };
 
 #endif

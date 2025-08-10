@@ -24,7 +24,7 @@ enum	ResponseCode
 // Response format:
 //:server.name <numeric> <target / *> <extra params> :<message>\r\n
 
-void		sendResponse(const Client &client, ResponseCode code, const std::string &params);
+void		sendResponse(Client *client, ResponseCode code, const std::string &params);
 
 std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params);
 

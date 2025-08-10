@@ -14,10 +14,13 @@ Client*	Server::findClientByName(const std::string &nickname) const
 // Send a message from client
 void	Server::notifyNickChange(Client *sender, const std::string &newNickname) const
 {
+	std::stringstream ss;
+	ss << ":" << sender->getNickname() << " NICK :" << newNickname;
+
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
 	{
 		if (it->second->isClientInChannel(sender->getSocketFd()))
-			it->second->broadcastMessage(sender, "NICK", newNickname);
+			it->second->broadcastMessage(ss.str());
 	}
 }
 
@@ -27,9 +30,12 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 	// default quitting reason
 	std::string	message = (reason.empty()) ? "Client disconnected" : reason;
 
+	std::stringstream ss;
+	ss << ":" << sender->getNickname() << " QUIT :" << message;
+
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
 	{
 		if (it->second->isClientInChannel(sender->getSocketFd()))
-			it->second->broadcastMessage(sender, "QUIT", reason);
+			it->second->broadcastMessage(ss.str());
 	}
 }

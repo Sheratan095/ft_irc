@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-void	Server::passCmd(Client &client, const IRCMessage &message)
+void	Server::passCmd(Client *client, const IRCMessage &message)
 {
 	if (message.parameters.size() != 1)
 	{
@@ -9,7 +9,7 @@ void	Server::passCmd(Client &client, const IRCMessage &message)
 	}
 
 	// if the client is already registered before the message: error
-	if (client.isRegistered())
+	if (client->isRegistered())
 	{
 		sendResponse(client, ERR_ALREADYREGISTERED, "");
 		return;
@@ -21,10 +21,10 @@ void	Server::passCmd(Client &client, const IRCMessage &message)
 		return;
 	}
 
-	client.setAuthenticated();
+	client->setAuthenticated();
 
 	// if the client is now FULL registered, send a welcome message
-	if (client.isRegistered())
+	if (client->isRegistered())
 	{
 		sendResponse(client, RPL_WELCOME, "");
 		return;

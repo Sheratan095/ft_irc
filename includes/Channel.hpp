@@ -25,7 +25,7 @@ class	Channel
 		std::list<SocketFd>				_invited; // List of invited clients
 
 	public:
-		Channel(const std::string &name);
+		Channel(const std::string &name, Client *creator);
 		~Channel();
 
 		const std::string	&getTopic() const;
@@ -43,6 +43,11 @@ class	Channel
 		bool	removeOperator(SocketFd client_fd);
 
 		bool	isClientInChannel(SocketFd client_fd) const;
+		bool	isClientInvited(SocketFd client_fd) const;
+		bool	isInviteOnly() const;
+		bool	isChannelFull() const;
+		bool	isPasswordProtected() const;
+		bool	isPasswordCorrect(const std::string &password) const;
 
 		void	broadcastMessage(const std::string &message) const;
 };

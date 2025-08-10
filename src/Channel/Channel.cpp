@@ -1,10 +1,17 @@
 #include "Channel.hpp"
 
-Channel::Channel(const std::string &name): 
+Channel::Channel(const std::string &name, Client *client): 
 _name(name), _topic(""),
 _isInviteOnly(false), _istopicRestrictedToOps(true),
 _isPasswordProtected(false), _password(""), _userLimit(DEFAULT_USER_LIMIT_IN_CHANNEL)
-{}
+{
+	// Add the creator to the channel
+	if (client)
+	{
+		_members[client->getSocketFd()] = client;
+		_operators.push_back(client->getSocketFd());
+	}
+}
 
 Channel::~Channel()
 {}
@@ -73,4 +80,29 @@ bool	Channel::removeOperator(SocketFd client_fd)
 bool	Channel::isClientInChannel(SocketFd client_fd) const
 {
 	return (_members.find(client_fd) != _members.end());
+}
+
+bool	Channel::isInviteOnly() const
+{
+	return (_isInviteOnly);
+}
+
+bool	Channel::isChannelFull() const
+{
+	return (_members.size() >= _userLimit);
+}
+
+bool	Channel::isPasswordProtected() const
+{
+	return (_isPasswordProtected);
+}
+
+bool	Channel::isPasswordCorrect(const std::string &password) const
+{
+	return (_password == password);
+}
+
+bool	Channel::isClientInvited(SocketFd client_fd) const
+{
+	return (std::find(_invited.begin(), _invited.end(), client_fd) != _invited.end());
 }

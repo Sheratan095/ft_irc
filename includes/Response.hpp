@@ -19,6 +19,11 @@ enum	ResponseCode
 	ERR_ALREADYREGISTERED = 462,
 	ERR_NICKNAMEINUSE = 433,
 	ERR_ERRONEUSNICKNAME = 432, // Invalid nickname
+
+	ERR_NOSUCHCHANNEL = 403, // No such channel
+	ERR_INVITEONLYCHAN = 473, // Cannot join channel (+i)
+	ERR_CHANNELISFULL = 471, // Channel is full
+	ERR_BADCHANNELKEY = 475, // Bad channel key
 };
 
 // Response format:
@@ -27,9 +32,5 @@ enum	ResponseCode
 void		sendResponse(Client *client, ResponseCode code, const std::string &params);
 
 std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params);
-
-// bool	sendCustomErrorResponse(int client_fd, std::string customError);
-
-std::string	getResponseByCode(ResponseCode code);
 
 #endif

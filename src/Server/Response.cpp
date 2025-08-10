@@ -46,7 +46,19 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 		case ERR_ERRONEUSNICKNAME:
 			oss << " " << params << " :Erroneous nickname";
 			break;
-		
+
+		case ERR_NOSUCHCHANNEL:
+			oss << " " << params << " :No such channel";
+			break;
+
+		case ERR_INVITEONLYCHAN:
+			oss << " " << params << " :Cannot join channel (+i)";
+			break;
+
+		case ERR_BADCHANNELKEY:
+			oss << " " << params << " :Password mismatch";
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

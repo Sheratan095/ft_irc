@@ -4,11 +4,16 @@ void	Server::handleRequest(int client_fd)
 {
 	std::vector<IRCMessage>	messages;
 	std::string				message = readMessageFromClient(client_fd);
-	if (!message.empty())
+	
+	if (message.empty())
 	{
-		messages = parseMessage(message);
-		printRawMessage(messages);
+		quitCmd(_clients[client_fd], "Client disconnected");
+
+		return ;
 	}
+	
+	messages = parseMessage(message);
+	printRawMessage(messages);
 
 	messages = parseMessage(message);
 	if (messages.empty())

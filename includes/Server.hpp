@@ -45,6 +45,7 @@ class	Server
 		// commands
 		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
 		void	quitCmd(Client *client, const IRCMessage &message);
+		void	quitCmd(Client *client, const std::string &reason); // used for like end task or in general when the client process isn't disconnected in normal way
 		void	userCmd(Client *client, const IRCMessage &message);
 		void	passCmd(Client *client, const IRCMessage &message);
 		void	nickCmd(Client *client, const IRCMessage &message);

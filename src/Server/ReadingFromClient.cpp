@@ -78,7 +78,7 @@ std::string	Server::readMessageFromClient(int client_fd) const
 	if (bytes_received < 0)
 		std::cerr << "Error receiving data: " << strerror(errno) << std::endl;
 	else if (bytes_received == 0)
-		std::cout << "Client disconnected gracefully" << std::endl;
+		std::cout << "Client " << client_fd << " is trying to disconnect in a strange way" << std::endl;
 
 	buffer[bytes_received] = '\0'; // Null-terminate the received string
 

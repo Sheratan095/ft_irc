@@ -73,11 +73,3 @@ bool	insentiveStringCompare(const std::string &str1, const std::string &str2)
 
 	return (true);
 }
-
-void	sendMessage(SocketFd socketFfd, const std::string &message)
-{
-	ssize_t	bytesSent = send(socketFfd, message.c_str(), message.size(), 0);
-
-	if (bytesSent < 0)
-		std::cerr << "Error sending message to socket fd: " << socketFfd << std::endl;
-}

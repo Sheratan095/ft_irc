@@ -24,8 +24,10 @@ class	Channel
 		std::list<SocketFd>				_operators; // List of operator file descriptors
 		std::list<SocketFd>				_invited; // List of invited clients
 
+		Server*						_server; // Pointer to the server instance
+
 	public:
-		Channel(const std::string &name);
+		Channel(const std::string &name, Server* server);
 		~Channel();
 
 		const std::string	&getTopic() const;

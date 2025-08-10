@@ -33,3 +33,18 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 			it->second->broadcastMessage(sender, "QUIT", reason);
 	}
 }
+
+SocketFd	Server::getSocketFd() const
+{
+	return (_socketFd);
+}
+
+void	Server::sendMessage(IRCMessage *message)
+{
+	ssize_t	bytesSent = send(message->_senderSocketFd, message->toString().c_str(), message->toString().size(), 0);
+
+	if (bytesSent < 0)
+		std::cerr << "Error sending message to socket fd: " << message->_senderSocketFd << std::endl;
+
+	addIrcMessage(message);
+}

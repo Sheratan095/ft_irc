@@ -55,7 +55,8 @@ bool	Server::switchCommand(const IRCMessage &message, Client &client)
 		return (true);
 	}
 
-	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
+	IRCMessage	*msg = new IRCMessage(client, ERR_UNKNOWNCOMMAND, message.command);
+	sendMessage(msg);
 
 	return (false);
 }

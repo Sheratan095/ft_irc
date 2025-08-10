@@ -7,9 +7,11 @@
 // :Hello everyone!	Message text (trailing parameter)
 void	Channel::broadcastMessage(Client *sender, const std::string &command, const std::string &message) const
 {
-	std::string fullMessage = ":" + sender->getPrefix() + " " + command + " " + _name + " :" + message;
+	std::string	fullMessage = ":" + sender->getPrefix() + " " + command + " " + _name + " :" + message;
+
+	IRCMessage	*msg = new IRCMessage(sender->getSocketFd(), sender->getPrefix(), command, { _name }, message);
 
 	for (std::map<SocketFd, Client*>::const_iterator it = _members.begin(); it != _members.end(); ++it)
-		sendMessage(it->first, fullMessage);
+		_server->sendMessage(msg);
 
 }

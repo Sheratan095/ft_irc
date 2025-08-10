@@ -33,7 +33,6 @@ class	Server
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
 
-		void	addIrcMessage(IRCMessage *message);
 		bool	switchCommand(const IRCMessage &message, Client &client);
 
 
@@ -42,6 +41,7 @@ class	Server
 		void					printRawMessage(const std::vector<IRCMessage> &messages) const;
 		Client*					findClientByName(const std::string &nickname) const;
 
+		void					addIrcMessage(IRCMessage *message);
 
 		// commands
 		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
@@ -57,7 +57,9 @@ class	Server
 		Server(const int port, const std::string &password);
 		~Server();
 
-		void	startServer();
+		void		startServer();
+		SocketFd	getSocketFd() const;
+		void		sendMessage(IRCMessage *message);
 
 //-------------------------EXCEPTIONS-------------------------
 

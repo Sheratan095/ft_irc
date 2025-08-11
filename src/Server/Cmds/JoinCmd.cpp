@@ -17,46 +17,53 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 
 
 	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);
+	Channel	*targetChannel;
 
 	if (it == _channels.end())
 	{
 		// Create a new channel if it doesn't exist, the creator is admin by default
 		Channel	*newChannel = new Channel(channelName, client);
 		_channels[channelName] = newChannel;
-
-		return ;
+		targetChannel = newChannel;
+	
 	}
-
-	Channel	*targetChannel = it->second;
-
-	// try to join the channel
-	if (targetChannel->isInviteOnly())
+	else
 	{
-		if (!targetChannel->isClientInvited(client->getSocketFd()))
+		targetChannel = it->second;
+
+		// try to join the channel
+		if (targetChannel->isInviteOnly())
 		{
-			sendResponse(client, ERR_INVITEONLYCHAN, channelName);
+			if (!targetChannel->isClientInvited(client->getSocketFd()))
+			{
+				sendResponse(client, ERR_INVITEONLYCHAN, channelName);
+				return;
+			}
+		}
+
+		if (targetChannel->isChannelFull())
+		{
+			sendResponse(client, ERR_CHANNELISFULL, channelName);
 			return;
 		}
-	}
 
-	if (targetChannel->isChannelFull())
-	{
-		sendResponse(client, ERR_CHANNELISFULL, channelName);
-		return;
-	}
-
-	if (targetChannel->isPasswordProtected())
-	{
-		if (message.parameters.size() < 2 || !targetChannel->isPasswordCorrect(message.parameters[1]))
+		if (targetChannel->isPasswordProtected())
 		{
-			sendResponse(client, ERR_BADCHANNELKEY, channelName);
-			return;
+			if (message.parameters.size() < 2 || !targetChannel->isPasswordCorrect(message.parameters[1]))
+			{
+				sendResponse(client, ERR_BADCHANNELKEY, channelName);
+				return;
+			}
 		}
+
+		targetChannel->addClient(client->getSocketFd(), client);
+
 	}
 
-	targetChannel->addClient(client->getSocketFd(), client);
 
-	notifyJoin(client, channelName);
+
+
+	notifyJoin(client, targetChannel);
 
 	// TO DO notify other clients in the channel
 	// send topic to the just connected client?

@@ -106,3 +106,8 @@ bool	Channel::isClientInvited(SocketFd client_fd) const
 {
 	return (std::find(_invited.begin(), _invited.end(), client_fd) != _invited.end());
 }
+
+const std::string &Channel::getName() const
+{
+	return (_name);
+}

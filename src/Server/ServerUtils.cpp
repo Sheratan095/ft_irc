@@ -37,17 +37,13 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 	{
 		if (it->second->isClientInChannel(sender->getSocketFd()))
 			it->second->broadcastMessage(ss.str());
-	}
+	}	
 }
 
-void	Server::notifyJoin(Client *client, const std::string &channelName) const
+void	Server::notifyJoin(Client *client, Channel *channel) const
 {
-	std::stringstream ss;
-	ss << ":" << client->getNickname() << " JOIN :" << channelName;
+	std::stringstream	ss;
+	ss << ":" << client->getNickname() << " JOIN :" << channel->getName();
 
-	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
-	{
-		if (it->second->isClientInChannel(client->getSocketFd()))
-			it->second->broadcastMessage(ss.str());
-	}
+	channel->broadcastMessage(ss.str());
 }

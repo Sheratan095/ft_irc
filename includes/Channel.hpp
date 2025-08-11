@@ -29,6 +29,7 @@ class	Channel
 		~Channel();
 
 		const std::string	&getTopic() const;
+		const std::string	&getName() const;
 
 		void	setTopic(const std::string &topic);
 		void	setInviteOnly(bool isInviteOnly);

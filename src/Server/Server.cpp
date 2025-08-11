@@ -35,6 +35,11 @@ Server::~Server()
 		}
 	}
 
+	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
+		delete (it->second); // Delete each channel
+
+	_channels.clear();
+
 	std::cout << "Server destroyed." << std::endl;
 }
 

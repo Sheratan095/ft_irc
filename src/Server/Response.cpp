@@ -59,6 +59,16 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :Password mismatch";
 			break;
 
+		case RPL_NOTOPIC:
+			// params = "<channel>"
+			oss << " " << targetName << " " << params << " :No topic is set";
+			break;
+
+		case RPL_TOPIC:
+			// params = "<channel> :<topic text>"
+			oss << " " << targetName << " " << params;
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

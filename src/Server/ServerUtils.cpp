@@ -15,7 +15,7 @@ Client*	Server::findClientByName(const std::string &nickname) const
 void	Server::notifyNickChange(Client *sender, const std::string &newNickname) const
 {
 	std::stringstream ss;
-	ss << ":" << sender->getNickname() << " NICK :" << newNickname;
+	ss << ":" << sender->getNickname() << " NICK :" << newNickname << "\r\n";
 
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
 	{
@@ -31,7 +31,7 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 	std::string	message = (reason.empty()) ? "Client disconnected" : reason;
 
 	std::stringstream ss;
-	ss << ":" << sender->getNickname() << " QUIT :" << message;
+	ss << ":" << sender->getNickname() << " QUIT :" << message << "\r\n";
 
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
 	{
@@ -42,8 +42,20 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 
 void	Server::notifyJoin(Client *client, Channel *channel) const
 {
+	// Notify all users in the channel
 	std::stringstream	ss;
-	ss << ":" << client->getNickname() << " JOIN :" << channel->getName();
+	ss << ":" << client->getNickname()
+	<< "!" << client->getNickname()
+	<< "@" << client->getIpAddress()
+	<< " JOIN :" << channel->getName()
+	<< "\r\n";
 
 	channel->broadcastMessage(ss.str());
+
+	// Send back to the client the topic
+	std::string	topic = channel->getTopic();
+	if (topic.empty())
+		sendResponse(client, RPL_NOTOPIC, channel->getName());
+	else
+		sendResponse(client, RPL_TOPIC, channel->getName() + " :" + topic);
 }

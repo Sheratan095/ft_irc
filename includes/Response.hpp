@@ -24,6 +24,9 @@ enum	ResponseCode
 	ERR_INVITEONLYCHAN = 473, // Cannot join channel (+i)
 	ERR_CHANNELISFULL = 471, // Channel is full
 	ERR_BADCHANNELKEY = 475, // Bad channel key
+
+	RPL_NOTOPIC = 331, // No topic is set
+	RPL_TOPIC = 332, // Topic of a channel
 };
 
 // Response format:

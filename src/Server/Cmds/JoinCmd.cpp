@@ -60,12 +60,13 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 
 	}
 
-
-
-
 	notifyJoin(client, targetChannel);
 
-	// TO DO notify other clients in the channel
-	// send topic to the just connected client?
-	// send name list to the just connected client?
+	// send topic to the just connected client
+	std::string	topic = targetChannel->getTopic();
+	if (topic.empty())
+		sendResponse(client, RPL_NOTOPIC, targetChannel->getName());
+	else
+		sendResponse(client, RPL_TOPIC, targetChannel->getName() + " :" + topic);
+
 }

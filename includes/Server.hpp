@@ -50,6 +50,10 @@ class	Server
 		void	passCmd(Client *client, const IRCMessage &message);
 		void	nickCmd(Client *client, const IRCMessage &message);
 		void	joinCmd(Client *client, const IRCMessage &message);
+		void	modeCmd(Client *client, const IRCMessage &message);
+		void	whoCmd(Client *client, const IRCMessage &message);
+
+
 
 
 		void	notifyNickChange(Client *sender, const std::string &newNickname) const;

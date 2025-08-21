@@ -21,6 +21,8 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/PassCmd.cpp \
 	src/Server/Cmds/NickCmd.cpp \
 	src/Server/Cmds/JoinCmd.cpp \
+	src/Server/Cmds/WhoCmd.cpp \
+	src/Server/Cmds/ModeCmd.cpp \
 	src/Utils.cpp \
 	src/Client.cpp \
 

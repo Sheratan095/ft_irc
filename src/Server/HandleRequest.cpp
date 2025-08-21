@@ -66,6 +66,18 @@ bool	Server::switchCommand(const IRCMessage &message, Client *client)
 		return (true);
 	}
 
+	if (message.command == "MODE")
+	{
+		modeCmd(client, message);
+		return (true);
+	}
+
+	if (message.command == "WHO")
+	{
+		whoCmd(client, message);
+		return (true);
+	}
+
 	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 
 	return (false);

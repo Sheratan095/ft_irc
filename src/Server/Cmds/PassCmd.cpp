@@ -2,16 +2,16 @@
 
 void	Server::passCmd(Client *client, const IRCMessage &message)
 {
-	if (message.parameters.size() != 1)
-	{
-		sendResponse(client, ERR_NEEDMOREPARAMS, "PASS");
-		return;
-	}
-
 	// if the client is already registered before the message: error
 	if (client->isRegistered())
 	{
 		sendResponse(client, ERR_ALREADYREGISTERED, "");
+		return;
+	}
+
+	if (message.parameters.size() != 1)
+	{
+		sendResponse(client, ERR_NEEDMOREPARAMS, "PASS");
 		return;
 	}
 

@@ -12,7 +12,7 @@ Client::~Client()
 
 bool	Client::isRegistered() const
 {
-	if (_username.empty() || _nickname.empty() || !_isAuthenticated)
+	if (_username.empty() || _nickname.empty() || _realname.empty() || !_isAuthenticated)
 		return (false);
 
 	return (true);
@@ -51,4 +51,19 @@ std::string	Client::getIpAddress() const
 std::string	Client::getPrefix() const
 {
 	return (_nickname + "!" + _username + "@" + _ipAddress);
+}
+
+std::string	Client::getRealName() const
+{
+	return (_realname);
+}
+
+void	Client::setRealName(const std::string& realname)
+{
+	_realname = realname;
+}
+
+std::string	Client::getUsername() const
+{
+	return (_username);
 }

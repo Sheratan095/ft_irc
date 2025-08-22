@@ -10,6 +10,7 @@ class	Client
 
 		std::string				_username;
 		std::string				_nickname;
+		std::string				_realname; // TO DO
 		bool					_isAuthenticated;
 
 		std::string				_ipAddress;
@@ -23,10 +24,13 @@ class	Client
 		std::string	getNickname() const;
 		std::string	getIpAddress() const;
 		std::string	getPrefix() const;
+		std::string	getRealName() const;
+		std::string	getUsername() const;
 
 		void	setUsername(const std::string& username);
 		void	setNickname(const std::string& nickname);
 		void	setAuthenticated();
+		void	setRealName(const std::string& realname);
 
 };
 

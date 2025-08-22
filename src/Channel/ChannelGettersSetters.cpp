@@ -38,3 +38,8 @@ void	Channel::setUserLimit(size_t userLimit)
 	else
 		_userLimit = DEFAULT_USER_LIMIT_IN_CHANNEL;
 }
+
+bool	Channel::isClientOperator(SocketFd client_fd) const
+{
+	return (std::find(_operators.begin(), _operators.end(), client_fd) != _operators.end());
+}

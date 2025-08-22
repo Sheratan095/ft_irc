@@ -69,6 +69,16 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << targetName << " " << params;
 			break;
 
+		case RPL_WHOREPLY:
+			// params = "<channel> :<names>"
+			oss << params;
+			break;
+
+		case RPL_ENDOFWHO:
+			// params = "<channel>"
+			oss << " " << targetName << " " << params << " :End of /NAMES list";
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

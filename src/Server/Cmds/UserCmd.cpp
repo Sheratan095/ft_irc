@@ -20,7 +20,7 @@ void	Server::userCmd(Client *client, const IRCMessage &message)
 	client->setUsername(message.parameters[0]);
 	// the second parameter is the hostname, which we ignore
 	// the third parameter is the server name, which we ignore
-	// client->setNickname(message.parameters[3]);
+	client->setRealName(message.trailing);
 
 	// if the client is now FULL registered, send a welcome message
 	if (client->isRegistered())

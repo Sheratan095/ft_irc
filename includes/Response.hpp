@@ -27,6 +27,9 @@ enum	ResponseCode
 
 	RPL_NOTOPIC = 331, // No topic is set
 	RPL_TOPIC = 332, // Topic of a channel
+
+	RPL_WHOREPLY = 352, // Reply to WHO command
+	RPL_ENDOFWHO = 315, // End of WHO list
 };
 
 // Response format:

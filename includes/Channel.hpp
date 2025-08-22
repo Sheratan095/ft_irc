@@ -30,6 +30,7 @@ class	Channel
 
 		const std::string	&getTopic() const;
 		const std::string	&getName() const;
+		const std::string	getUserList() const;
 
 		void	setTopic(const std::string &topic);
 		void	setInviteOnly(bool isInviteOnly);
@@ -45,12 +46,16 @@ class	Channel
 
 		bool	isClientInChannel(SocketFd client_fd) const;
 		bool	isClientInvited(SocketFd client_fd) const;
+		bool	isClientOperator(SocketFd client_fd) const;
 		bool	isInviteOnly() const;
 		bool	isChannelFull() const;
 		bool	isPasswordProtected() const;
 		bool	isPasswordCorrect(const std::string &password) const;
 
 		void	broadcastMessage(const std::string &message) const;
+
+		// return a vector of who's is connected to the channel
+		std::vector<std::string>	getWho() const;
 };
 
 #endif

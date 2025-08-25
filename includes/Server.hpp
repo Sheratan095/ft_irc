@@ -52,6 +52,7 @@ class	Server
 		void	joinCmd(Client *client, const IRCMessage &message);
 		void	modeCmd(Client *client, const IRCMessage &message);
 		void	whoCmd(Client *client, const IRCMessage &message);
+		void	topicCmd(Client *client, const IRCMessage &message);
 
 
 

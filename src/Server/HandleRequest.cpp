@@ -78,6 +78,12 @@ bool	Server::switchCommand(const IRCMessage &message, Client *client)
 		return (true);
 	}
 
+	if (message.command == "TOPIC")
+	{
+		topicCmd(client, message);
+		return (true);
+	}
+
 	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 
 	return (false);

@@ -61,7 +61,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 
 		case RPL_NOTOPIC:
 			// params = "<channel>"
-			oss << params << " :No topic is set";
+			oss << " " << params << " :No topic is set";
 			break;
 
 		case RPL_TOPIC:

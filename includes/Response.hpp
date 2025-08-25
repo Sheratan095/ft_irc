@@ -25,11 +25,15 @@ enum	ResponseCode
 	ERR_CHANNELISFULL = 471, // Channel is full
 	ERR_BADCHANNELKEY = 475, // Bad channel key
 
+	ERR_NOTONCHANNEL = 442,
+
 	RPL_NOTOPIC = 331, // No topic is set
 	RPL_TOPIC = 332, // Topic of a channel
 
 	RPL_WHOREPLY = 352, // Reply to WHO command
 	RPL_ENDOFWHO = 315, // End of WHO list
+
+	RPL_CHANNELMODEIS = 324,
 };
 
 // Response format:

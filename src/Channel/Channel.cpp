@@ -159,3 +159,22 @@ std::vector<std::string>	Channel::getWho() const
 	return (whoList);
 }
 
+std::string		Channel::getMode() const
+{
+	std::string	modes = "+";
+
+	if (isInviteOnly())
+		modes += "i";
+	if (isPasswordProtected())
+		modes += "k";
+	if (isChannelFull())
+		modes += "l";
+	if (_istopicRestrictedToOps)
+		modes += "t";
+	if (_userLimit > 0)
+		modes += "l";
+
+	modes += "n"; // disallow messages from outside channel
+
+	return (modes);
+}

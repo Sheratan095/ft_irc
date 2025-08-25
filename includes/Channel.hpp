@@ -56,6 +56,7 @@ class	Channel
 
 		// return a vector of who's is connected to the channel
 		std::vector<std::string>	getWho() const;
+		std::string					getNames() const;
 		std::string					getMode() const;
 };
 

@@ -33,6 +33,9 @@ enum	ResponseCode
 	RPL_WHOREPLY = 352, // Reply to WHO command
 	RPL_ENDOFWHO = 315, // End of WHO list
 
+	RPL_NAMREPLY = 353, // Reply to NAMES command
+	RPL_ENDOFNAMES = 366, // End of NAMES list
+
 	RPL_CHANNELMODEIS = 324,
 };
 

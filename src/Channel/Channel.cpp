@@ -178,3 +178,13 @@ std::string		Channel::getMode() const
 
 	return (modes);
 }
+
+std::string	Channel::getNames() const
+{
+	std::string	namesList;
+
+	for (std::map<SocketFd, Client*>::const_iterator pair = _members.begin(); pair != _members.end(); ++pair)
+		namesList += pair->second->getNickname() + " ";
+
+	return (namesList);
+}

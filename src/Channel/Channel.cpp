@@ -184,7 +184,13 @@ std::string	Channel::getNames() const
 	std::string	namesList;
 
 	for (std::map<SocketFd, Client*>::const_iterator pair = _members.begin(); pair != _members.end(); ++pair)
+	{
+		if (isClientOperator(pair->first))
+			namesList += "@";
+
 		namesList += pair->second->getNickname() + " ";
+
+	}
 
 	return (namesList);
 }

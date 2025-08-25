@@ -59,18 +59,16 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :Password mismatch";
 			break;
 
-		// adjust the topic replies TO DO
 		case RPL_NOTOPIC:
 			// params = "<channel>"
-			oss << " " << targetName << " " << params << " :No topic is set";
+			oss << params << " :No topic is set";
 			break;
 
 		case RPL_TOPIC:
 			// params = "<channel> :<topic text>"
-			oss << " " << targetName << " " << params;
+			oss << " " << params;
 			break;
 
-		// TO DO is now the client displaying the user list???
 		case RPL_WHOREPLY:
 			// params = "<channel> :<names>"
 			 oss << " " << params;

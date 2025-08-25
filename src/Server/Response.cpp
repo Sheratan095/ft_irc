@@ -70,6 +70,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << targetName << " " << params;
 			break;
 
+		// TO DO is now the client displaying the user list???
 		case RPL_WHOREPLY:
 			// params = "<channel> :<names>"
 			 oss << " " << params;

@@ -60,6 +60,8 @@ class	Server
 		void	notifyNickChange(Client *sender, const std::string &newNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 		void	notifyJoin(Client *client, Channel *channel) const;
+		void	NotifyTopicChange(Client *client, Channel *channel) const;
+
 
 	public:
 		Server(const int port, const std::string &password);

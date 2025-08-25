@@ -47,7 +47,7 @@ void	Server::notifyJoin(Client *client, Channel *channel) const
 	ss << ":" << client->getNickname()
 	<< "!" << client->getNickname()
 	<< "@" << client->getIpAddress()
-	<< " JOIN :" << channel->getName()
+	<< " JOIN " << channel->getName()
 	<< "\r\n";
 
 	channel->broadcastMessage(ss.str());
@@ -58,4 +58,19 @@ void	Server::notifyJoin(Client *client, Channel *channel) const
 		sendResponse(client, RPL_NOTOPIC, channel->getName());
 	else
 		sendResponse(client, RPL_TOPIC, channel->getName() + " :" + topic);
+}
+
+void	Server::NotifyTopicChange(Client *client, Channel *channel) const
+{
+	std::string	topic = channel->getTopic();
+
+	std::stringstream	ss;
+
+	ss << ":" << client->getNickname()
+	<< "!" << client->getNickname()
+	<< "@" << client->getIpAddress()
+	<< " TOPIC " << channel->getName()
+	<< " :" << topic << "\r\n";
+
+	channel->broadcastMessage(ss.str());
 }

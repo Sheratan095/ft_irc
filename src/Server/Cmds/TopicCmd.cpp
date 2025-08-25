@@ -35,5 +35,7 @@ void	Server::topicCmd(Client *client, const IRCMessage &message)
 		channel->setTopic(newTopic);
 
 		sendResponse(client, RPL_TOPIC, channelName + " :" + newTopic);
+
+		NotifyTopicChange(client, channel);
 	}
 }

@@ -70,7 +70,7 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 	// 	sendResponse(client, RPL_TOPIC, targetChannel->getName() + " :" + topic);
 
 	std::string userList = targetChannel->getNames();
-	// = means that the channel is discoverable by everyone 
+	// = means that the channel is discoverable by everyone
 	sendResponse(client, RPL_NAMREPLY, "= " + targetChannel->getName() + " :" + userList);
 
 	// Fine della lista

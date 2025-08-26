@@ -1,5 +1,9 @@
 #include "Channel.hpp"
 
+const std::map<SocketFd, Client*>& Channel::getMembers() const
+{
+	return (_members);
+}
 
 const std::string	&Channel::getTopic() const
 {

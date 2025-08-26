@@ -28,9 +28,10 @@ class	Channel
 		Channel(const std::string &name, Client *creator);
 		~Channel();
 
-		const std::string	&getTopic() const;
-		const std::string	&getName() const;
-		const std::string	getUserList() const;
+		const std::string					&getTopic() const;
+		const std::string					&getName() const;
+		const std::string					getUserList() const;
+		const std::map<SocketFd, Client*>	&getMembers() const; // Added this line
 
 		void	setTopic(const std::string &topic);
 		void	setInviteOnly(bool isInviteOnly);

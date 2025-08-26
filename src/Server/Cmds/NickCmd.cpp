@@ -28,12 +28,16 @@ void	Server::nickCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
+	if (client->getNickname() == new_nickname)
+		return; // no change
+
 	if (findClientByName(new_nickname) != NULL)
 	{
 		sendResponse(client, ERR_NICKNAMEINUSE, new_nickname);
 		return;
 	}
 
+	std::string	oldNickname = client->getNickname();
 	client->setNickname(new_nickname);
 
 	// if the client was not registered before the message
@@ -49,7 +53,7 @@ void	Server::nickCmd(Client *client, const IRCMessage &message)
 	else
 	{
 		//TO DO send message to all clients (also the sender) connected to the same channels that the nickname is changed
-		notifyNickChange(client, new_nickname);
+		notifyNickChange(client, oldNickname);
 	}
 
 }

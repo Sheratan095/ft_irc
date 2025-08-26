@@ -12,12 +12,12 @@ Client*	Server::findClientByName(const std::string &nickname) const
 }
 
 // Send a message from client
-void	Server::notifyNickChange(Client *sender, const std::string &newNickname) const
+void	Server::notifyNickChange(Client *sender, const std::string &oldNickname) const
 {
 	std::stringstream	ss;
 
-	ss << ":" << sender->getNickname() << " NICK :" << newNickname << "\r\n";
-	
+	ss << ":" << oldNickname << " NICK :" << sender->getNickname() << "\r\n";
+
 	std::string message = ss.str();
 	
 	// Set to track clients who've already been notified

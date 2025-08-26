@@ -57,7 +57,7 @@ class	Server
 
 
 
-		void	notifyNickChange(Client *sender, const std::string &newNickname) const;
+		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 		void	notifyJoin(Client *client, Channel *channel) const;
 		void	NotifyTopicChange(Client *client, Channel *channel) const;

@@ -1,5 +1,7 @@
 #include "Server.hpp"
 
+static bool	isChannelNameValid(const std::string &channelName);
+
 void	Server::joinCmd(Client *client, const IRCMessage &message)
 {
 	if (message.parameters.size() < 1)
@@ -9,7 +11,7 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 	}
 
 	const std::string	&channelName = message.parameters[0];
-	if (channelName.empty() || channelName[0] != '#')
+	if (isChannelNameValid(channelName) == false)
 	{
 		sendResponse(client, ERR_NOSUCHCHANNEL, channelName);
 		return;
@@ -71,4 +73,30 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 	// Fine della lista
 	sendResponse(client, RPL_ENDOFNAMES, targetChannel->getName());
 
+}
+
+// must start with #, must contain something after #
+static bool	isChannelNameValid(const std::string &channelName)
+{
+	// Check if the channel name starts with '#'
+	if (channelName.empty() || channelName[0] != '#')
+		return (false);
+
+	// Check if the channel name contains at least one character after '#'
+	if (channelName.size() == 1)
+		return (false);
+
+	if (channelName.size() > 50) // IRC standard limit for channel name length
+		return (false);
+
+	// Check for invalid characters in the rest of the name
+	for (size_t i = 1; i < channelName.size(); ++i)
+	{
+		char	c = channelName[i];
+		// Space, comma, and ASCII control characters are disallowed
+		if (c == ' ' || c == ',' || static_cast<unsigned char>(c) < 0x20 || c == 0x7F)
+			return (false);
+	}
+
+	return (true);
 }

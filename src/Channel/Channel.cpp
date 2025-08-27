@@ -189,8 +189,36 @@ std::string	Channel::getNames() const
 			namesList += "@";
 
 		namesList += pair->second->getNickname() + " ";
-
 	}
 
 	return (namesList);
 }
+
+void	Channel::notifyJoin(Client *client) const
+{
+	// Notify all users in the channel
+	std::stringstream	ss;
+	ss << ":" << client->getNickname()
+	<< "!" << client->getUsername()
+	<< "@" << client->getIpAddress()
+	<< " JOIN " << this->getName()
+	<< "\r\n";
+
+	this->broadcastMessage(ss.str());
+}
+
+void	Channel::notifyTopicChange(Client *client) const
+{
+	std::string	topic = this->getTopic();
+
+	std::stringstream	ss;
+
+	ss << ":" << client->getNickname()
+	<< "!" << client->getUsername()
+	<< "@" << client->getIpAddress()
+	<< " TOPIC " << this->getName()
+	<< " :" << topic << "\r\n";
+
+	this->broadcastMessage(ss.str());
+}
+

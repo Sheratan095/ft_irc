@@ -62,7 +62,7 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 
 	}
 
-	notifyJoin(client, targetChannel);
+	targetChannel->notifyJoin(client);
 
 	// Send back to the client the topic
 	std::string	topic = targetChannel->getTopic();

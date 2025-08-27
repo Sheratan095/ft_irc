@@ -60,12 +60,10 @@ class	Server
 		void	topicCmd(Client *client, const IRCMessage &message);
 
 
-
+		// Global notifications
 		std::set<SocketFd>	getClientsToNotify(Client *sender) const;
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
-		void	notifyJoin(Client *client, Channel *channel) const;
-		void	NotifyTopicChange(Client *client, Channel *channel) const;
 
 
 	public:

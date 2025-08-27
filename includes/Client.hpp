@@ -10,7 +10,7 @@ class	Client
 
 		std::string				_username;
 		std::string				_nickname;
-		std::string				_realname; // TO DO
+		std::string				_realname;
 		bool					_isAuthenticated;
 
 		std::string				_ipAddress;

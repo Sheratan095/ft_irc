@@ -15,7 +15,8 @@ SRCS = src/main.cpp \
 	src/Server/HandleRequest.cpp \
 	src/Server/Response.cpp \
 	src/Server/ReadingFromClient.cpp \
-	src/Server/Cmds/AddClient.cpp \
+	src/Server/GlobalNotifications.cpp \
+	src/Server/ClientManagement.cpp \
 	src/Server/Cmds/QuitCmd.cpp \
 	src/Server/Cmds/UserCmd.cpp \
 	src/Server/Cmds/PassCmd.cpp \

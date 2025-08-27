@@ -16,6 +16,7 @@
 #include <vector>
 #include <sstream>
 #include <poll.h>
+#include <set>
 #include <algorithm> // For std::find
 #include "Utils.hpp"
 #include "Response.hpp"

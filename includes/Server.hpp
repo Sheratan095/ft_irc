@@ -21,6 +21,9 @@ class	Server
 		std::vector<pollfd>				_pollFds;
 
 		std::map<std::string, Channel*>	_channels;
+		//Needed to send QUIT and NICK also in private conversations and not just in the shared channels
+		std::map<SocketFd, std::set<SocketFd> > _privateConversations;
+
 
 		bool	createSocket();
 		bool	bindSocket();
@@ -42,8 +45,10 @@ class	Server
 		Client*					findClientByName(const std::string &nickname) const;
 
 
-		// commands
 		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
+		void	removeClient(Client *client);
+
+		// commands
 		void	quitCmd(Client *client, const IRCMessage &message);
 		void	quitCmd(Client *client, const std::string &reason); // used for like end task or in general when the client process isn't disconnected in normal way
 		void	userCmd(Client *client, const IRCMessage &message);
@@ -56,7 +61,7 @@ class	Server
 
 
 
-
+		std::set<SocketFd>	getClientsToNotify(Client *sender) const;
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 		void	notifyJoin(Client *client, Channel *channel) const;

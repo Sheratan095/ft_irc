@@ -82,13 +82,6 @@ void	Server::notifyJoin(Client *client, Channel *channel) const
 	<< "\r\n";
 
 	channel->broadcastMessage(ss.str());
-
-	// Send back to the client the topic
-	std::string	topic = channel->getTopic();
-	if (topic.empty())
-		sendResponse(client, RPL_NOTOPIC, channel->getName());
-	else
-		sendResponse(client, RPL_TOPIC, channel->getName() + " :" + topic);
 }
 
 void	Server::NotifyTopicChange(Client *client, Channel *channel) const

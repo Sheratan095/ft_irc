@@ -64,6 +64,13 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 
 	notifyJoin(client, targetChannel);
 
+	// Send back to the client the topic
+	std::string	topic = targetChannel->getTopic();
+	if (topic.empty())
+		sendResponse(client, RPL_NOTOPIC, targetChannel->getName());
+	else
+		sendResponse(client, RPL_TOPIC, targetChannel->getName() + " :" + topic);
+
 	// The Topic isn't sent by default
 
 	std::string userList = targetChannel->getNames();

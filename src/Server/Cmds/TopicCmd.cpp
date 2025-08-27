@@ -2,7 +2,7 @@
 
 void	Server::topicCmd(Client *client, const IRCMessage &message)
 {
-	if (message.parameters.empty() || message.parameters.size() > 2)
+	if (message.parameters.empty())
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "TOPIC");
 		return;

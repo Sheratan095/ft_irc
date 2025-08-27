@@ -46,4 +46,6 @@ void		sendResponse(Client *client, ResponseCode code, const std::string &params)
 
 std::string	composeResponse(ResponseCode code, const std::string &targetName, const std::string &params);
 
+void		sendSrvFULLError(int client_fd);
+
 #endif

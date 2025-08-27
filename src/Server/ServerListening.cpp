@@ -96,7 +96,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	{
 		std::cerr << "Failed to add client with fd: " << client_fd << std::endl;
 
-		sendResponse(_clients[client_fd], ERR_SRVFULL, "");
+		sendSrvFULLError(client_fd);
 
 		close(client_fd);
 

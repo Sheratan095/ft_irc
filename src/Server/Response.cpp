@@ -18,10 +18,6 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " :Welcome to the IRC Network";
 			break;
 
-		case ERR_SRVFULL:
-			oss << " :Server is full";
-			break;
-
 		case ERR_UNKNOWNCOMMAND:
 			oss << " " << params << " :Unknown command";
 			break;
@@ -102,4 +98,15 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 	oss << "\r\n";
 
 	return (oss.str());
+}
+
+// Special function because this message is sent when the Client class isn't still created
+void	sendSrvFULLError(int client_fd)
+{
+	std::ostringstream	oss;
+
+	// 501 ERR_SRVFULL
+	oss << ":" << SERVER_NAME << " 501 * :Server is full\r\n";;
+
+	sendMessage(client_fd, oss.str());
 }

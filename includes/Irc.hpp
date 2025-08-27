@@ -26,7 +26,7 @@
 
 #define	DEFAULT_USER_LIMIT_IN_CHANNEL 128 
 
-#define	MAX_CLIENTS 2
+#define	MAX_CLIENTS 5
 
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 

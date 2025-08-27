@@ -24,8 +24,8 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/WhoCmd.cpp \
 	src/Server/Cmds/ModeCmd.cpp \
 	src/Server/Cmds/TopicCmd.cpp \
+	src/Client/Client.cpp \
 	src/Utils.cpp \
-	src/Client.cpp \
 
 all: $(NAME)
 

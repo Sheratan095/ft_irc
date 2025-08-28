@@ -54,6 +54,8 @@ class	Channel
 		bool	isPasswordCorrect(const std::string &password) const;
 
 		void	broadcastMessage(const std::string &message) const;
+		void	relayMessage(const std::string &message, SocketFd exclude_fd) const;
+
 
 		// return a vector of who's is connected to the channel
 		std::vector<std::string>	getWho() const;

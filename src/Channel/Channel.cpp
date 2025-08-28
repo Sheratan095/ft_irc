@@ -131,7 +131,7 @@ void	Channel::notifyMsg(Client *sender, const std::string &message) const
 	<< " PRIVMSG " << this->getName()
 	<< " :" << message << "\r\n";
 
-	this->broadcastMessage(ss.str());
+	this->relayMessage(ss.str(), sender->getSocketFd());
 }
 
 // :nick!user@host PRIVMSG #channel :Hello everyone!
@@ -143,4 +143,14 @@ void	Channel::broadcastMessage(const std::string &message) const
 {
 	for (std::map<SocketFd, Client*>::const_iterator it = _members.begin(); it != _members.end(); ++it)
 		sendMessage(it->first, message);
+}
+
+// Used to forward a message from the sender to all the other users in the chat except himself
+void	Channel::relayMessage(const std::string &message, SocketFd exclude_fd) const
+{
+	for (std::map<SocketFd, Client*>::const_iterator it = _members.begin(); it != _members.end(); ++it)
+	{
+		if (it->first != exclude_fd)
+			sendMessage(it->first, message);
+	}
 }

@@ -43,7 +43,7 @@ enum	ResponseCode
 	ERR_NOSUCHNICK = 401, // Nick not found
 	ERR_USERONCHANNEL = 443, // User is already on channel
 	ERR_CHANOPRIVSNEEDED = 482, // Channel privileges needed
-	RPL_INVITE = 314,
+	RPL_INVITE = 341,
 };
 
 // Response format:

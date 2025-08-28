@@ -54,6 +54,6 @@ void	Server::inviteCmd(Client *client, const IRCMessage &message)
 
 	targetChannel->inviteClient(clientInvited->getSocketFd());
 
-	sendResponse(client, RPL_INVITE, clientInvited->getNickname() + targetChannel->getName());
+	sendResponse(client, RPL_INVITE, clientInvited->getNickname() + " " + targetChannel->getName());
 
 }

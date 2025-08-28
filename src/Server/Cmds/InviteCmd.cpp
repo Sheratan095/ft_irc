@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 //If an INVITE command fails (e.g., ERR_NOSUCHNICK, ERR_USERONCHANNEL, ERR_NOTONCHANNEL),
-//		the numeric reply is sent to the client who issued the INVITE.
+//the numeric reply is sent to the client who issued the INVITE.
 // The client does not display it in the channel window, because no action affected the channel.
 // The message appears only in the server tab, which is essentially the “raw IRC log” for the connection
 void	Server::inviteCmd(Client *client, const IRCMessage &message)
@@ -26,11 +26,13 @@ void	Server::inviteCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
+	std::string	channelName = toLower(message.parameters[1]);
+
 	// The channel to invite the client to must exist
-	std::map<std::string, Channel*>::iterator	it = _channels.find(message.parameters[1]);
+	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);
 	if (it == _channels.end())
 	{
-		sendResponse(client, ERR_NOSUCHCHANNEL, message.parameters[1]);
+		sendResponse(client, ERR_NOSUCHCHANNEL, channelName);
 		return;
 	}
 	Channel *targetChannel = it->second;

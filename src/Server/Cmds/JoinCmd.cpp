@@ -16,7 +16,8 @@ void	Server::joinCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	const std::string	&channelName = message.parameters[0];
+	// the channel names are normalized to lowercase
+	std::string	channelName = toLower(message.parameters[0]);
 	if (isChannelNameValid(channelName) == false)
 	{
 		sendResponse(client, ERR_NOSUCHCHANNEL, channelName);

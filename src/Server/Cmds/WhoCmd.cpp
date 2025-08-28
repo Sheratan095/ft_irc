@@ -14,12 +14,13 @@ void	Server::whoCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	std::map<std::string, Channel*>::iterator	it = _channels.find(message.parameters[0]);
+	const std::string	&channelName = toLower(message.parameters[0]);
+	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);
 	Channel	*targetChannel;
 
 	if (it == _channels.end())
 	{
-		sendResponse(client, ERR_NOSUCHCHANNEL, message.parameters[0]);
+		sendResponse(client, ERR_NOSUCHCHANNEL, channelName);
 		return;
 	}
 

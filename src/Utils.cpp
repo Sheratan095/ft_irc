@@ -81,3 +81,13 @@ void	sendMessage(SocketFd socketFfd, const std::string &message)
 	if (bytesSent < 0)
 		std::cerr << "Error sending message to socket fd: " << socketFfd << std::endl;
 }
+
+std::string toLower(const std::string &s)
+{
+	std::string	res = s;
+
+	for (size_t i = 0; i < res.size(); ++i)
+		res[i] = std::tolower(res[i]);
+
+	return (res);
+}

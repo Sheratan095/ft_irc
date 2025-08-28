@@ -9,4 +9,6 @@ std::vector<std::string>	split(const std::string& str, const std::string& delimi
 
 bool						insentiveStringCompare(const std::string &str1, const std::string &str2);
 
+std::string					toLower(const std::string &s);
+
 #endif

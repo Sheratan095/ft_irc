@@ -14,7 +14,7 @@ void	Server::topicCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	const std::string	&channelName = message.parameters[0];
+	const std::string	&channelName = toLower(message.parameters[0]);
 	std::map<std::string, Channel*>::iterator	channelIt = _channels.find(channelName);
 
 	if (channelIt == _channels.end())

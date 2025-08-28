@@ -14,7 +14,7 @@ void	Server::modeCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	const std::string	&channelName = message.parameters[0];
+	const std::string	&channelName = toLower(message.parameters[0]);
 
 	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);
 	Channel	*targetChannel;

@@ -20,6 +20,7 @@ class	Server
 		std::map<SocketFd, Client*>		_clients;
 		std::vector<pollfd>				_pollFds;
 
+		// channels's name are normalized to lowercase
 		std::map<std::string, Channel*>	_channels;
 		//Needed to send QUIT and NICK also in private conversations and not just in the shared channels
 		std::map<SocketFd, std::set<SocketFd> > _privateConversations;

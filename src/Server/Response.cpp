@@ -94,7 +94,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			break;
 
 		case ERR_NOSUCHNICK:
-			oss << " " << params << " :No such nick/channel";
+			oss << " " << params << " :No such nick";
 			break;
 
 		case ERR_USERONCHANNEL:

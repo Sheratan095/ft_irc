@@ -106,6 +106,22 @@ void	Channel::notifyTopicChange(Client *client) const
 	this->broadcastMessage(ss.str());
 }
 
+//:<kicker>!<kicker_user>@<kicker_host> KICK <channel> <target> :<reason>
+void	Channel::notifyKick(Client *kickerClient, Client *kickedClient, const std::string &reason) const
+{
+	std::stringstream	ss;
+
+	ss << ":" << kickerClient->getNickname()
+	<< "!" << kickerClient->getUsername()
+	<< "@" << kickerClient->getIpAddress()
+	<< " KICK " << this->getName()
+	<< " " << kickedClient->getNickname()
+	<< " :" << reason << "\r\n";
+
+	this->broadcastMessage(ss.str());
+}
+
+
 // :nick!user@host PRIVMSG #channel :Hello everyone!
 // :nick!user@host	Prefix (who sent the message)
 // PRIVMSG	Command

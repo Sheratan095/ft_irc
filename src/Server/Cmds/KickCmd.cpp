@@ -18,14 +18,6 @@ void	Server::kickCmd(Client *client, const IRCMessage &message)
 	const std::string&	targetNickname = message.parameters[1];
 	const std::string&	reason = message.parameters.size() == 3 ? message.parameters[2] : "";
 
-	// The client to invite must be connected to the server
-	Client	*clientInvited = findClientByName(message.parameters[0]);
-	if (clientInvited == NULL)
-	{
-		sendResponse(client, ERR_NOSUCHNICK, message.parameters[0]);
-		return;
-	}
-
 	// Check if the channel exist
 	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);
 	if (it == _channels.end())
@@ -35,6 +27,14 @@ void	Server::kickCmd(Client *client, const IRCMessage &message)
 	}
 	Channel *targetChannel = it->second;
 
+	// The client to kick must be connected to the server
+	Client	*clientToKick = findClientByName(targetNickname);
+	if (clientToKick == NULL)
+	{
+		sendResponse(client, ERR_NOSUCHNICK, targetNickname);
+		return;
+	}
+
 	// The kicker must be in the channel
 	if (targetChannel->isClientInChannel(client->getSocketFd()) == false)
 	{
@@ -43,9 +43,9 @@ void	Server::kickCmd(Client *client, const IRCMessage &message)
 	}
 
 	// The kicked must be in the channel
-	if (targetChannel->isClientInChannel(clientInvited->getSocketFd()) == false)
+	if (targetChannel->isClientInChannel(clientToKick->getSocketFd()) == false)
 	{
-		sendResponse(client, ERR_USERNOTINCHANNEL, clientInvited->getNickname());
+		sendResponse(client, ERR_USERNOTINCHANNEL, clientToKick->getNickname());
 		return;
 	}
 
@@ -56,5 +56,7 @@ void	Server::kickCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
+	targetChannel->notifyKick(client, clientToKick, reason);
 
+	targetChannel->removeClient(clientToKick->getSocketFd());
 }

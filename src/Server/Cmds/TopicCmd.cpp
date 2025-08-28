@@ -2,6 +2,12 @@
 
 void	Server::topicCmd(Client *client, const IRCMessage &message)
 {
+	if (client->isRegistered() == false)
+	{
+		sendResponse(client, ERR_NOTREGISTERED, "TOPIC");
+		return;
+	}
+
 	if (message.parameters.empty())
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "TOPIC");

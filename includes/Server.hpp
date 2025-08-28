@@ -58,6 +58,8 @@ class	Server
 		void	modeCmd(Client *client, const IRCMessage &message);
 		void	whoCmd(Client *client, const IRCMessage &message);
 		void	topicCmd(Client *client, const IRCMessage &message);
+		void	inviteCmd(Client *client, const IRCMessage &message);
+
 
 
 		// Global notifications

@@ -2,6 +2,12 @@
 
 void	Server::whoCmd(Client *client, const IRCMessage &message)
 {
+	if (client->isRegistered() == false)
+	{
+		sendResponse(client, ERR_NOTREGISTERED, "WHO");
+		return;
+	}
+
 	if (message.parameters.empty())
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "WHO");

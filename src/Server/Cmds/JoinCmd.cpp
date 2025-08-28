@@ -4,6 +4,12 @@ static bool	isChannelNameValid(const std::string &channelName);
 
 void	Server::joinCmd(Client *client, const IRCMessage &message)
 {
+	if (client->isRegistered() == false)
+	{
+		sendResponse(client, ERR_NOTREGISTERED, "JOIN");
+		return;
+	}
+
 	if (message.parameters.size() < 1)
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "JOIN");

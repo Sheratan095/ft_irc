@@ -2,8 +2,11 @@
 
 void	Server::modeCmd(Client *client, const IRCMessage &message)
 {
-	(void)client; // Currently not used, but can be implemented later
-	(void)message; // Currently not used, but can be implemented later
+	if (client->isRegistered() == false)
+	{
+		sendResponse(client, ERR_NOTREGISTERED, "MODE");
+		return;
+	}
 
 	if (message.parameters.size() < 1)
 	{

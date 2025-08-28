@@ -33,6 +33,10 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 		case ERR_ALREADYREGISTERED:
 			oss << " :You are already registered";
 			break;
+
+		case ERR_NOTREGISTERED:
+			oss << " " << params << " :You have not registered";
+			break;
 		
 		case ERR_NICKNAMEINUSE:
 			oss << " " << params << " :Nickname is already in use";

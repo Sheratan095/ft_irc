@@ -32,6 +32,7 @@ bool	Channel::removeClient(SocketFd client_fd)
 	if (it != _members.end())
 	{
 		_members.erase(it);
+		removeOperator(client_fd); // Also remove from operators if present
 		return (true);
 	}
 

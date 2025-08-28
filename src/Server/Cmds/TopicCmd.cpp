@@ -24,6 +24,11 @@ void	Server::topicCmd(Client *client, const IRCMessage &message)
 	}
 
 	Channel	*channel = channelIt->second;
+	if (channel->isClientInChannel(client->getSocketFd()) == false)
+	{
+		sendResponse(client, ERR_NOTONCHANNEL, channelName);
+		return;
+	}
 
 	if (message.trailing.empty())
 	{

@@ -11,4 +11,6 @@ bool						insentiveStringCompare(const std::string &str1, const std::string &str
 
 std::string					toLower(const std::string &s);
 
+bool						startsWith(const std::string &str, const std::string &prefix);
+
 #endif

@@ -90,7 +90,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 
 		case RPL_ENDOFNAMES:
 			// params = "<channel>"
-			oss << " " << params << " :End of NAMES list";
+			oss << " " << params << " :End of /NAMES list";
 			break;
 
 		case ERR_NOSUCHNICK:

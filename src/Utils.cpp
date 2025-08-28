@@ -91,3 +91,11 @@ std::string toLower(const std::string &s)
 
 	return (res);
 }
+
+bool	startsWith(const std::string &str, const std::string &prefix)
+{
+	if (str.size() < prefix.size())
+		return (false);
+
+	return (str.compare(0, prefix.size(), prefix) == 0);
+}

@@ -67,3 +67,19 @@ std::string	Client::getUsername() const
 {
 	return (_username);
 }
+
+std::string Client::getWho() const
+{
+	std::ostringstream	oss;
+
+	oss << "* "
+		<< getUsername() << " "
+		<< getIpAddress() << " "
+		<< SERVER_NAME << " "
+		<< getNickname() << " "
+		<< "H"
+		<< " :0 "
+		<< getRealName();
+
+	return (oss.str());
+}

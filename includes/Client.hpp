@@ -27,6 +27,8 @@ class	Client
 		std::string	getRealName() const;
 		std::string	getUsername() const;
 
+		std::string	getWho() const;
+
 		void	setUsername(const std::string& username);
 		void	setNickname(const std::string& nickname);
 		void	setAuthenticated();

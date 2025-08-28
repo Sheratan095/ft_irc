@@ -93,6 +93,27 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :End of NAMES list";
 			break;
 
+		case ERR_NOSUCHNICK:
+			oss << " " << params << " :No such nick";
+			break;
+
+		case ERR_USERONCHANNEL:
+			oss << " " << params << " :User is already on channel";
+			break;
+
+		case ERR_NOTONCHANNEL:
+			oss << " " << params << " :You are not on that channel";
+			break;
+
+		case ERR_CHANOPRIVSNEEDED:
+			oss << " " << params << " :You need to be a channel operator to perform this action";
+			break;
+
+		// params = "<nick> <channel>"
+		case RPL_INVITE:
+			oss << " " << params;
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

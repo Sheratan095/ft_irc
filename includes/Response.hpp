@@ -39,6 +39,11 @@ enum	ResponseCode
 	RPL_ENDOFNAMES = 366, // End of NAMES list
 
 	RPL_CHANNELMODEIS = 324,
+
+	ERR_NOSUCHNICK = 401, // Nick not found
+	ERR_USERONCHANNEL = 443, // User is already on channel
+	ERR_CHANOPRIVSNEEDED = 482, // Channel privileges needed
+	RPL_INVITE = 314,
 };
 
 // Response format:

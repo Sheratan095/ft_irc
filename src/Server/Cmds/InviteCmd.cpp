@@ -1,5 +1,9 @@
 #include "Server.hpp"
 
+//If an INVITE command fails (e.g., ERR_NOSUCHNICK, ERR_USERONCHANNEL, ERR_NOTONCHANNEL),
+//		the numeric reply is sent to the client who issued the INVITE.
+// The client does not display it in the channel window, because no action affected the channel.
+// The message appears only in the server tab, which is essentially the “raw IRC log” for the connection
 void	Server::inviteCmd(Client *client, const IRCMessage &message)
 {
 	if (client->isRegistered() == false)
@@ -55,5 +59,6 @@ void	Server::inviteCmd(Client *client, const IRCMessage &message)
 	targetChannel->inviteClient(clientInvited->getSocketFd());
 
 	sendResponse(client, RPL_INVITE, clientInvited->getNickname() + " " + targetChannel->getName());
+	sendInviteMessage(client, clientInvited, targetChannel);
 
 }

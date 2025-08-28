@@ -67,6 +67,9 @@ class	Server
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 
+		// Send a message to a client
+		void	sendInviteMessage(Client *inviter, Client *invited, Channel *channel) const;
+
 
 	public:
 		Server(const int port, const std::string &password);

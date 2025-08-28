@@ -11,3 +11,17 @@ Client*	Server::findClientByName(const std::string &nickname) const
 	return (NULL);
 }
 
+void Server::sendInviteMessage(Client *inviter, Client *invited, Channel *channel) const
+{
+	std::ostringstream	oss;
+
+	// Format: :<inviter>!<user>@<host> INVITE <invited-nick> :<channel>
+	oss << ":" << inviter->getNickname()
+		<< "!" << inviter->getUsername()
+		<< "@" << inviter->getIpAddress()
+		<< " INVITE " << invited->getNickname()
+		<< " :" << channel->getName()
+		<< "\r\n";
+
+	sendMessage(invited->getSocketFd(), oss.str());
+}

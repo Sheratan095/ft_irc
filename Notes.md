@@ -5,3 +5,5 @@ a channe named just # can't be created
 If a client tries to change their nickname to the same nickname they already have, the IRC server should not perform any broadcast or state change
 
 channels names case sensitive?? now yes
+
+TO DO check fcntl? fcntl(fd, F_SETFL, O_NONBLOCK) is the only way permitted

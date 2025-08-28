@@ -63,6 +63,7 @@ class	Channel
 		void	notifyJoin(Client *client) const;
 		void	notifyTopicChange(Client *client) const;
 		void	notifyKick(Client *kickerClient, Client *kickedClient, const std::string &reason) const;
+		void	notifyMsg(Client *sender, const std::string &message) const;
 };
 
 #endif

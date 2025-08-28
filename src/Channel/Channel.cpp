@@ -121,6 +121,18 @@ void	Channel::notifyKick(Client *kickerClient, Client *kickedClient, const std::
 	this->broadcastMessage(ss.str());
 }
 
+void	Channel::notifyMsg(Client *sender, const std::string &message) const
+{
+	std::stringstream	ss;
+
+	ss << ":" << sender->getNickname()
+	<< "!" << sender->getUsername()
+	<< "@" << sender->getIpAddress()
+	<< " PRIVMSG " << this->getName()
+	<< " :" << message << "\r\n";
+
+	this->broadcastMessage(ss.str());
+}
 
 // :nick!user@host PRIVMSG #channel :Hello everyone!
 // :nick!user@host	Prefix (who sent the message)

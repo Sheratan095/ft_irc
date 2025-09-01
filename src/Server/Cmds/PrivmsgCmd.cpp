@@ -46,5 +46,11 @@ void	Server::privmsgCmd(Client *client, const IRCMessage &message)
 		}
 
 		recipient->sendPrivMessage(client, message.trailing);
+
+		//Update the map with private message
+		//std::map<SocketFd, std::set<SocketFd> > _privateConversations;
+
+		_privateConversations[client->getSocketFd()].insert(recipient->getSocketFd());
+		_privateConversations[recipient->getSocketFd()].insert(client->getSocketFd());
 	}
 }

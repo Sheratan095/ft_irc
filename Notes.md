@@ -7,3 +7,5 @@ If a client tries to change their nickname to the same nickname they already hav
 channels names case sensitive?? now yes
 
 TO DO check fcntl? fcntl(fd, F_SETFL, O_NONBLOCK) is the only way permitted
+
+TO DO WHOIS

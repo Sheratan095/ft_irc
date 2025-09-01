@@ -34,6 +34,8 @@ class	Client
 		void	setAuthenticated();
 		void	setRealName(const std::string& realname);
 
+		void	sendPrivMessage(Client *sender, const std::string &message) const;
+
 };
 
 #endif

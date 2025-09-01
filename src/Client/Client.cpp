@@ -83,3 +83,14 @@ std::string Client::getWho() const
 
 	return (oss.str());
 }
+
+void	Client::sendPrivMessage(Client *sender, const std::string &message) const
+{
+	std::stringstream	ss;
+
+	ss << ":" << sender->getPrefix()
+	<< " PRIVMSG " << this->getNickname() // Target nick
+	<< " :" << message << "\r\n";
+
+	sendMessage(this->getSocketFd(), ss.str());
+}

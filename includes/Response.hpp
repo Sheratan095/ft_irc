@@ -44,7 +44,7 @@ enum	ResponseCode
 	ERR_USERONCHANNEL = 443, // User is already on channel
 	ERR_CHANOPRIVSNEEDED = 482, // Channel privileges needed
 	RPL_INVITE = 341,
-	ERR_USERNOTINCHANNEL = 441
+	ERR_USERNOTINCHANNEL = 441,
 };
 
 // Response format:

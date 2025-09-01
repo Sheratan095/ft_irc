@@ -26,10 +26,25 @@ void	Server::privmsgCmd(Client *client, const IRCMessage &message)
 		}
 
 		Channel	*channel = it->second;
+		if (channel->isClientInChannel(client->getSocketFd()) == false)
+		{
+			sendResponse(client, ERR_NOTONCHANNEL, target);
+			return;
+		}
+
 		channel->notifyMsg(client, message.trailing);
 	}
 	else
 	{
 		// Handle private message
+
+		Client	*recipient = findClientByName(target);
+		if (!recipient)
+		{
+			sendResponse(client, ERR_NOSUCHNICK, target);
+			return;
+		}
+
+		recipient->sendPrivMessage(client, message.trailing);
 	}
 }

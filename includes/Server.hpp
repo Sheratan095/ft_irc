@@ -66,7 +66,7 @@ class	Server
 
 
 		// Global notifications
-		std::set<SocketFd>	getClientsToNotify(Client *sender) const;
+		void	dispatchNotifications(Client *sender, const std::string &message) const;
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 

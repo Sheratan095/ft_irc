@@ -5,7 +5,10 @@ void	Server::notifyNickChange(Client *sender, const std::string &oldNickname) co
 {
 	std::stringstream	ss;
 
-	ss << ":" << oldNickname << " NICK :" << sender->getNickname() << "\r\n";
+	ss << ":" << oldNickname
+	<< "!" << sender->getUsername()
+	<< "@" << sender->getIpAddress()
+	<< " NICK :" << sender->getNickname() << "\r\n";
 
 	std::string	message = ss.str();
 
@@ -26,27 +29,42 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 
 	// Notify users in shared channels and with private conversations
 	dispatchNotifications(sender, message);
-
 }
 
+// JUST ONE message for client is sent, than the client can display it in every tabs associated with that client
 void	Server::dispatchNotifications(Client *sender, const std::string &message) const
 {
-	// For every channel the sender is in, broadcast the message
-	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin(); it != _channels.end(); ++it)
+	std::set<SocketFd> result;
+
+	// Always include the sender
+	result.insert(sender->getSocketFd());
+
+	// For every channel the sender is in, collect all members
+	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin();
+		it != _channels.end(); ++it)
 	{
 		if (it->second->isClientInChannel(sender->getSocketFd()))
 		{
-			it->second->broadcastMessage(message);
+			const std::map<SocketFd, Client*> &members = it->second->getMembers();
+			for (std::map<SocketFd, Client*>::const_iterator memIt = members.begin();
+				memIt != members.end(); ++memIt)
+			{
+				result.insert(memIt->first);
+			}
 		}
 	}
 
 	 // Add clients in private conversations with the sender
-	std::map<SocketFd, std::set<SocketFd> >::const_iterator	privIt = _privateConversations.find(sender->getSocketFd());
+	std::map<SocketFd, std::set<SocketFd> >::const_iterator privIt = _privateConversations.find(sender->getSocketFd());
 	if (privIt != _privateConversations.end())
 	{
-		for (std::set<SocketFd>::const_iterator pmIt = privIt->second.begin(); pmIt != privIt->second.end(); ++pmIt)
+		for (std::set<SocketFd>::const_iterator pmIt = privIt->second.begin();
+			pmIt != privIt->second.end(); ++pmIt)
 		{
-			sendMessage(*pmIt, message);
+			result.insert(*pmIt);
 		}
 	}
+
+	for (std::set<SocketFd>::const_iterator it = result.begin(); it != result.end(); ++it)
+		sendMessage(*it, message);
 }

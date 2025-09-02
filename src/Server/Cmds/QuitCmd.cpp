@@ -3,12 +3,6 @@
 // Used when a real cmd is sent
 void	Server::quitCmd(Client *client, const IRCMessage &message)
 {
-	if (client->isRegistered() == false)
-	{
-		sendResponse(client, ERR_NOTREGISTERED, "QUIT");
-		return;
-	}
-
 	if (!client)
 		return;
 

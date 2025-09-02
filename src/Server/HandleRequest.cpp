@@ -15,7 +15,6 @@ void	Server::handleRequest(int client_fd)
 	messages = parseMessage(message);
 	printRawMessage(messages);
 
-	messages = parseMessage(message);
 	if (messages.empty())
 	{
 		std::cerr << "Error: No valid messages parsed from client fd: " << client_fd << std::endl;

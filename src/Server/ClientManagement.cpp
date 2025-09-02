@@ -29,7 +29,7 @@ bool	Server::addClient(pollfd clientPollFd, const std::string &ip_str)
 
 void	Server::removeClient(Client *client)
 {
-		// Remove the client from every channels that he's connected to
+	// Remove the client from every channels that he's connected to
 	for (std::map<std::string, Channel*>::iterator it = _channels.begin(); it != _channels.end(); ++it)
 	{
 		if (it->second->isClientInChannel(client->getSocketFd()))

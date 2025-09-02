@@ -83,13 +83,11 @@ std::string		Channel::getMode() const
 
 	if (_isInviteOnly)
 		modes += "i";
-	if (_isPasswordProtected)
-		modes += "k";
-	if (isChannelFull())
-		modes += "l";
 	if (_istopicRestrictedToOps)
 		modes += "t";
-	if (_userLimit > 0)
+	if (_isPasswordProtected)
+		modes += "k";
+	if (_isUserLimited)
 		modes += "l";
 
 	modes += "n"; // disallow messages from outside channel

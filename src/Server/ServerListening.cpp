@@ -74,8 +74,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 
 	// Set the client socket to non-blocking mode
 	// I don't override the existing flags, just add O_NONBLOCK
-	int	flags = fcntl(client_fd, F_GETFL, 0);
-	if (flags == -1 || fcntl(client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
+	if (fcntl(client_fd, F_SETFL, O_NONBLOCK) == -1)
 	{
 		close(client_fd);
 		return ;

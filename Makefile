@@ -65,7 +65,7 @@ val: all
 
 #COLORS
 
-GREEN=\033[0;32m
-RED=\033[0;31m
-BLUE=\033[0;34m
-RESET=\033[0m
+GREEN=\e[0;32m
+RED=\e[0;91m
+BLUE=\e[0;34m
+RESET=\e[0m

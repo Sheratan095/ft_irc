@@ -1,6 +1,7 @@
 #include "Server.hpp"
 
 // Send a message from client
+// isn't shown in private chats because it's considered a global event
 void	Server::notifyNickChange(Client *sender, const std::string &oldNickname) const
 {
 	std::stringstream	ss;

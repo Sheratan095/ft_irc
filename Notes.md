@@ -6,6 +6,8 @@ If a client tries to change their nickname to the same nickname they already hav
 
 channels names case sensitive?? now yes
 
+TO DO handle cap
+
 TO DO remove Errno from checkpoll
 
 !!!!!Error numerics like 401 ERR_NOSUCHNICK!!!!!

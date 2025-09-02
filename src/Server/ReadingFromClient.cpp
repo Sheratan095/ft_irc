@@ -1,14 +1,27 @@
 #include "Server.hpp"
 
+// Utility: replace all substrings
+static void replaceAll(std::string &str, const std::string &from, const std::string &to)
+{
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+	{
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+}
+
 std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 {
 	std::vector<IRCMessage> messages;
-	std::vector<std::string> lines;
 
-	if (message.find("\r\n") != std::string::npos)
-		lines = split(message, "\r\n");
-	else
-		lines = split(message, "\n");
+	// 1. Normalize line endings (\r\n → \n, \r → \n)
+	std::string normalized = message;
+	replaceAll(normalized, "\r\n", "\n");
+	replaceAll(normalized, "\r", "\n");
+
+	// 2. Split into lines
+	std::vector<std::string> lines = split(normalized, "\n");
 
 	for (size_t i = 0; i < lines.size(); ++i)
 	{
@@ -20,17 +33,17 @@ std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 		size_t pos = 0;
 		std::string rest = line;
 
-		// 1. Parse prefix
+		// 3. Prefix (optional)
 		if (rest[0] == ':')
 		{
 			pos = rest.find(' ');
 			if (pos == std::string::npos)
-				continue; // Invalid
+				continue; // Invalid line
 			msg.prefix = rest.substr(1, pos - 1);
 			rest = rest.substr(pos + 1);
 		}
 
-		// 2. Parse command
+		// 4. Command
 		pos = rest.find(' ');
 		if (pos == std::string::npos)
 		{
@@ -41,7 +54,7 @@ std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 		msg.command = rest.substr(0, pos);
 		rest = rest.substr(pos + 1);
 
-		// 3. Parse parameters
+		// 5. Parameters
 		std::vector<std::string> params;
 		while (!rest.empty())
 		{
@@ -52,11 +65,10 @@ std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 			}
 			if (rest[0] == ':')
 			{
-				// Trailing param — take the rest
+				// Trailing param — keep raw (important for CTCP/DCC)
 				msg.trailing = rest.substr(1);
 				break;
 			}
-			// Middle param
 			pos = rest.find(' ');
 			if (pos == std::string::npos)
 			{
@@ -74,7 +86,6 @@ std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 	return messages;
 }
 
-
 std::string	Server::readMessageFromClient(int client_fd) const
 {
 	static char	buffer[1024];
@@ -87,7 +98,7 @@ std::string	Server::readMessageFromClient(int client_fd) const
 
 	buffer[bytes_received] = '\0'; // Null-terminate the received string
 
-	return (std::string(buffer));
+	return (std::string(buffer, bytes_received));
 }
 
 void	Server::printRawMessage(const std::vector<IRCMessage> &messages) const

@@ -10,6 +10,8 @@ TO DO handle cap
 
 TO DO remove Errno from checkpoll
 
+TO DO able the quit also if not registered
+
 !!!!!Error numerics like 401 ERR_NOSUCHNICK!!!!!
 
 -----------------------------------------------------------------------------------------------------------

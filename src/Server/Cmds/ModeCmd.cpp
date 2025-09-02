@@ -39,4 +39,11 @@ void	Server::modeCmd(Client *client, const IRCMessage &message)
 		sendResponse(client, RPL_CHANNELMODEIS, channelName + " " + targetChannel->getMode());
 		return;
 	}
+
+	// Only channel operators may set modes
+	if (!targetChannel->isClientOperator(client->getSocketFd()))
+	{
+		sendResponse(client, ERR_CHANOPRIVSNEEDED, channelName);
+		return;
+	}
 }

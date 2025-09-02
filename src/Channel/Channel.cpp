@@ -3,7 +3,8 @@
 Channel::Channel(const std::string &name, Client *client): 
 _name(name), _topic(""),
 _isInviteOnly(false), _istopicRestrictedToOps(true),
-_isPasswordProtected(false), _password(""), _userLimit(DEFAULT_USER_LIMIT_IN_CHANNEL)
+_isPasswordProtected(false), _password(""), 
+_isUserLimited(false), _userLimit(DEFAULT_USER_LIMIT_IN_CHANNEL)
 {
 	// Add the creator to the channel
 	if (client)

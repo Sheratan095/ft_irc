@@ -8,7 +8,7 @@ channels names case sensitive?? now yes
 
 TO DO check fcntl? fcntl(fd, F_SETFL, O_NONBLOCK) is the only way permitted
 
-TO DO WHOIS
+!!!!!Error numerics like 401 ERR_NOSUCHNICK!!!!!
 
 -----------------------------------------------------------------------------------------------------------
 WHY DOES NICK CHANGE MESSAGE DOESN'T APPEAR ON PRIVATE CHATS' TAB IN HEXCHAT BUT APPEARS IN CHANNEL TABS?

@@ -8,7 +8,7 @@ void	Server::whoisCmd(Client *client, const IRCMessage *message)
 		return;
 	}
 
-	if (message->parameters.size() < 1)
+	if (message->parameters.empty())
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "WHOIS");
 		return;
@@ -49,6 +49,8 @@ std::string	Server::formatWhoisChannels(Client *targetClient, const std::map<std
 		{
 			if (!channelList.empty())
 				channelList += " ";
+			if (channel->isClientOperator(targetClient->getSocketFd()))
+				channelList += "@";
 			channelList += channel->getName();
 		}
 	}

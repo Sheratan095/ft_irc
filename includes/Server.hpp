@@ -62,8 +62,12 @@ class	Server
 		void	inviteCmd(Client *client, const IRCMessage &message);
 		void	kickCmd(Client *client, const IRCMessage &message);
 		void	privmsgCmd(Client *client, const IRCMessage &message);
+		void	whoisCmd(Client *client, const IRCMessage *message);
 
-
+		// Used jus by whoisCmd
+		std::string	formatWhoisUser(Client *targetClient) const;
+		std::string	formatWhoisChannels(Client *targetClient, const std::map<std::string, Channel*> &channels) const;
+		std::string	formatWhoisServer(Client *targetClient) const;
 
 		// Global notifications
 		void	dispatchNotifications(Client *sender, const std::string &message) const;

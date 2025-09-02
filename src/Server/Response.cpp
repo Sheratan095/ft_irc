@@ -114,6 +114,26 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params;
 			break;
 
+		//params = "<target-nick> <username> <host> * :<realname>"
+		case RPL_WHOISUSER:
+			oss << " " << params;
+			break;
+
+		//params = "<nick> :#chan1 @#chan2..."
+		case RPL_WHOISCHANNELS:
+			oss << " " << params;
+			break;
+
+		// params = "<nick> <server> :<server info>"
+		case RPL_WHOISSERVER:
+			oss << " " << params;
+			break;
+
+		// params = "<nick>"
+		case RPL_ENDOFWHOIS:
+			oss << " " << params << " :End of /WHOIS list";
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

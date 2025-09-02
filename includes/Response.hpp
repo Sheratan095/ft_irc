@@ -45,6 +45,11 @@ enum	ResponseCode
 	ERR_CHANOPRIVSNEEDED = 482, // Channel privileges needed
 	RPL_INVITE = 341,
 	ERR_USERNOTINCHANNEL = 441,
+
+	RPL_WHOISUSER = 311,
+	RPL_WHOISCHANNELS = 319,
+	RPL_WHOISSERVER = 312,
+	RPL_ENDOFWHOIS = 318,
 };
 
 // Response format:

@@ -27,6 +27,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/InviteCmd.cpp \
 	src/Server/Cmds/KickCmd.cpp \
 	src/Server/Cmds/PrivmsgCmd.cpp \
+	src/Server/Cmds/WhoisCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 

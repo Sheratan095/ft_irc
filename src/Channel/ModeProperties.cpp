@@ -1,6 +1,5 @@
 #include "Channel.hpp"
 
-
 //----------------------------i----------------------------
 void	Channel::setInviteOnly()
 {

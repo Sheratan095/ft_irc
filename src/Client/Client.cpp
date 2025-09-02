@@ -1,7 +1,12 @@
 #include "Client.hpp"
 
 Client::Client(SocketFd socket_fd, const std::string &ipAddress): _socketFd(socket_fd), _ipAddress(ipAddress)
-{}
+{
+	_username = "";
+	_nickname = "";
+	_realname = "";
+	_isAuthenticated = false;
+}
 
 Client::~Client()
 {

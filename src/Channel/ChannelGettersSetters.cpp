@@ -15,34 +15,6 @@ void	Channel::setTopic(const std::string &topic)
 	_topic = topic;
 }
 
-void	Channel::setInviteOnly(bool isInviteOnly)
-{
-	_isInviteOnly = isInviteOnly;
-}
-
-void	Channel::setTopicRestrictedToOps(bool istopicRestrictedToOps)
-{
-	_istopicRestrictedToOps = istopicRestrictedToOps;
-}
-
-void	Channel::setPasswordProtected(bool isPasswordProtected, const std::string &password)
-{
-	_isPasswordProtected = isPasswordProtected;
-
-	if (isPasswordProtected)
-		_password = password;
-	else
-		_password.clear();
-}
-
-void	Channel::setUserLimit(size_t userLimit)
-{
-	if (userLimit > 0)
-		_userLimit = userLimit;
-	else
-		_userLimit = DEFAULT_USER_LIMIT_IN_CHANNEL;
-}
-
 bool	Channel::isClientOperator(SocketFd client_fd) const
 {
 	return (std::find(_operators.begin(), _operators.end(), client_fd) != _operators.end());
@@ -54,24 +26,9 @@ bool	Channel::isClientInChannel(SocketFd client_fd) const
 	return (_members.find(client_fd) != _members.end());
 }
 
-bool	Channel::isInviteOnly() const
-{
-	return (_isInviteOnly);
-}
-
 bool	Channel::isChannelFull() const
 {
 	return (_members.size() >= _userLimit);
-}
-
-bool	Channel::isPasswordProtected() const
-{
-	return (_isPasswordProtected);
-}
-
-bool	Channel::isPasswordCorrect(const std::string &password) const
-{
-	return (_password == password);
 }
 
 bool	Channel::isClientInvited(SocketFd client_fd) const
@@ -129,26 +86,6 @@ std::vector<std::string>	Channel::getWho() const
 	}
 
 	return (whoList);
-}
-
-std::string		Channel::getMode() const
-{
-	std::string	modes = "+";
-
-	if (isInviteOnly())
-		modes += "i";
-	if (isPasswordProtected())
-		modes += "k";
-	if (isChannelFull())
-		modes += "l";
-	if (_istopicRestrictedToOps)
-		modes += "t";
-	if (_userLimit > 0)
-		modes += "l";
-
-	modes += "n"; // disallow messages from outside channel
-
-	return (modes);
 }
 
 std::string	Channel::getNames() const

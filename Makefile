@@ -8,6 +8,7 @@ CC += -Wall -Wextra -Werror
 SRCS = src/main.cpp \
 	src/Channel/Channel.cpp \
 	src/Channel/ChannelGettersSetters.cpp \
+	src/Channel/ModeProperties.cpp \
 	src/Server/Server.cpp \
 	src/Server/ServerUtils.cpp \
 	src/Server/ServerListening.cpp \

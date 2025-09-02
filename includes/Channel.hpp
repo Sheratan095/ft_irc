@@ -17,6 +17,7 @@ class	Channel
 		bool						_isPasswordProtected; // (k)
 		std::string					_password; // (k) - optional password for private channels
 
+		bool						_isUserLimited; // (l)
 		size_t						_userLimit; // (l) - maximum number of members allowed in the channel
 
 
@@ -28,34 +29,45 @@ class	Channel
 		Channel(const std::string &name, Client *creator);
 		~Channel();
 
-		const std::string					&getTopic() const;
 		const std::string					&getName() const;
 		const std::string					getUserList() const;
 		const std::map<SocketFd, Client*>	&getMembers() const; // Added this line
 
 		void	setTopic(const std::string &topic);
-		void	setInviteOnly(bool isInviteOnly);
-		void	setTopicRestrictedToOps(bool istopicRestrictedToOps);
-		void	setPasswordProtected(bool _isPasswordProtected, const std::string &password = "");
-		void	setUserLimit(size_t _userLimit);
+		const std::string					&getTopic() const;
+
+		//----------------------------MODE----------------------------
+		void	setInviteOnly();
+		void	removeInviteOnly();
+		bool	isInviteOnly() const;
+
+		void	setTopicRestriction();
+		void	removeTopicRestriction();
+		bool	isTopicRestrictedToOps() const;
+
+		void	setPassword(const std::string &password);
+		void	removePassword();
+		bool	isPasswordProtected() const;
+		bool	isPasswordCorrect(const std::string &password) const;
+
+		void	setUserLimit(size_t userLimit);
+		void	removeUserLimit();
+		bool	isUserLimited() const;
+		//------------------------------------------------------------
 
 		bool	addClient(SocketFd client_fd, Client *client);
 		bool	removeClient(SocketFd client_fd);
 		bool	inviteClient(SocketFd client_fd);
 		bool	addOperator(SocketFd client_fd);
 		bool	removeOperator(SocketFd client_fd);
+		bool	isChannelFull() const;
 
 		bool	isClientInChannel(SocketFd client_fd) const;
 		bool	isClientInvited(SocketFd client_fd) const;
 		bool	isClientOperator(SocketFd client_fd) const;
-		bool	isInviteOnly() const;
-		bool	isChannelFull() const;
-		bool	isPasswordProtected() const;
-		bool	isPasswordCorrect(const std::string &password) const;
 
 		void	broadcastMessage(const std::string &message) const;
 		void	relayMessage(const std::string &message, SocketFd exclude_fd) const;
-
 
 		// return a vector of who's is connected to the channel
 		std::vector<std::string>	getWho() const;

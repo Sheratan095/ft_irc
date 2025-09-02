@@ -14,7 +14,7 @@ void	Server::notifyNickChange(Client *sender, const std::string &oldNickname) co
 	std::string	message = ss.str();
 
 	// Notify users in shared channels and with private conversations
-	dispatchNotifications(sender, message);
+	dispatchNotifications(sender, message, true);
 }
 
 void	Server::notifyQuit(Client *sender, const std::string &reason) const
@@ -29,16 +29,17 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 	std::string	message = ss.str();
 
 	// Notify users in shared channels and with private conversations
-	dispatchNotifications(sender, message);
+	dispatchNotifications(sender, message, false);
 }
 
 // JUST ONE message for client is sent, than the client can display it in every tabs associated with that client
-void	Server::dispatchNotifications(Client *sender, const std::string &message) const
+void	Server::dispatchNotifications(Client *sender, const std::string &message, bool includeSender) const
 {
 	std::set<SocketFd> result;
 
 	// Always include the sender
-	result.insert(sender->getSocketFd());
+	if (includeSender)
+		result.insert(sender->getSocketFd());
 
 	// For every channel the sender is in, collect all members
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin();

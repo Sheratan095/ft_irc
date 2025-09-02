@@ -70,7 +70,7 @@ class	Server
 		std::string	formatWhoisServer(Client *targetClient) const;
 
 		// Global notifications
-		void	dispatchNotifications(Client *sender, const std::string &message) const;
+		void	dispatchNotifications(Client *sender, const std::string &message, bool includeSender) const;
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 

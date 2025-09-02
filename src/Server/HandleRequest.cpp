@@ -7,7 +7,7 @@ void	Server::handleRequest(int client_fd)
 	
 	if (message.empty())
 	{
-		quitCmd(_clients[client_fd], "Client disconnected");
+		removeClient(_clients[client_fd]);
 
 		return ;
 	}

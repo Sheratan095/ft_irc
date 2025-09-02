@@ -35,11 +35,7 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 // JUST ONE message for client is sent, than the client can display it in every tabs associated with that client
 void	Server::dispatchNotifications(Client *sender, const std::string &message, bool includeSender) const
 {
-	std::set<SocketFd> result;
-
-	// Always include the sender
-	if (includeSender)
-		result.insert(sender->getSocketFd());
+	std::set<SocketFd>	result;
 
 	// For every channel the sender is in, collect all members
 	for (std::map<std::string, Channel*>::const_iterator it = _channels.begin();
@@ -66,6 +62,9 @@ void	Server::dispatchNotifications(Client *sender, const std::string &message, b
 			result.insert(*pmIt);
 		}
 	}
+
+	if (!includeSender)
+		result.erase(sender->getSocketFd()); // Remove sender if present and not wanted
 
 	for (std::set<SocketFd>::const_iterator it = result.begin(); it != result.end(); ++it)
 		sendMessage(*it, message);

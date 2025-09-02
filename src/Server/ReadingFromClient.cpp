@@ -3,7 +3,12 @@
 std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 {
 	std::vector<IRCMessage> messages;
-	std::vector<std::string> lines = split(message, "\r\n");
+	std::vector<std::string> lines;
+
+	if (message.find("\r\n") != std::string::npos)
+		lines = split(message, "\r\n");
+	else
+		lines = split(message, "\n");
 
 	for (size_t i = 0; i < lines.size(); ++i)
 	{

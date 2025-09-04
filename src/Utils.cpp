@@ -99,3 +99,13 @@ bool	startsWith(const std::string &str, const std::string &prefix)
 
 	return (str.compare(0, prefix.size(), prefix) == 0);
 }
+
+int safeAtoi(const std::string &s)
+{
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		if (!std::isdigit(s[i]))
+			return (-1); // invalid number
+	}
+	return (std::atoi(s.c_str()));
+}

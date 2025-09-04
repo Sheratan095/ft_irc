@@ -134,6 +134,11 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :End of /WHOIS list";
 			break;
 
+		// params = "<modechar>"
+		case ERR_UNKNOWNMODE:
+			oss << " " << params << " :Unknown mode";
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

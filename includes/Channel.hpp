@@ -78,6 +78,8 @@ class	Channel
 		void	notifyTopicChange(Client *client) const;
 		void	notifyKick(Client *kickerClient, Client *kickedClient, const std::string &reason) const;
 		void	notifyMsg(Client *sender, const std::string &message) const;
+		void	notifyMode(Client *client, const std::string &appliedModes, const std::vector<std::string> &appliedParams) const;
+
 };
 
 #endif

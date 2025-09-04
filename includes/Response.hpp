@@ -50,6 +50,8 @@ enum	ResponseCode
 	RPL_WHOISCHANNELS = 319,
 	RPL_WHOISSERVER = 312,
 	RPL_ENDOFWHOIS = 318,
+
+	ERR_UNKNOWNMODE = 472
 };
 
 // Response format:

@@ -135,6 +135,26 @@ void	Channel::notifyMsg(Client *sender, const std::string &message) const
 	this->relayMessage(ss.str(), sender->getSocketFd());
 }
 
+// TO DO da finì
+void	Channel::notifyMode(Client *client, const std::string &appliedModes, const std::vector<std::string> &appliedParams) const
+{
+	std::stringstream	ss;
+
+	ss << ":" << client->getNickname()
+	<< "!" << client->getUsername()
+	<< "@" << client->getIpAddress()
+	<< "@" << client->getIpAddress()
+	<< " MODE " << this->getName()
+	<< " " << appliedModes;
+
+	for (size_t i = 0; i < appliedParams.size(); ++i)
+		ss << " " << appliedParams[i];
+
+	ss << "\r\n";
+
+	this->broadcastMessage(ss.str());
+}
+
 // :nick!user@host PRIVMSG #channel :Hello everyone!
 // :nick!user@host	Prefix (who sent the message)
 // PRIVMSG	Command

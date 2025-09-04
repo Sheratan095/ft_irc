@@ -64,6 +64,10 @@ class	Server
 		void	privmsgCmd(Client *client, const IRCMessage &message);
 		void	whoisCmd(Client *client, const IRCMessage *message);
 
+		// used during modeCmd
+		void	parseMode(Client *client, Channel *channel, const IRCMessage &message) const;
+
+
 		// Used jus by whoisCmd
 		std::string	formatWhoisUser(Client *targetClient) const;
 		std::string	formatWhoisChannels(Client *targetClient, const std::map<std::string, Channel*> &channels) const;

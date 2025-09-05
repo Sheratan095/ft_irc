@@ -85,7 +85,8 @@ void	Server::parseMode(Client *client, Channel *channel, const IRCMessage &messa
 						channel->setInviteOnly();
 					else
 						channel->removeInviteOnly();
-					appliedModes += (adding ? "+" : "-") + 'i';
+					appliedModes += (adding ? "+" : "-");
+					appliedModes += 'i';
 					break;
 				}
 
@@ -95,7 +96,8 @@ void	Server::parseMode(Client *client, Channel *channel, const IRCMessage &messa
 						channel->setTopicRestriction();
 					else
 						channel->removeTopicRestriction();
-					appliedModes += (adding ? "+" : "-") + 't';
+					appliedModes += (adding ? "+" : "-");
+					appliedModes += 't';
 					break;
 				}
 
@@ -188,7 +190,7 @@ void	Server::parseMode(Client *client, Channel *channel, const IRCMessage &messa
 
 				default :
 					sendResponse(client, ERR_UNKNOWNMODE, std::string(1, modeChar) + " " + channel->getName());
-					return;
+					continue;
 			}
 		}
 	}

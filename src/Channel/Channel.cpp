@@ -143,7 +143,6 @@ void	Channel::notifyMode(Client *client, const std::string &appliedModes, const 
 	ss << ":" << client->getNickname()
 	<< "!" << client->getUsername()
 	<< "@" << client->getIpAddress()
-	<< "@" << client->getIpAddress()
 	<< " MODE " << this->getName()
 	<< " " << appliedModes;
 

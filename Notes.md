@@ -12,6 +12,16 @@ TO DO remove Errno from checkpoll
 
 TO DO able the quit also if not registered
 
+TO DO add a kick reason
+
+TO DO restriction on topic
+
+TO DO user number limit doesn't works
+
+TO DO: if a client is invited and the channel is key protected, should the invted still insert the key? now yes
+
+TO DO: can you kick yourself? or remove operator to yourself?
+
 !!!!!Error numerics like 401 ERR_NOSUCHNICK!!!!!
 
 -----------------------------------------------------------------------------------------------------------

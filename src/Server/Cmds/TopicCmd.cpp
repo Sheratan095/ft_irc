@@ -41,6 +41,13 @@ void	Server::topicCmd(Client *client, const IRCMessage &message)
 	}
 	else
 	{
+		// Check for topic restriction
+		if (channel->isTopicRestrictedToOps() && !channel->isClientOperator(client->getSocketFd()))
+		{
+			sendResponse(client, ERR_CHANOPRIVSNEEDED, channelName);
+			return;
+		}
+
 		// Set the new topic
 		const std::string &newTopic = message.trailing;
 		channel->setTopic(newTopic);

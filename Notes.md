@@ -14,7 +14,7 @@ TO DO able the quit also if not registered
 
 TO DO add a kick reason
 
-TO DO restriction on topic
+DONE restriction on topic
 
 TO DO user number limit doesn't works
 

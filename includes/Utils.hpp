@@ -15,4 +15,6 @@ bool						startsWith(const std::string &str, const std::string &prefix);
 
 int							safeAtoi(const std::string &str);
 
+std::string					intToString(int n);
+
 #endif

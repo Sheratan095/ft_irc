@@ -109,3 +109,11 @@ int safeAtoi(const std::string &s)
 	}
 	return (std::atoi(s.c_str()));
 }
+
+std::string	intToString(int n)
+{
+	std::ostringstream oss;
+	oss << n;
+
+	return (oss.str());
+}

@@ -109,6 +109,10 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :You need to be a channel operator to perform this action";
 			break;
 
+		case ERR_CHANNELISFULL:
+			oss << " " << params << " :Channel is full";
+			break;
+
 		// params = "<nick> <channel>"
 		case RPL_INVITE:
 			oss << " " << params;

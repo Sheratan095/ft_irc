@@ -140,9 +140,9 @@ void	Server::parseMode(Client *client, Channel *channel, const IRCMessage &messa
 							sendResponse(client, ERR_NEEDMOREPARAMS, "MODE " + channel->getName());
 							continue;
 						}
-						appliedParams.push_back(params[paramIndex - 1]);
+						int	newLimit = channel->setUserLimit(limit);
+						appliedParams.push_back(intToString(newLimit));
 						appliedModes += "+l";
-						channel->setUserLimit(limit);
 					}
 					else
 					{

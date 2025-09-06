@@ -18,7 +18,7 @@ class	Channel
 		std::string					_password; // (k) - optional password for private channels
 
 		bool						_isUserLimited; // (l)
-		size_t						_userLimit; // (l) - maximum number of members allowed in the channel
+		int							_userLimit; // (l) - maximum number of members allowed in the channel
 
 
 		std::map<SocketFd, Client*>		_members; // Map of client file descriptors to Client objects
@@ -50,7 +50,7 @@ class	Channel
 		bool	isPasswordProtected() const;
 		bool	isPasswordCorrect(const std::string &password) const;
 
-		void	setUserLimit(size_t userLimit);
+		int		setUserLimit(int userLimit);
 		void	removeUserLimit();
 		bool	isUserLimited() const;
 		//------------------------------------------------------------

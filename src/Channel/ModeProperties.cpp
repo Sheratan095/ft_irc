@@ -56,14 +56,17 @@ bool	Channel::isPasswordCorrect(const std::string &password) const
 }
 
 //----------------------------l----------------------------
-void	Channel::setUserLimit(size_t userLimit)
+// return the new user limit
+int	Channel::setUserLimit(int userLimit)
 {
-	if (_userLimit < DEFAULT_USER_LIMIT_IN_CHANNEL)
+	if (userLimit < DEFAULT_USER_LIMIT_IN_CHANNEL)
 		_userLimit = userLimit;
 	else
 		_userLimit = DEFAULT_USER_LIMIT_IN_CHANNEL;
 
 	_isUserLimited = true;
+
+	return (_userLimit);
 }
 
 void	Channel::removeUserLimit()

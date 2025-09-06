@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <stdlib.h>
 #include <csignal>
 #include <cerrno>

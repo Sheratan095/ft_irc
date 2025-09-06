@@ -19,8 +19,8 @@ Channel::~Channel()
 
 bool	Channel::addClient(SocketFd client_fd, Client *client)
 {
-	if (_members.size() >= _userLimit)
-		return (false); // User limit reached
+	if (isClientInChannel(client_fd))
+		return (false); // Client already in the channel
 
 	_members[client_fd] = client;
 	return (true);

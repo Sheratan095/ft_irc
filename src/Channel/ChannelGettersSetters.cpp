@@ -28,7 +28,7 @@ bool	Channel::isClientInChannel(SocketFd client_fd) const
 
 bool	Channel::isChannelFull() const
 {
-	return (_members.size() >= _userLimit);
+	return (_members.size() >= (size_t)_userLimit);
 }
 
 bool	Channel::isClientInvited(SocketFd client_fd) const

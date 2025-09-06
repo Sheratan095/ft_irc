@@ -20,7 +20,7 @@ TO DO add a kick reason
 
 DONE restriction on topic
 
-TO DO user number limit doesn't works
+DONE user number limit doesn't works
 
 DONE: if a client is invited and the channel is key protected, should the invted still insert the key? now yes
 

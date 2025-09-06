@@ -16,7 +16,7 @@ void	Server::kickCmd(Client *client, const IRCMessage &message)
 
 	const std::string&	channelName =  toLower(message.parameters[0]);
 	const std::string&	targetNickname = message.parameters[1];
-	const std::string&	reason = message.parameters.size() == 3 ? message.parameters[2] : "";
+	const std::string&	reason = message.trailing.empty() ? "No reason specified" : message.trailing;
 
 	// Check if the channel exist
 	std::map<std::string, Channel*>::iterator	it = _channels.find(channelName);

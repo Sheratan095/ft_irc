@@ -16,7 +16,7 @@ TO DO remove Errno from checkpoll
 
 DONE able the quit also if not registered
 
-TO DO add a kick reason
+DONE add a kick reason
 
 DONE restriction on topic
 

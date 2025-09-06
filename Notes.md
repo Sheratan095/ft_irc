@@ -6,11 +6,15 @@ If a client tries to change their nickname to the same nickname they already hav
 
 channels names case sensitive?? now yes
 
+TO DO nick name sensitive?
+
+TO DO commands case insensitive
+
 TO DO handle cap
 
 TO DO remove Errno from checkpoll
 
-TO DO able the quit also if not registered
+DONE able the quit also if not registered
 
 TO DO add a kick reason
 
@@ -18,9 +22,9 @@ DONE restriction on topic
 
 TO DO user number limit doesn't works
 
-TO DO: if a client is invited and the channel is key protected, should the invted still insert the key? now yes
+DONE: if a client is invited and the channel is key protected, should the invted still insert the key? now yes
 
-TO DO: can you kick yourself? or remove operator to yourself?
+DONE: can you kick yourself? or remove operator to yourself? now yes
 
 !!!!!Error numerics like 401 ERR_NOSUCHNICK!!!!!
 

@@ -17,7 +17,7 @@ void	Server::handleRequest(int client_fd)
 
 	if (messages.empty())
 	{
-		std::cerr << "Error: No valid messages parsed from client fd: " << client_fd << std::endl;
+		std::cerr << "Error: empty message sent from fd: " << client_fd << std::endl << std::endl;
 		return;
 	}
 

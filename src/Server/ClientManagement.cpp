@@ -36,7 +36,7 @@ void	Server::removeClient(Client *client)
 			it->second->removeClient(client->getSocketFd());
 	}
 
-	// Remove quitting client from other clients' sets
+	// Remove quitting client from other clients' sets (private conversations)
 	for (std::map<SocketFd, std::set<SocketFd> >::iterator it = _privateConversations.begin(); it != _privateConversations.end(); ++it)
 		it->second.erase(client->getSocketFd());
 

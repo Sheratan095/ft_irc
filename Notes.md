@@ -8,7 +8,7 @@ channels names case sensitive?? now yes
 
 TO DO nick name sensitive?
 
-TO DO commands case insensitive
+DONE commands case insensitive
 
 TO DO handle cap
 

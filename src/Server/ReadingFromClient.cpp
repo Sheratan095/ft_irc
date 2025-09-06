@@ -1,4 +1,5 @@
 #include "Server.hpp"
+#include <algorithm> // For std::transform
 
 // Utility: replace all substrings
 static void replaceAll(std::string &str, const std::string &from, const std::string &to)
@@ -48,10 +49,14 @@ std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
 		if (pos == std::string::npos)
 		{
 			msg.command = rest;
+			// Convert command to uppercase
+			std::transform(msg.command.begin(), msg.command.end(), msg.command.begin(), ::toupper);
 			messages.push_back(msg);
 			continue;
 		}
 		msg.command = rest.substr(0, pos);
+		// Convert command to uppercase
+		std::transform(msg.command.begin(), msg.command.end(), msg.command.begin(), ::toupper);
 		rest = rest.substr(pos + 1);
 
 		// 5. Parameters

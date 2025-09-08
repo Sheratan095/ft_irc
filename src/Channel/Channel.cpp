@@ -135,7 +135,6 @@ void	Channel::notifyMsg(Client *sender, const std::string &message) const
 	this->relayMessage(ss.str(), sender->getSocketFd());
 }
 
-// TO DO da finì
 void	Channel::notifyMode(Client *client, const std::string &appliedModes, const std::vector<std::string> &appliedParams) const
 {
 	std::stringstream	ss;

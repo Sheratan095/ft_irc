@@ -16,6 +16,11 @@ TO DO LIST command
 
 TO DO bot
 
+TO DO when ctrl + c in nc
+Client 4 is trying to disconnect in a strange way
+Client with fd: 4 disconnected
+Client with fd: 4 disconnected
+
 DONE handle cap
 
 DONE chiusura errore dopo cambiamente ERRNo

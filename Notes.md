@@ -6,7 +6,7 @@ If a client tries to change their nickname to the same nickname they already hav
 
 channels names case sensitive?? now yes
 
-TO DO nick name sensitive?
+DONE nick name sensitive now yes
 
 TO DO crash with an ssl connection??
 

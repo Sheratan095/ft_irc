@@ -4,7 +4,7 @@ void	handleSigInt(int sig)
 {
 	if (sig	==	SIGINT)
 	{
-		std::cout << "\nInterrupt signal received. Shutting down server..." << std::endl;
+		std::cout << "\nInterrupt signal received" << std::endl;
 		SERVER_RUNNING = false;
 	}
 }

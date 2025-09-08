@@ -36,18 +36,17 @@ void	Server::run()
 // true: Stop the server
 bool	Server::checkPoll(int poolResult) const
 {
-	if (poolResult < 0)
+	if (!SERVER_RUNNING)
 	{
-		std::cerr << "Poll failed (error cause unavailable)" << std::endl;
+		std::cout << "Server shutting down..." << std::endl << std::endl;
 		return (true); // Stop the server
 	}
-	else if (poolResult == 0) // Timeout occurred, no new connections
+
+	// Error occurred during poll
+	if (poolResult < 0)
 	{
-		if (!SERVER_RUNNING)
-		{
-			std::cout << "Server shutting down..." << std::endl;
-			return (true); // Stop the server
-		}
+		std::cerr << "Poll failed (error cause unavailable)" << std::endl << std::endl;
+		return (true); // Stop the server
 	}
 
 	return (false); // Continue listening for new connections

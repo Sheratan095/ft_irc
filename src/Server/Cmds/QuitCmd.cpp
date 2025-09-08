@@ -26,8 +26,7 @@ void	Server::quitCmd(Client *client, const std::string &reason)
 	else
 		notifyQuit(client, "Client disconnected");
 
-	int	client_fd = client->getSocketFd();
-	std::cout << "Client with fd: " << client_fd << " disconnected" << std::endl << std::endl;
+	client->getSocketFd();
 
 	removeClient(client);
 }

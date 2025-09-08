@@ -11,7 +11,7 @@ class	Client
 		std::string				_username;
 		std::string				_nickname;
 		std::string				_realname;
-		bool					_capHandshaking;
+		bool					_capHandshaking; // if the client requests CAP, the welcome message is delayed until CAP END
 		bool					_isAuthenticated;
 
 		std::string				_ipAddress;

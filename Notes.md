@@ -10,6 +10,8 @@ TO DO nick name sensitive?
 
 DONE commands case insensitive
 
+TO DO LIST command
+
 TO DO handle cap
 
 TO DO chiusura errore dopo cambiamente ERRNo

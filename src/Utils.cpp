@@ -117,3 +117,31 @@ std::string	intToString(int n)
 
 	return (oss.str());
 }
+
+// Join vector<string> with a separator
+std::string	join(const std::vector<std::string> &elements, const std::string &separator)
+{
+	std::string	result;
+
+	for (size_t i = 0; i < elements.size(); ++i)
+	{
+		result += elements[i];
+		if (i != elements.size() - 1)
+			result += separator;
+	}
+	return (result);
+}
+
+// Join set<string> with a separator
+std::string	join(const std::set<std::string> &elements, const std::string &separator)
+{
+	std::string	result;
+
+	for (std::set<std::string>::const_iterator it = elements.begin(); it != elements.end(); ++it)
+	{
+		if (!result.empty())
+			result += separator;
+		result += *it;
+	}
+	return (result);
+}

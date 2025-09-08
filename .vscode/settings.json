@@ -1,5 +1,6 @@
 {
 	"files.associations": {
+		"*.embeddedhtml": "html",
 		"ostream": "cpp",
 		"array": "cpp",
 		"atomic": "cpp",
@@ -53,6 +54,8 @@
 		"ctime": "cpp",
 		"set": "cpp",
 		"fstream": "cpp",
-		"iomanip": "cpp"
+		"iomanip": "cpp",
+		"ranges": "cpp",
+		"span": "cpp"
 	}
 }

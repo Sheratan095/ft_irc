@@ -31,7 +31,7 @@ bool	Server::switchCommand(const IRCMessage &message, Client *client)
 
 	if (message.command == "CAP")
 	{
-		sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
+		capCmd(client, message);
 		return (true);
 	}
 

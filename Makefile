@@ -2,7 +2,7 @@ NAME = ircserv
 
 TESTFOLDER = test/bircd
 
-CC = c++ -std=c++98 -g -Iincludes/
+CC = c++ -std=c++98 -Ofast -g -Iincludes/
 CC += -Wall -Wextra -Werror
 
 SRCS = src/main.cpp \
@@ -29,6 +29,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/KickCmd.cpp \
 	src/Server/Cmds/PrivmsgCmd.cpp \
 	src/Server/Cmds/WhoisCmd.cpp \
+	src/Server/Cmds/CapCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 

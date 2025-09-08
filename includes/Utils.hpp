@@ -17,4 +17,8 @@ int							safeAtoi(const std::string &str);
 
 std::string					intToString(int n);
 
+std::string					join(const std::set<std::string> &elements, const std::string &separator);
+
+std::string					join(const std::vector<std::string> &elements, const std::string &separator);
+
 #endif

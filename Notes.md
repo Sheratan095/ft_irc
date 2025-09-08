@@ -12,6 +12,11 @@ DONE commands case insensitive
 
 TO DO handle cap
 
+TO DO chiusura errore dopo cambiamente ERRNo
+Interrupt signal received. Shutting down server...
+Poll failed (error cause unavailable)
+Server destroyed.
+
 DONE able the quit also if not registered
 
 DONE add a kick reason

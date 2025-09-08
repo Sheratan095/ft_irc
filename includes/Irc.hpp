@@ -18,6 +18,7 @@
 #include <poll.h>
 #include <set>
 #include <algorithm> // For std::find
+#include <netdb.h> // For gethostbyname
 #include "Utils.hpp"
 #include "Response.hpp"
 

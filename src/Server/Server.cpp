@@ -97,28 +97,48 @@ bool	Server::createSocket()
 
 bool	Server::bindSocket()
 {
-	// Create and configure the server address structure
-	struct sockaddr_in	addr = {};
+	struct sockaddr_in addr = {};
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(_port);
 
-	// Configure the address structure:
-	addr.sin_family = AF_INET;						// IPv4 address family
-	//htonl  converts a 32-bit (long) integer from your machine’s native byte order (host order) to network byte order (big-endian)
-	// INADDR_ANY is 0x00000000
-	// addr.sin_addr.s_addr = htonl(INADDR_ANY);		// Accept connections from any IP
-	addr.sin_port = 	(_port);					// Convert port to network byte order
-
-	// Bind the socket to the specified address and port
-	// This associates the socket with a specific network interface and port
-	// After binding, the socket can listen for incoming connections on this address
-	if (bind(_socketFd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
+	// Resolve hostname → IP
+	char hostname[256];
+	if (gethostname(hostname, sizeof(hostname)) == -1)
 	{
-		// Binding failed - port might be already in use or insufficient permissions
+		std::cerr << "Error: gethostname failed" << std::endl;
 		close(_socketFd);
-		return (false);
+		return false;
 	}
 
-	return (true);
+	struct hostent *host = gethostbyname(hostname);
+	if (host == NULL)
+	{
+		std::cerr << "Error: gethostbyname failed" << std::endl;
+		close(_socketFd);
+		return false;
+	}
+
+	struct in_addr **addr_list = reinterpret_cast<struct in_addr **>(host->h_addr_list);
+	if (addr_list[0] == NULL)
+	{
+		std::cerr << "Error: no IP addresses found for host" << std::endl;
+		close(_socketFd);
+		return false;
+	}
+
+	// Use the first IP associated with this hostname
+	addr.sin_addr = *addr_list[0];
+
+	if (bind(_socketFd, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr)) == -1)
+	{
+		std::cerr << "Error: socket binding failed" << std::endl;
+		close(_socketFd);
+		return false;
+	}
+
+	return true;
 }
+
 
 bool	Server::startSocketListening()
 {

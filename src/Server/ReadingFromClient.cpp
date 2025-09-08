@@ -96,8 +96,12 @@ std::string	Server::readMessageFromClient(int client_fd) const
 	static char	buffer[1024];
 	ssize_t	bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
+	// it goes on when the client try to connect with SSL
 	if (bytes_received < 0)
+	{
 		std::cerr << "Error receiving data" << std::endl;
+		return ("");
+	}
 	else if (bytes_received == 0)
 		std::cout << "Client " << client_fd << " is trying to disconnect in a strange way" << std::endl;
 

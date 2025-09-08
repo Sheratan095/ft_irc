@@ -8,7 +8,7 @@ channels names case sensitive?? now yes
 
 DONE nick name sensitive now yes
 
-TO DO crash with an ssl connection??
+DONE crash with an ssl connection??
 
 DONE commands case insensitive
 

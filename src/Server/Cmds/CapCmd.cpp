@@ -27,7 +27,7 @@ void Server::capCmd(Client *client, const IRCMessage &message)
 		// manually join the set
 		std::string	capabilities = join(supported, " ");
 
-		sendMessage(client->getSocketFd(), ":" + serverName + " CAP * LS :" + capabilities);
+		sendMessage(client->getSocketFd(), ":" + serverName + " CAP * LS :" + capabilities + "\r\n");
 	}
 	else if (subCmd == "REQ")
 	{
@@ -45,22 +45,27 @@ void Server::capCmd(Client *client, const IRCMessage &message)
 		std::vector<std::string>	acked, nacked;
 		size_t	supportedCount = supported.size();
 
-		// Check which requested capabilities are supported
 		for (size_t i = 0; i < reqCaps.size(); ++i)
 		{
+			bool	found = false;
 			for (size_t j = 0; j < supportedCount; ++j)
 			{
 				if (reqCaps[i] == supported[j])
-					acked.push_back(reqCaps[i]);
-				else
-					nacked.push_back(reqCaps[i]);
+				{
+					found = true;
+					break;
+				}
 			}
+			if (found)
+				acked.push_back(reqCaps[i]);
+			else
+				nacked.push_back(reqCaps[i]);
 		}
 
 		if (!acked.empty())
-			sendMessage(client->getSocketFd(), ":" + serverName + " CAP * ACK :" + join(acked, " "));
+			sendMessage(client->getSocketFd(), ":" + serverName + " CAP * ACK :" + join(acked, " ") + "\r\n");
 		if (!nacked.empty())
-			sendMessage(client->getSocketFd(), ":" + serverName + " CAP * NAK :" + join(nacked, " "));
+			sendMessage(client->getSocketFd(), ":" + serverName + " CAP * NAK :" + join(nacked, " ") + "\r\n");
 	}
 	else if (subCmd == "END")
 	{
@@ -70,6 +75,6 @@ void Server::capCmd(Client *client, const IRCMessage &message)
 	else
 	{
 		// Unknown subcommand → NAK
-		sendMessage(client->getSocketFd(), ":" + serverName + " CAP * NAK :");
+		sendMessage(client->getSocketFd(), ":" + serverName + " CAP * NAK :" + subCmd + "\r\n");
 	}
 }

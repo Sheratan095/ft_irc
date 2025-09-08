@@ -11,6 +11,7 @@ class	Client
 		std::string				_username;
 		std::string				_nickname;
 		std::string				_realname;
+		bool					_capHandshaking;
 		bool					_isAuthenticated;
 
 		std::string				_ipAddress;
@@ -33,6 +34,8 @@ class	Client
 		void	setNickname(const std::string& nickname);
 		void	setAuthenticated();
 		void	setRealName(const std::string& realname);
+		void	setCapHandshaking(bool status);
+
 
 		void	sendPrivMessage(Client *sender, const std::string &message) const;
 };

@@ -5,6 +5,7 @@ Client::Client(SocketFd socket_fd, const std::string &ipAddress): _socketFd(sock
 	_username = "";
 	_nickname = "";
 	_realname = "";
+	_capHandshaking = false;
 	_isAuthenticated = false;
 }
 
@@ -17,7 +18,7 @@ Client::~Client()
 
 bool	Client::isRegistered() const
 {
-	if (_username.empty() || _nickname.empty() || _realname.empty() || !_isAuthenticated)
+	if (_username.empty() || _nickname.empty() || _realname.empty() || !_isAuthenticated || _capHandshaking == true)
 		return (false);
 
 	return (true);
@@ -87,6 +88,11 @@ std::string Client::getWho() const
 		<< getRealName();
 
 	return (oss.str());
+}
+
+void	Client::setCapHandshaking(bool status)
+{
+	_capHandshaking = status;
 }
 
 void	Client::sendPrivMessage(Client *sender, const std::string &message) const

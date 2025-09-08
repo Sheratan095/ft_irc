@@ -2,6 +2,8 @@
 
 void Server::capCmd(Client *client, const IRCMessage &message)
 {
+	client->setCapHandshaking(true);
+
 	const std::string	serverName = SERVER_NAME;
 
 	//multi-prefix - Shows multiple user prefixes (@ for ops, + for voice, etc.)
@@ -71,10 +73,17 @@ void Server::capCmd(Client *client, const IRCMessage &message)
 	{
 		// Acknowledge the end of capability negotiation DO NOT NEED TO SEND ACK
 		// sendMessage(client->getSocketFd(), ":" + serverName + " CAP * ACK");
+		client->setCapHandshaking(false);
 	}
 	else
 	{
 		// Unknown subcommand → NAK
 		sendMessage(client->getSocketFd(), ":" + serverName + " CAP * NAK :" + subCmd + "\r\n");
+	}
+
+	if (client->isRegistered())
+	{
+		// If the client is now fully registered, send the welcome messages
+		sendResponse(client, RPL_WELCOME, "");
 	}
 }

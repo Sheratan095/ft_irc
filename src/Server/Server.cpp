@@ -104,8 +104,8 @@ bool	Server::bindSocket()
 	addr.sin_family = AF_INET;						// IPv4 address family
 	//htonl  converts a 32-bit (long) integer from your machine’s native byte order (host order) to network byte order (big-endian)
 	// INADDR_ANY is 0x00000000
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);		// Accept connections from any IP
-	addr.sin_port = htons(_port);					// Convert port to network byte order
+	// addr.sin_addr.s_addr = htonl(INADDR_ANY);		// Accept connections from any IP
+	addr.sin_port = 	(_port);					// Convert port to network byte order
 
 	// Bind the socket to the specified address and port
 	// This associates the socket with a specific network interface and port

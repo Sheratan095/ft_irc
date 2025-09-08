@@ -38,16 +38,8 @@ bool	Server::checkPoll(int poolResult) const
 {
 	if (poolResult < 0)
 	{
-		if (errno == EINTR)
-		{
-			std::cerr << "Poll interrupted by signal" << std::endl;
-			return (false); // Continue listening
-		}
-		else
-		{
-			std::cerr << "Poll error: " << strerror(errno) << std::endl;
-			return (true); // Stop the server on error
-		}
+		std::cerr << "Poll failed (error cause unavailable)" << std::endl;
+		return (true); // Stop the server
 	}
 	else if (poolResult == 0) // Timeout occurred, no new connections
 	{
@@ -68,7 +60,7 @@ void	Server::handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t c
 	
 	if (client_fd == -1)
 	{
-		std::cerr << "Error accepting client connection: " << strerror(errno) << std::endl;
+		std::cerr << "Error accepting client connection" << std::endl;
 		return; // Handle error, but continue accepting new connections
 	}
 

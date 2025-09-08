@@ -97,7 +97,7 @@ std::string	Server::readMessageFromClient(int client_fd) const
 	ssize_t	bytes_received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
 	if (bytes_received < 0)
-		std::cerr << "Error receiving data: " << strerror(errno) << std::endl;
+		std::cerr << "Error receiving data" << std::endl;
 	else if (bytes_received == 0)
 		std::cout << "Client " << client_fd << " is trying to disconnect in a strange way" << std::endl;
 

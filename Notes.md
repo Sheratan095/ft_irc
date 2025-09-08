@@ -12,8 +12,6 @@ DONE commands case insensitive
 
 TO DO handle cap
 
-TO DO remove Errno from checkpoll
-
 DONE able the quit also if not registered
 
 DONE add a kick reason

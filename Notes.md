@@ -8,6 +8,8 @@ channels names case sensitive?? now yes
 
 TO DO nick name sensitive?
 
+TO DO crash with an ssl connection??
+
 DONE commands case insensitive
 
 TO DO LIST command

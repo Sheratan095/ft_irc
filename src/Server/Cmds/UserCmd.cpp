@@ -10,12 +10,11 @@ void	Server::userCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	if (message.parameters.size() + (!message.trailing.empty()) < 4)
+	if (message.parameters.size() < 2 || message.trailing.empty())
 	{
 		sendResponse(client, ERR_NEEDMOREPARAMS, "USER");
 		return;
 	}
-
 
 	client->setUsername(message.parameters[0]);
 	// the second parameter is the hostname, which we ignore

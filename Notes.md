@@ -12,7 +12,7 @@ DONE commands case insensitive
 
 TO DO LIST command
 
-TO DO handle cap
+DONE handle cap
 
 TO DO chiusura errore dopo cambiamente ERRNo
 Interrupt signal received. Shutting down server...

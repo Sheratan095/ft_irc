@@ -34,7 +34,7 @@ SRCS = src/main.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 
-BOT_NAME = Magic8Ball
+BOT_NAME = MagicBall
 BOT_SRCS = src/Bot/Bot.cpp \
 		src/Bot/main.cpp \
 		src/Bot/BotUtils.cpp \
@@ -76,6 +76,11 @@ test_bot:
 
 val: all
 	valgrind ./$(NAME) $(arg)
+
+val_bot:
+	@$(CC) $(BOT_SRCS) -Iincludes/ -o $(BOT_NAME)
+	valgrind ./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
+
 
 #COLORS
 

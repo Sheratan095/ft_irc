@@ -143,6 +143,21 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 			oss << " " << params << " :Unknown mode";
 			break;
 
+		// params = ""
+		case RPL_LISTSTART:
+			oss << "Channel :Users  Name";
+			break;
+
+		case RPL_LIST:
+			// params = "<channel> <user count> :<topic>"
+			oss << " " << params;
+			break;
+
+		case RPL_LISTEND:
+			// params = ""
+			oss << " :End of /LIST";
+			break;
+
 		default:
 			oss << " :Unknown response code";
 			break;

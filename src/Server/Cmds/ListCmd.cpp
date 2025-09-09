@@ -1,5 +1,6 @@
 #include "Server.hpp"
 
+// FORMAT: /LIST
 void	Server::listCmd(Client *client, const IRCMessage &message)
 {
 	if (client->isRegistered() == false)
@@ -8,9 +9,6 @@ void	Server::listCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	if (message.parameters.size() < 1)
-	{
-		sendResponse(client, ERR_NEEDMOREPARAMS, "LIST");
-		return;
-	}
+	
+
 }

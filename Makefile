@@ -35,29 +35,28 @@ SRCS = src/main.cpp \
 	src/Utils.cpp \
 
 BOT_NAME = MagicBall
-BOT_SRCS = src/Bot/Bot.cpp \
-		src/Bot/main.cpp \
-		src/Bot/BotUtils.cpp \
+BOT_SRCS = Bot/src/Bot.cpp \
+		Bot/src/main.cpp \
+		Bot/src/BotUtils.cpp \
+		Bot/src/BotConnection.cpp \
 
 
-all: $(NAME)
+all: $(NAME) $(BOT_NAME)
 
 $(NAME): $(SRCS)
 	@$(CC) $(SRCS) -Iincludes/ -o $(NAME)
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
 
-bot: $(BOT_SRCS)
-	@$(CC)  $(BOT_SRCS) -o $(BOT_NAME)
+$(BOT_NAME): $(BOT_SRCS)
+	@$(CC) -IBot/includes/ $(BOT_SRCS) -o $(BOT_NAME)
+	@echo "$(GREEN)[$(NAME)]:\t BOT COMPILED$(RESET)"
 
 clean:
-	@$(MAKE) -s -C $(TESTFOLDER) clean
-	@echo "$(RED)[Tester]:\t CLEAN$(RESET)"
 	@echo "$(RED)[$(NAME)]:\t CLEAN$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(MAKE) -s -C $(TESTFOLDER) fclean
-	@echo "$(RED)[Tester]:\t FCLEAN$(RESET)"
+	@rm -f $(BOT_NAME)
 	@echo "$(RED)[$(NAME)]:\t FCLEAN$(RESET)"
 
 re: fclean all
@@ -70,15 +69,13 @@ arg = $(PORT) $(PASSWORD)
 test: all
 	./$(NAME) $(arg)
 
-test_bot:
-	@$(CC) $(BOT_SRCS) -Iincludes/ -o $(BOT_NAME)
+test_bot: all
 	./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
 
 val: all
 	valgrind ./$(NAME) $(arg)
 
-val_bot:
-	@$(CC) $(BOT_SRCS) -Iincludes/ -o $(BOT_NAME)
+val_bot: all
 	valgrind ./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
 
 

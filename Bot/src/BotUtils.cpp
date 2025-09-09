@@ -211,3 +211,39 @@ std::string	getNickByPrefix(const std::string &prefix)
 
 	return (prefix.substr(0, excl_pos));
 }
+
+void	printRawMessage(const std::vector<IRCMessage> &messages)
+{
+	for (size_t i = 0; i < messages.size(); ++i)
+	{
+		const IRCMessage	&msg = messages[i];
+
+		if (msg.prefix.empty())
+			std::cout << "No prefix, " << std::endl;
+		else
+			std::cout << "Prefix: " << msg.prefix << ", " << std::endl;
+
+		if (msg.command.empty())
+			std::cout << "No command " << std::endl;
+		else
+			std::cout << "Command: " << msg.command << std::endl;
+
+		if (msg.parameters.empty())
+			std::cout << "No parameters " << std::endl;
+		else
+		{
+			std::cout << "Parameters: ";
+			for (size_t i = 0; i < msg.parameters.size(); ++i)
+				std::cout << msg.parameters[i] << " " ;
+
+			std::cout << std::endl;
+		}
+
+		if (!msg.trailing.empty())
+			std::cout << "Trailing: " << msg.trailing << std::endl;
+
+		std::cout << std::endl;
+
+	}
+
+}

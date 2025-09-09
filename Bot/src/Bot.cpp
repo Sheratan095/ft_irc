@@ -69,19 +69,24 @@ void	Bot::run()
 			buffer[bytes_received] = '\0';
 
 			std::vector<IRCMessage>	messages = parseMessage(std::string(buffer));
+			printRawMessage(messages);
 			for (size_t i = 0; i < messages.size(); ++i)
-			{
-				if (messages[i].command == "PRIVMSG")
-					privmsgCmd(messages[i]);
-				if (messages[i].command == "PING")
-					sendMessage(_socketFd, "PONG :" + messages[i].trailing + "\r\n");
-			}
+				switchCommand(messages[i]);
 		}
 	}
 
 	close(_socketFd);
 }
 
+void	Bot::switchCommand(const IRCMessage &command)
+{
+	if (command.command == "PRIVMSG")
+		privmsgCmd(command);
+	if (command.command == "PING")
+		sendMessage(_socketFd, "PONG :" + command.trailing + "\r\n");
+	if (command.command == "INVITE")
+		sendMessage(_socketFd, "JOIN " + command.trailing + "\r\n");
+}
 
 void Bot::privmsgCmd(const IRCMessage &message) const
 {

@@ -31,6 +31,7 @@ class Bot
 		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
 
 		void	privmsgCmd(const IRCMessage &message) const;
+		void	switchCommand(const IRCMessage &command);
 
 
 	//-------------------------EXCEPTIONS-------------------------

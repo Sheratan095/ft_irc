@@ -57,4 +57,7 @@ void						replaceAll(std::string &str, const std::string &from, const std::strin
 
 std::string					getNickByPrefix(const std::string &prefix);
 
+void						printRawMessage(const std::vector<IRCMessage> &messages);
+
+
 #endif

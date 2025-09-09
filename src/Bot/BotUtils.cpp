@@ -1,0 +1,105 @@
+#include "Bot.hpp"
+
+std::vector<std::string>	split(const std::string& str, const std::string& delimiter)
+{
+		std::vector<std::string>	result;
+		size_t						start = 0;
+		size_t						end;
+
+		while ((end = str.find(delimiter, start)) != std::string::npos)
+		{
+			result.push_back(str.substr(start, end - start));
+			start = end + delimiter.length();
+		}
+
+		result.push_back(str.substr(start)); // Add remaining part
+
+		return (result);
+}
+
+bool	insentiveStringCompare(const std::string &str1, const std::string &str2)
+{
+	if (str1.size() != str2.size())
+		return (false);
+
+	for (size_t i = 0; i < str1.size(); ++i)
+	{
+		if (std::tolower(str1[i]) != std::tolower(str2[i]))
+			return (false);
+	}
+
+	return (true);
+}
+
+void	sendMessage(SocketFd socketFfd, const std::string &message)
+{
+	ssize_t	bytesSent = send(socketFfd, message.c_str(), message.size(), 0);
+
+	if (bytesSent < 0)
+		std::cerr << "Error sending message to socket fd: " << socketFfd << std::endl;
+}
+
+std::string toLower(const std::string &s)
+{
+	std::string	res = s;
+
+	for (size_t i = 0; i < res.size(); ++i)
+		res[i] = std::tolower(res[i]);
+
+	return (res);
+}
+
+bool	startsWith(const std::string &str, const std::string &prefix)
+{
+	if (str.size() < prefix.size())
+		return (false);
+
+	return (str.compare(0, prefix.size(), prefix) == 0);
+}
+
+int safeAtoi(const std::string &s)
+{
+	for (size_t i = 0; i < s.size(); ++i)
+	{
+		if (!std::isdigit(s[i]))
+			return (-1); // invalid number
+	}
+	return (std::atoi(s.c_str()));
+}
+
+std::string	intToString(int n)
+{
+	std::ostringstream	oss;
+
+	oss << n;
+
+	return (oss.str());
+}
+
+// Join vector<string> with a separator
+std::string	join(const std::vector<std::string> &elements, const std::string &separator)
+{
+	std::string	result;
+
+	for (size_t i = 0; i < elements.size(); ++i)
+	{
+		result += elements[i];
+		if (i != elements.size() - 1)
+			result += separator;
+	}
+	return (result);
+}
+
+// Join set<string> with a separator
+std::string	join(const std::set<std::string> &elements, const std::string &separator)
+{
+	std::string	result;
+
+	for (std::set<std::string>::const_iterator it = elements.begin(); it != elements.end(); ++it)
+	{
+		if (!result.empty())
+			result += separator;
+		result += *it;
+	}
+	return (result);
+}

@@ -2,7 +2,7 @@ NAME = ircserv
 
 TESTFOLDER = test/bircd
 
-CC = c++ -std=c++98 -Ofast -g -Iincludes/
+CC = c++ -std=c++98 -Ofast -g
 CC += -Wall -Wextra -Werror
 
 SRCS = src/main.cpp \
@@ -34,13 +34,21 @@ SRCS = src/main.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 
+BOT_NAME = Magic8Ball
+BOT_SRCS = src/Bot/Bot.cpp \
+		src/Bot/main.cpp \
+		src/BotUtils.cpp \
+
+
 all: $(NAME)
 
 $(NAME): $(SRCS)
-# 	@$(MAKE) -s -C $(TESTFOLDER) all
-# 	@echo "$(BLUE)[$(NAME)]:\t TESTER COMPILED$(RESET)"
-	@$(CC) $(SRCS) -o $(NAME)
+	@$(CC) $(SRCS) -Iincludes/ -o $(NAME)
+
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
+
+bot: $(BOT_SRCS)
+	@$(CC)  $(BOT_SRCS) -o $(BOT_NAME)
 
 clean:
 	@$(MAKE) -s -C $(TESTFOLDER) clean
@@ -63,6 +71,8 @@ arg = $(PORT) $(PASSWORD)
 test: all
 	./$(NAME) $(arg)
 
+test_bot: test
+	./$(BOT_NAME) 10.12.1.10 $(PORT) $(PORT)
 
 val: all
 	valgrind ./$(NAME) $(arg)

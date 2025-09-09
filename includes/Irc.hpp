@@ -32,6 +32,8 @@
 
 #define	MAX_CLIENTS 10
 
+#define BOT_NAME "Magic_8_ball"
+
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 
 class	Channel;

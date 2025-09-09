@@ -13,7 +13,7 @@ Server::Server(const int port, const std::string &password): _port(port), _passw
 	if (port < 1024 || port > 65535)
 		throw std::out_of_range("Port must be between 1024 and 65535.");
 
-	_bot = new Bot("ChatBot");
+	_bot = new Bot(BOT_NAME);
 
 	std::cout << "Server created with password: '" << password << "'" << std::endl;
 }

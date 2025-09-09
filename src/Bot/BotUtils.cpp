@@ -103,3 +103,12 @@ std::string	join(const std::set<std::string> &elements, const std::string &separ
 	}
 	return (result);
 }
+
+void	handleSigInt(int sig)
+{
+	if (sig	==	SIGINT)
+	{
+		std::cout << "\nInterrupt signal received" << std::endl;
+		BOT_RUNNING = false;
+	}
+}

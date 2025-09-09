@@ -37,14 +37,13 @@ SRCS = src/main.cpp \
 BOT_NAME = Magic8Ball
 BOT_SRCS = src/Bot/Bot.cpp \
 		src/Bot/main.cpp \
-		src/BotUtils.cpp \
+		src/Bot/BotUtils.cpp \
 
 
 all: $(NAME)
 
 $(NAME): $(SRCS)
 	@$(CC) $(SRCS) -Iincludes/ -o $(NAME)
-
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
 
 bot: $(BOT_SRCS)
@@ -71,8 +70,9 @@ arg = $(PORT) $(PASSWORD)
 test: all
 	./$(NAME) $(arg)
 
-test_bot: test
-	./$(BOT_NAME) 10.12.1.10 $(PORT) $(PORT)
+test_bot:
+	@$(CC) $(BOT_SRCS) -Iincludes/ -o $(BOT_NAME)
+	./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
 
 val: all
 	valgrind ./$(NAME) $(arg)

@@ -1,29 +1,83 @@
 #ifndef BOT_HPP
 #define BOT_HPP
 
-#include <string>
 #include <iostream>
-#include <vector>
-#include <set>
-#include <sstream>
+#include <cstring>
+#include <string>
+#include <stdlib.h>
+#include <csignal>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <map>
+#include <fcntl.h> 
+#include <list>
+#include <vector>
+#include <sstream>
+#include <poll.h>
+#include <set>
+#include <algorithm> // For std::find
+#include <netdb.h> // For gethostbyname
+
+extern bool BOT_RUNNING;
 
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 
 
 class Bot
 {
-public:
-	Bot(const std::string &server_ip, int server_port, int bot_port);
-	void run();
+	private:
+		std::string	_server_ip;
+		int			_server_port;
+		SocketFd	_socketFd;
 
-private:
-	std::string _server_ip;
-	int _server_port;
-	int _bot_port;
+		std::string	_nick;
+
+		std::vector<pollfd>	_pollFds;
+
+		std::string	_ip;
+
+
+	public:
+		Bot(const std::string &server_ip, int server_port);
+
+		bool	createSocket();
+		void	run();
+		void	connectToServer(const std::string &password);
+
+	//-------------------------EXCEPTIONS-------------------------
+
+		class SocketException : public std::exception
+		{
+			virtual const char *what() const throw()
+			{
+				return "Error: socket creation failed";
+			}
+		};
+
+		class BindException : public std::exception
+		{
+			virtual const char *what() const throw()
+			{
+				return "Error: bind failed";
+			}
+		};
+
+		class ListenException : public std::exception
+		{
+			virtual const char *what() const throw()
+			{
+				return "Error: listen failed";
+			}
+		};
+
+
 };
 
 //----------------- Bot Utilities ----------------//
+
+void						handleSigInt(int sig);
 
 std::vector<std::string>	split(const std::string& str, const std::string& delimiter);
 

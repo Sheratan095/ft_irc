@@ -30,6 +30,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/PrivmsgCmd.cpp \
 	src/Server/Cmds/WhoisCmd.cpp \
 	src/Server/Cmds/CapCmd.cpp \
+	src/Server/Cmds/ListCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 

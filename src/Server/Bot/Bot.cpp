@@ -66,11 +66,11 @@ void Bot::receiveMessage(Client *client, const IRCMessage &message) const
 	}
 	else if (message.trailing == "!8ball" || message.trailing == "!8ball ")
 	{
-		reply = "Please ask a yes/no question after the command. (include '?')";
+		reply = "Please ask a yes/no question after the command.";
 	}
 	else if (message.trailing.find("?") == std::string::npos)
 	{
-		reply = "That doesn't look like a question. Please ask a yes/no question.";
+		reply = "That doesn't look like a question. Please ask a yes/no question. (include '?')";
 	}
 	else
 	{

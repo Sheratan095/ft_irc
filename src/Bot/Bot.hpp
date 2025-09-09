@@ -24,6 +24,14 @@ extern bool BOT_RUNNING;
 
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 
+struct	IRCMessage
+{
+	std::string					prefix;      // Optional, starts with ':'
+	std::string					command;
+	std::vector<std::string>	parameters;  // Command parameters
+	std::string					trailing;    // Trailing parameter, if any
+};
+
 
 class Bot
 {
@@ -34,9 +42,9 @@ class Bot
 
 		std::string	_nick;
 
-		std::vector<pollfd>	_pollFds;
-
 		std::string	_ip;
+
+		std::vector<std::string>	_responses;
 
 
 	public:
@@ -45,6 +53,11 @@ class Bot
 		bool	createSocket();
 		void	run();
 		void	connectToServer(const std::string &password);
+
+		std::vector<IRCMessage>	parseMessage(const std::string &message) const;
+
+		void	privmsgCmd(const IRCMessage &message) const;
+
 
 	//-------------------------EXCEPTIONS-------------------------
 
@@ -96,5 +109,9 @@ std::string					toLower(const std::string &s);
 void						sendMessage(SocketFd socketFfd, const std::string &message);
 
 bool						insentiveStringCompare(const std::string &str1, const std::string &str2);
+
+void						replaceAll(std::string &str, const std::string &from, const std::string &to);
+
+std::string					getNickByPrefix(const std::string &prefix);
 
 #endif // BOT_HPP

@@ -112,3 +112,102 @@ void	handleSigInt(int sig)
 		BOT_RUNNING = false;
 	}
 }
+
+std::vector<IRCMessage> Bot::parseMessage(const std::string &message) const
+{
+	std::vector<IRCMessage> messages;
+
+	// 1. Normalize line endings (\r\n → \n, \r → \n)
+	std::string normalized = message;
+	replaceAll(normalized, "\r\n", "\n");
+	replaceAll(normalized, "\r", "\n");
+
+	// 2. Split into lines
+	std::vector<std::string> lines = split(normalized, "\n");
+
+	for (size_t i = 0; i < lines.size(); ++i)
+	{
+		const std::string &line = lines[i];
+		if (line.empty())
+			continue;
+
+		IRCMessage msg;
+		size_t pos = 0;
+		std::string rest = line;
+
+		// 3. Prefix (optional)
+		if (rest[0] == ':')
+		{
+			pos = rest.find(' ');
+			if (pos == std::string::npos)
+				continue; // Invalid line
+			msg.prefix = rest.substr(1, pos - 1);
+			rest = rest.substr(pos + 1);
+		}
+
+		// 4. Command
+		pos = rest.find(' ');
+		if (pos == std::string::npos)
+		{
+			msg.command = rest;
+			// Convert command to uppercase
+			std::transform(msg.command.begin(), msg.command.end(), msg.command.begin(), ::toupper);
+			messages.push_back(msg);
+			continue;
+		}
+		msg.command = rest.substr(0, pos);
+		// Convert command to uppercase
+		std::transform(msg.command.begin(), msg.command.end(), msg.command.begin(), ::toupper);
+		rest = rest.substr(pos + 1);
+
+		// 5. Parameters
+		std::vector<std::string> params;
+		while (!rest.empty())
+		{
+			if (rest[0] == ' ')
+			{
+				rest = rest.substr(1);
+				continue;
+			}
+			if (rest[0] == ':')
+			{
+				// Trailing param — keep raw (important for CTCP/DCC)
+				msg.trailing = rest.substr(1);
+				break;
+			}
+			pos = rest.find(' ');
+			if (pos == std::string::npos)
+			{
+				params.push_back(rest);
+				break;
+			}
+			params.push_back(rest.substr(0, pos));
+			rest = rest.substr(pos + 1);
+		}
+
+		msg.parameters = params;
+		messages.push_back(msg);
+	}
+
+	return messages;
+}
+
+void	replaceAll(std::string &str, const std::string &from, const std::string &to)
+{
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+	{
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length();
+	}
+}
+
+std::string	getNickByPrefix(const std::string &prefix)
+{
+	size_t	excl_pos = prefix.find('!');
+
+	if (excl_pos == std::string::npos)
+		return (prefix); // No '!', return whole prefix as nick
+
+	return (prefix.substr(0, excl_pos));
+}

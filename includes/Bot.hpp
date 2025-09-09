@@ -4,12 +4,14 @@
 #include "Irc.hpp"
 
 class Client;
+struct IRCMessage;
 
 class Bot
 {
 	private:
-		const std::string	_name;
-		std::string			_ipAddress;
+		const std::string			_name;
+		std::string					_ipAddress;
+		std::vector<std::string>	_responses;
 	
 	public:
 		Bot(const std::string &name);
@@ -22,7 +24,7 @@ class Bot
 		void	setIpAddress(const std::string &ipAddress);
 
 		void	sendWelcome(Client *client) const;
-		void	receiveMessage(Client *client, const std::string &message) const;
+		void	receiveMessage(Client *client, const IRCMessage &message) const;
 
 };
 

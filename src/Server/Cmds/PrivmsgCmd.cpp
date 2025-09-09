@@ -39,7 +39,7 @@ void	Server::privmsgCmd(Client *client, const IRCMessage &message)
 		// Message to the bot
 		if (insensitiveStringCompare(target, _bot->getName()))
 		{
-			_bot->receiveMessage(client, message.trailing);
+			_bot->receiveMessage(client, message);
 			return;
 		}
 

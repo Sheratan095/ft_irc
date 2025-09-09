@@ -60,7 +60,7 @@ std::vector<std::string>	split(const std::string& str, const std::string& delimi
 		return (result);
 }
 
-bool	insentiveStringCompare(const std::string &str1, const std::string &str2)
+bool	insensitiveStringCompare(const std::string &str1, const std::string &str2)
 {
 	if (str1.size() != str2.size())
 		return (false);

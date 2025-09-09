@@ -26,7 +26,7 @@ bool	Bot::isRegistered() const
 	return (!_ipAddress.empty() && !_name.empty());
 }
 
-void Bot::reciveMessage(Client *client, const std::string &message) const
+void Bot::receiveMessage(Client *client, const std::string &message) const
 {
 	(void)client;
 	(void)message;
@@ -34,7 +34,13 @@ void Bot::reciveMessage(Client *client, const std::string &message) const
 	if (isRegistered() == false)
 		return ;
 
-	// Process the received message
+	std::stringstream	ss;
+
+	ss << ":" << getPrefix()
+	<< " PRIVMSG " << client->getNickname()
+	<< " :" << "ahahahah stupiddooooo" << "\r\n";
+
+	sendMessage(client->getSocketFd(), ss.str());
 }
 void	Bot::sendWelcome(Client *client) const
 {

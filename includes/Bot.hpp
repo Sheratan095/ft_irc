@@ -22,7 +22,7 @@ class Bot
 		void	setIpAddress(const std::string &ipAddress);
 
 		void	sendWelcome(Client *client) const;
-		void	reciveMessage(Client *client, const std::string &message) const;
+		void	receiveMessage(Client *client, const std::string &message) const;
 
 };
 

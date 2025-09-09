@@ -36,6 +36,13 @@ void	Server::privmsgCmd(Client *client, const IRCMessage &message)
 	}
 	else
 	{
+		// Message to the bot
+		if (insensitiveStringCompare(target, _bot->getName()))
+		{
+			_bot->receiveMessage(client, message.trailing);
+			return;
+		}
+
 		// Handle private message
 
 		Client	*recipient = findClientByName(target);

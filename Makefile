@@ -33,6 +33,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/ListCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
+	src/Server/Bot/Bot.cpp
 
 all: $(NAME)
 

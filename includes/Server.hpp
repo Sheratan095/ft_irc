@@ -25,6 +25,7 @@ class	Server
 		//Needed to send QUIT and NICK also in private conversations and not just in the shared channels
 		std::map<SocketFd, std::set<SocketFd> >	_privateConversations;
 
+		Bot*	_bot;
 
 		bool	createSocket();
 		bool	bindSocket();

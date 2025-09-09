@@ -21,6 +21,7 @@
 #include <netdb.h> // For gethostbyname
 #include "Utils.hpp"
 #include "Response.hpp"
+#include "Bot.hpp"
 
 #define SERVER_NAME "ircServer"
 #define SERVER_INFO "A slightly sarcastic IRC server that lets you chat, argue, and probably break something."
@@ -33,9 +34,9 @@
 
 typedef int	SocketFd; // Define SocketFd as an alias for int, representing a socket file descriptor
 
-
 class	Channel;
 class	Client;
+class	Bot;
 class	Server;
 
 struct	IRCMessage

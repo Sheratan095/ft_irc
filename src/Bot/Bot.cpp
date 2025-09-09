@@ -77,9 +77,15 @@ void	Bot::run()
 
 		// it goes on when the client try to connect with SSL
 		if (bytes_received < 0)
+		{
 			std::cerr << "Error receiving data" << std::endl;
+			break;
+		}
 		else if (bytes_received == 0)
+		{
 			std::cout << "Client " << _socketFd << " is trying to disconnect in a strange way" << std::endl;
+			break;
+		}
 
 		buffer[bytes_received] = '\0'; // Null-terminate the received string
 

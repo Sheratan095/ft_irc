@@ -2,7 +2,7 @@
 
 void	Server::run()
 {
-	std::cout << "Server is listening on " << _ip << ":" << _port << std::endl << std::endl;
+	std::cout << "Server is listening on " << _ip << " : " << _port << std::endl << std::endl;
 
 	int	poolResult;
 

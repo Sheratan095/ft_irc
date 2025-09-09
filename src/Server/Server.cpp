@@ -13,7 +13,7 @@ Server::Server(const int port, const std::string &password): _port(port), _passw
 	if (port < 1024 || port > 65535)
 		throw std::out_of_range("Port must be between 1024 and 65535.");
 
-	std::cout << "Server created with port: " << port << " and password: '" << password << "'" << std::endl;
+	std::cout << "Server created with password: '" << password << "'" << std::endl;
 }
 
 Server::~Server()
@@ -148,5 +148,17 @@ bool	Server::startSocketListening()
 		close(_socketFd);
 		return (false);
 	}
+
+	 // After listen() succeeds, retrieve the bound address
+	struct sockaddr_in	addr;
+	socklen_t			len = sizeof(addr);
+
+	if (getsockname(_socketFd, reinterpret_cast<struct sockaddr*>(&addr), &len) == 0)
+	{
+		char	ipStr[INET_ADDRSTRLEN];
+		if (inet_ntop(AF_INET, &addr.sin_addr, ipStr, sizeof(ipStr)) != NULL)
+			_ip = ipStr;
+	}
+
 	return (true);
 }

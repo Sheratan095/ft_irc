@@ -36,17 +36,28 @@ void Bot::reciveMessage(Client *client, const std::string &message) const
 
 	// Process the received message
 }
-
 void	Bot::sendWelcome(Client *client) const
 {
 	if (client == NULL)
-		return ;
+		return;
 
-	std::stringstream	ss;
+	std::string	prefix = getPrefix();
 
-	ss << ":" << getPrefix()
-	<< " PRIVMSG " << client->getNickname() // Target nick
-	<< " :" << "ao zzaaa" << "\r\n";
+	std::vector<std::string>	lines;
 
-	sendMessage(client->getSocketFd(), ss.str());
+	lines.push_back("Hello! I am the Magic 8-Ball 🎱");
+	lines.push_back("Ask me any yes/no question by typing: !8ball <your question>");
+	lines.push_back("Example: !8ball Will I pass exam rank 01?");
+	lines.push_back("I will respond: yes sure as long as it doesn't come out get_next_line");
+
+	for (size_t i = 0; i < lines.size(); ++i)
+	{
+		std::stringstream	ss;
+	
+		ss << ":" << prefix
+		<< " PRIVMSG " << client->getNickname()
+		<< " :" << lines[i] << "\r\n";
+	
+		sendMessage(client->getSocketFd(), ss.str());
+	}
 }

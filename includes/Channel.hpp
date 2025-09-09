@@ -73,6 +73,7 @@ class	Channel
 		std::vector<std::string>	getWho() const;
 		std::string					getNames() const;
 		std::string					getMode() const;
+		int							getClientCount() const;
 
 		void	notifyJoin(Client *client) const;
 		void	notifyTopicChange(Client *client) const;

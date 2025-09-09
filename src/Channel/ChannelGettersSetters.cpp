@@ -102,3 +102,8 @@ std::string	Channel::getNames() const
 
 	return (namesList);
 }
+
+int	Channel::getClientCount() const
+{
+	return (_members.size());
+}

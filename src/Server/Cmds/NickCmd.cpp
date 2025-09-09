@@ -47,7 +47,7 @@ void	Server::nickCmd(Client *client, const IRCMessage &message)
 		if (client->isRegistered())
 		{
 			client->setAuthenticated();
-			sendResponse(client, RPL_WELCOME, "");
+			sendWelcomeMessages(client);
 		}
 	}
 	else

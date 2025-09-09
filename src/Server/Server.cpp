@@ -161,8 +161,25 @@ bool	Server::startSocketListening()
 	{
 		char	ipStr[INET_ADDRSTRLEN];
 		if (inet_ntop(AF_INET, &addr.sin_addr, ipStr, sizeof(ipStr)) != NULL)
-			_ip = ipStr;
+			setIpAddress(ipStr);
 	}
 
 	return (true);
+}
+
+void	Server::setIpAddress(const std::string &ipAddress)
+{
+	_ip = ipAddress;
+
+	_bot->setIpAddress(ipAddress);
+}
+
+void	Server::sendWelcomeMessages(Client *client) const
+{
+	if (client == NULL)
+		return ;
+
+	// Send welcome messages to the client
+	sendResponse(client, RPL_WELCOME, "");
+	_bot->sendWelcome(client);
 }

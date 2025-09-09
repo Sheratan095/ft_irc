@@ -37,6 +37,8 @@ class	Server
 		void	handleConnectionRequest(struct sockaddr_in	client_addr, socklen_t client_len);
 		void	handleDisconnection(int client_fd);
 		void	handleRequest(int client_fd);
+		void	setIpAddress(const std::string &ipAddress);
+
 
 		bool	switchCommand(const IRCMessage &message, Client *client);
 
@@ -48,6 +50,7 @@ class	Server
 
 
 		bool	addClient(pollfd clientPollFd, const std::string &ip_str); // first connection
+		void	sendWelcomeMessages(Client *client) const;
 		void	removeClient(Client *client);
 
 		// commands

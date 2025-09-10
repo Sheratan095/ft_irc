@@ -105,3 +105,8 @@ void	Client::sendPrivMessage(Client *sender, const std::string &message) const
 
 	sendMessage(this->getSocketFd(), ss.str());
 }
+
+void	Client::setImBot(bool status)
+{
+	_imBot = status;
+}

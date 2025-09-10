@@ -31,6 +31,7 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/WhoisCmd.cpp \
 	src/Server/Cmds/CapCmd.cpp \
 	src/Server/Cmds/ListCmd.cpp \
+	src/Server/Cmds/ImBotCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 

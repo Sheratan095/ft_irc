@@ -113,6 +113,12 @@ bool	Server::switchCommand(const IRCMessage &message, Client *client)
 		return (true);
 	}
 
+	if (message.command == "IMBOT")
+	{
+		imBotCmd(client, message);
+		return (true);
+	}
+
 	sendResponse(client, ERR_UNKNOWNCOMMAND, message.command);
 
 	return (false);

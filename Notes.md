@@ -14,7 +14,7 @@ DONE commands case insensitive
 
 DONE LIST command
 
-TO DO check what if /TOPIC #a: new topic (du punti attaccati all'ultimo parametro)
+DONE check what if /TOPIC #a: new topic (du punti attaccati all'ultimo parametro) it's ok
 
 DONE when ctrl + c in nc
 Client 4 is trying to disconnect in a strange way

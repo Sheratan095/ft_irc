@@ -84,6 +84,8 @@ class	Server
 
 		// Send a message to a client
 		void	sendInviteMessage(Client *inviter, Client *invited, Channel *channel) const;
+		void	sendWelcomeMessage(Client *client) const;
+
 
 
 	public:

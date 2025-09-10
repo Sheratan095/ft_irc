@@ -82,8 +82,5 @@ void Server::capCmd(Client *client, const IRCMessage &message)
 	}
 
 	if (client->isRegistered())
-	{
-		// If the client is now fully registered, send the welcome messages
-		sendResponse(client, RPL_WELCOME, "");
-	}
+		sendWelcomeMessage(client);
 }

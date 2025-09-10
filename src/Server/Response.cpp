@@ -178,3 +178,10 @@ void	sendSrvFULLError(int client_fd)
 
 	sendMessage(client_fd, oss.str());
 }
+
+void	Server::sendWelcomeMessage(Client *client) const
+{
+	sendResponse(client, RPL_WELCOME, "");
+
+	
+}

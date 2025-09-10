@@ -8,8 +8,18 @@ void	Server::privmsgCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
-	if (message.parameters.size() < 1 || message.trailing.empty())
+	std::string messageText = message.trailing;
+	if (messageText.empty() && message.parameters.size() > 1)
 	{
+		// Rebuild message from parameters[1..]
+		messageText = "";
+		for (size_t i = 1; i < message.parameters.size(); ++i) {
+			if (i > 1) messageText += " ";
+			messageText += message.parameters[i];
+		}
+	}
+
+	if (messageText.empty()) {
 		sendResponse(client, ERR_NEEDMOREPARAMS, "PRIVMSG");
 		return;
 	}

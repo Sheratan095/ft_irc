@@ -81,6 +81,8 @@ class	Server
 		void	dispatchNotifications(Client *sender, const std::string &message, bool includeSender) const;
 		void	notifyNickChange(Client *sender, const std::string &oldNickname) const;
 		void	notifyQuit(Client *sender, const std::string &reason) const;
+		void	notifyBotJoin(Client *bot) const;
+
 
 		// Send a message to a client
 		void	sendSrvFULLError(int client_fd) const;

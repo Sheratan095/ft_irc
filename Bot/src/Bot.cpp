@@ -120,5 +120,9 @@ void Bot::privmsgCmd(const IRCMessage &message) const
 		reply = _responses[responseIndex];
 	}
 
-	sendMessage(_socketFd,"PRIVMSG " + getNickByPrefix(message.prefix) + " :" + reply + "\r\n");
+	//If the message was sent in a channel, reply to the channel, else reply to the user
+	if (message.parameters.size() > 0 && startsWith(message.parameters[0], "#"))
+		sendMessage(_socketFd,"PRIVMSG " + message.parameters[0] + " :" + reply + "\r\n");
+	else
+		sendMessage(_socketFd,"PRIVMSG " + getNickByPrefix(message.prefix) + " :" + reply + "\r\n");
 }

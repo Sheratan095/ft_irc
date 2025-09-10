@@ -19,4 +19,10 @@ void	Server::imBotCmd(Client *client, const IRCMessage &message)
 
 	client->setUsage(message.trailing);
 	client->setImBot(true);
+
+	for (std::map<int, Client *>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->isRegistered() == true && it->second != client)
+			sendMessage(it->second->getSocketFd(), client->getNickname() + " bot is connected to the server. Usage: " + client->getUsage() + "\r\n");
+	}
 }

@@ -32,6 +32,16 @@ void	Server::notifyQuit(Client *sender, const std::string &reason) const
 	dispatchNotifications(sender, message, false);
 }
 
+void	Server::notifyBotJoin(Client *bot) const
+{
+	// Notify all the other registered clients about the new bot
+	for (std::map<int, Client *>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->isRegistered() && it->second != bot)
+			sendMessage(it->second->getSocketFd(), bot->getNickname() + " bot is connected to the server. Usage: " + bot->getUsage() + "\r\n");
+	}
+}
+
 // JUST ONE message for client is sent, than the client can display it in every tabs associated with that client
 void	Server::dispatchNotifications(Client *sender, const std::string &message, bool includeSender) const
 {

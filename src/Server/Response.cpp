@@ -169,7 +169,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 }
 
 // Special function because this message is sent when the Client class isn't still created
-void	sendSrvFULLError(int client_fd)
+void	Server::sendSrvFULLError(int client_fd)	const
 {
 	std::ostringstream	oss;
 
@@ -183,6 +183,7 @@ void	Server::sendWelcomeMessage(Client *client) const
 {
 	sendResponse(client, RPL_WELCOME, "");
 
+	// Send info about all the bots connected to the server
 	for (std::map<SocketFd, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if (it->second->isBot())

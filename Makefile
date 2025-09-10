@@ -71,13 +71,13 @@ test: all
 	./$(NAME) $(arg)
 
 test_bot: all
-	./$(BOT_NAME) 127.0.1.1 $(PORT) $(PASSWORD)
+	./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
 
 val: all
 	valgrind ./$(NAME) $(arg)
 
 val_bot: all
-	valgrind ./$(BOT_NAME) 127.0.1.1 $(PORT) $(PASSWORD)
+	valgrind ./$(BOT_NAME) 10.12.1.10 $(PORT) $(PASSWORD)
 
 
 #COLORS

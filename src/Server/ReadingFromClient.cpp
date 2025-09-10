@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-std::vector<IRCMessage> Server::parseMessage(const std::string &message) const
+std::vector<IRCMessage>	Server::parseMessage(const std::string &message) const
 {
 	std::vector<IRCMessage> messages;
 

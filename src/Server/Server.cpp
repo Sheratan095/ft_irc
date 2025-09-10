@@ -97,17 +97,17 @@ bool	Server::createSocket()
 
 bool	Server::bindSocket()
 {
-	struct sockaddr_in addr = {};
+	struct sockaddr_in	addr = {};
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(_port);
 
 	// Resolve hostname → IP
-	char hostname[256];
+	char	hostname[256];
 	if (gethostname(hostname, sizeof(hostname)) == -1)
 	{
 		std::cerr << "Error: gethostname failed" << std::endl;
 		close(_socketFd);
-		return false;
+		return (false);
 	}
 
 	struct hostent *host = gethostbyname(hostname);
@@ -115,7 +115,7 @@ bool	Server::bindSocket()
 	{
 		std::cerr << "Error: gethostbyname failed" << std::endl;
 		close(_socketFd);
-		return false;
+		return (false);
 	}
 
 	struct in_addr **addr_list = reinterpret_cast<struct in_addr **>(host->h_addr_list);
@@ -123,7 +123,7 @@ bool	Server::bindSocket()
 	{
 		std::cerr << "Error: no IP addresses found for host" << std::endl;
 		close(_socketFd);
-		return false;
+		return (false);
 	}
 
 	// Use the first IP associated with this hostname
@@ -133,10 +133,10 @@ bool	Server::bindSocket()
 	{
 		std::cerr << "Error: socket binding failed" << std::endl;
 		close(_socketFd);
-		return false;
+		return (false);
 	}
 
-	return true;
+	return (true);
 }
 
 

@@ -126,3 +126,9 @@ void Bot::privmsgCmd(const IRCMessage &message) const
 	else
 		sendMessage(_socketFd,"PRIVMSG " + getNickByPrefix(message.prefix) + " :" + reply + "\r\n");
 }
+
+std::string	Bot::getBotUsage() const
+{
+	return ("!8ball <your yes/no question> with a random answer.");
+
+}

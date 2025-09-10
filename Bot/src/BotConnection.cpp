@@ -32,7 +32,7 @@ void	Bot::connectToServer(const std::string &password)
 		sendMessage(_socketFd, "PASS " + password + "\r\n");
 	sendMessage(_socketFd, "NICK " + _nick + "\r\n");
 	sendMessage(_socketFd, "USER " + _nick + " 0 * :" + _nick + "\r\n");
-	sendMessage(_socketFd, "IMBOT\r\n");
+	sendMessage(_socketFd, "IMBOT :" + getBotUsage() + "\r\n");
 
 	// main loop
 	run();

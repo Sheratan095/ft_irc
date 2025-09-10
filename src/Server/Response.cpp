@@ -186,6 +186,6 @@ void	Server::sendWelcomeMessage(Client *client) const
 	for (std::map<SocketFd, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if (it->second->isBot())
-			sendMessage(client->getSocketFd(), it->second->getNickname() + " bot is connected to the server\r\n");
+			sendMessage(client->getSocketFd(), it->second->getNickname() + " bot is connected to the server. Usage: " + it->second->getUsage() + "\r\n");
 	}
 }

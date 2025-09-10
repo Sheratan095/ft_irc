@@ -33,6 +33,9 @@ class Bot
 		void	privmsgCmd(const IRCMessage &message) const;
 		void	switchCommand(const IRCMessage &command);
 
+		std::string	getBotUsage() const;
+
+
 
 	//-------------------------EXCEPTIONS-------------------------
 

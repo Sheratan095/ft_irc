@@ -30,6 +30,8 @@ Interrupt signal received. Shutting down server...
 Poll failed (error cause unavailable)
 Server destroyed.
 
+IF A CLIENT IS A BOT, IT HAS A USAGE property
+
 DONE able the quit also if not registered
 
 DONE add a kick reason

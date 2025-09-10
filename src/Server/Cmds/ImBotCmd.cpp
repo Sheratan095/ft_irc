@@ -11,5 +11,12 @@ void	Server::imBotCmd(Client *client, const IRCMessage &message)
 		return;
 	}
 
+	if (message.trailing.empty())
+	{
+		sendResponse(client, ERR_NEEDMOREPARAMS, "IMBOT");
+		return;
+	}
+
+	client->setUsage(message.trailing);
 	client->setImBot(true);
 }

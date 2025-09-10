@@ -183,6 +183,7 @@ void	Server::sendWelcomeMessage(Client *client) const
 {
 	sendResponse(client, RPL_WELCOME, "");
 
+	// Send info about all the bots connected to the server
 	for (std::map<SocketFd, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if (it->second->isBot())

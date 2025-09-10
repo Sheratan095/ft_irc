@@ -7,6 +7,7 @@ Client::Client(SocketFd socket_fd, const std::string &ipAddress): _socketFd(sock
 	_realname = "";
 	_capHandshaking = false;
 	_isAuthenticated = false;
+	_imBot = false;
 }
 
 Client::~Client()

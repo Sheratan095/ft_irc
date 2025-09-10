@@ -14,8 +14,6 @@ DONE commands case insensitive
 
 DONE LIST command
 
-TO DO bot notify clients when the bot is connected
-
 TO DO check what if /TOPIC #a: new topic (du punti attaccati all'ultimo parametro)
 
 DONE when ctrl + c in nc

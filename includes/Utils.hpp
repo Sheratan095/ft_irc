@@ -21,4 +21,6 @@ std::string					join(const std::set<std::string> &elements, const std::string &s
 
 std::string					join(const std::vector<std::string> &elements, const std::string &separator);
 
+void						replaceAll(std::string &str, const std::string &from, const std::string &to);
+
 #endif

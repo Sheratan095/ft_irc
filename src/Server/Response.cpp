@@ -169,7 +169,7 @@ std::string	composeResponse(ResponseCode code, const std::string &targetName, co
 }
 
 // Special function because this message is sent when the Client class isn't still created
-void	sendSrvFULLError(int client_fd)
+void	Server::sendSrvFULLError(int client_fd)	const
 {
 	std::ostringstream	oss;
 

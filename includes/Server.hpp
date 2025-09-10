@@ -83,6 +83,7 @@ class	Server
 		void	notifyQuit(Client *sender, const std::string &reason) const;
 
 		// Send a message to a client
+		void	sendSrvFULLError(int client_fd) const;
 		void	sendInviteMessage(Client *inviter, Client *invited, Channel *channel) const;
 		void	sendWelcomeMessage(Client *client) const;
 

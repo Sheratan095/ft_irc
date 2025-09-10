@@ -82,7 +82,7 @@ void	sendMessage(SocketFd socketFfd, const std::string &message)
 		std::cerr << "Error sending message to socket fd: " << socketFfd << std::endl;
 }
 
-std::string toLower(const std::string &s)
+std::string	toLower(const std::string &s)
 {
 	std::string	res = s;
 
@@ -146,9 +146,10 @@ std::string	join(const std::set<std::string> &elements, const std::string &separ
 	return (result);
 }
 
-void replaceAll(std::string &str, const std::string &from, const std::string &to)
+void	replaceAll(std::string &str, const std::string &from, const std::string &to)
 {
-	size_t start_pos = 0;
+	size_t	start_pos = 0;
+
 	while ((start_pos = str.find(from, start_pos)) != std::string::npos)
 	{
 		str.replace(start_pos, from.length(), to);

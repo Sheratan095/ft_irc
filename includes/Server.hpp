@@ -65,6 +65,8 @@ class	Server
 		void	privmsgCmd(Client *client, const IRCMessage &message);
 		void	whoisCmd(Client *client, const IRCMessage *message);
 		void	listCmd(Client *client, const IRCMessage &message);
+		void	imBotCmd(Client *client, const IRCMessage &message);
+
 
 		// used during modeCmd
 		void	parseMode(Client *client, Channel *channel, const IRCMessage &message) const;
@@ -82,6 +84,8 @@ class	Server
 
 		// Send a message to a client
 		void	sendInviteMessage(Client *inviter, Client *invited, Channel *channel) const;
+		void	sendWelcomeMessage(Client *client) const;
+
 
 
 	public:

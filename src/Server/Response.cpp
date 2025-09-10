@@ -178,3 +178,14 @@ void	sendSrvFULLError(int client_fd)
 
 	sendMessage(client_fd, oss.str());
 }
+
+void	Server::sendWelcomeMessage(Client *client) const
+{
+	sendResponse(client, RPL_WELCOME, "");
+
+	for (std::map<SocketFd, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->isBot())
+			sendMessage(client->getSocketFd(), it->second->getNickname() + " bot is connected to the server. Usage: " + it->second->getUsage() + "\r\n");
+	}
+}

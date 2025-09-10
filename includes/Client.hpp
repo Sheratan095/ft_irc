@@ -16,6 +16,9 @@ class	Client
 
 		std::string				_ipAddress;
 
+		bool					_imBot; // if the client is a bot for instant messaging
+		std::string				_usage;
+
 	public:
 		Client(SocketFd socket_fd, const std::string &ipAddress);
 		~Client();
@@ -35,7 +38,12 @@ class	Client
 		void	setAuthenticated();
 		void	setRealName(const std::string& realname);
 		void	setCapHandshaking(bool status);
+		void	setImBot(bool status);
 
+		// All bot stuff
+		bool		isBot() const;
+		std::string	getUsage() const;
+		void		setUsage(const std::string &usage);
 
 		void	sendPrivMessage(Client *sender, const std::string &message) const;
 };

@@ -25,8 +25,6 @@ void	Server::passCmd(Client *client, const IRCMessage &message)
 
 	// if the client is now FULL registered, send a welcome message
 	if (client->isRegistered())
-	{
-		sendResponse(client, RPL_WELCOME, "");
-		return;
-	}
+		sendWelcomeMessage(client);
+
 }

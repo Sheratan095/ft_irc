@@ -14,7 +14,7 @@ DONE commands case insensitive
 
 DONE LIST command
 
-TO DO bot
+TO DO bot notify clients when the bot is connected
 
 TO DO check what if /TOPIC #a: new topic (du punti attaccati all'ultimo parametro)
 
@@ -29,6 +29,8 @@ DONE chiusura errore dopo cambiamente ERRNo
 Interrupt signal received. Shutting down server...
 Poll failed (error cause unavailable)
 Server destroyed.
+
+IF A CLIENT IS A BOT, IT HAS A USAGE property
 
 DONE able the quit also if not registered
 

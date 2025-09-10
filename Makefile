@@ -2,7 +2,7 @@ NAME = ircserv
 
 TESTFOLDER = test/bircd
 
-CC = c++ -std=c++98 -Ofast -g -Iincludes/
+CC = c++ -std=c++98 -Ofast -g
 CC += -Wall -Wextra -Werror
 
 SRCS = src/main.cpp \
@@ -31,26 +31,33 @@ SRCS = src/main.cpp \
 	src/Server/Cmds/WhoisCmd.cpp \
 	src/Server/Cmds/CapCmd.cpp \
 	src/Server/Cmds/ListCmd.cpp \
+	src/Server/Cmds/ImBotCmd.cpp \
 	src/Client/Client.cpp \
 	src/Utils.cpp \
 
-all: $(NAME)
+BOT_NAME = MagicBall
+BOT_SRCS = Bot/src/Bot.cpp \
+		Bot/src/main.cpp \
+		Bot/src/BotUtils.cpp \
+		Bot/src/BotConnection.cpp \
+
+
+all: $(NAME) $(BOT_NAME)
 
 $(NAME): $(SRCS)
-# 	@$(MAKE) -s -C $(TESTFOLDER) all
-# 	@echo "$(BLUE)[$(NAME)]:\t TESTER COMPILED$(RESET)"
-	@$(CC) $(SRCS) -o $(NAME)
+	@$(CC) $(SRCS) -Iincludes/ -o $(NAME)
 	@echo "$(GREEN)[$(NAME)]:\t PROJECT COMPILED$(RESET)"
 
+$(BOT_NAME): $(BOT_SRCS)
+	@$(CC) -IBot/includes/ $(BOT_SRCS) -o $(BOT_NAME)
+	@echo "$(GREEN)[$(NAME)]:\t BOT COMPILED$(RESET)"
+
 clean:
-	@$(MAKE) -s -C $(TESTFOLDER) clean
-	@echo "$(RED)[Tester]:\t CLEAN$(RESET)"
 	@echo "$(RED)[$(NAME)]:\t CLEAN$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@$(MAKE) -s -C $(TESTFOLDER) fclean
-	@echo "$(RED)[Tester]:\t FCLEAN$(RESET)"
+	@rm -f $(BOT_NAME)
 	@echo "$(RED)[$(NAME)]:\t FCLEAN$(RESET)"
 
 re: fclean all
@@ -63,9 +70,15 @@ arg = $(PORT) $(PASSWORD)
 test: all
 	./$(NAME) $(arg)
 
+test_bot: all
+	./$(BOT_NAME) 127.0.1.1 $(PORT) $(PASSWORD)
 
 val: all
 	valgrind ./$(NAME) $(arg)
+
+val_bot: all
+	valgrind ./$(BOT_NAME) 127.0.1.1 $(PORT) $(PASSWORD)
+
 
 #COLORS
 

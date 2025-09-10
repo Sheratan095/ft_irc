@@ -7,6 +7,9 @@ Client::Client(SocketFd socket_fd, const std::string &ipAddress): _socketFd(sock
 	_realname = "";
 	_capHandshaking = false;
 	_isAuthenticated = false;
+
+	_imBot = false;
+	_usage = "";
 }
 
 Client::~Client()
@@ -104,4 +107,26 @@ void	Client::sendPrivMessage(Client *sender, const std::string &message) const
 	<< " :" << message << "\r\n";
 
 	sendMessage(this->getSocketFd(), ss.str());
+}
+
+void	Client::setImBot(bool status)
+{
+	_imBot = status;
+}
+
+
+// ALL JUST BOT STUFF
+bool	Client::isBot() const
+{
+	return (_imBot);
+}
+
+std::string	Client::getUsage() const
+{
+	return (_usage);
+}
+
+void	Client::setUsage(const std::string &usage)
+{
+	_usage = usage;
 }

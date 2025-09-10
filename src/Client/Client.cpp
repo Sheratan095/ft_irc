@@ -110,3 +110,9 @@ void	Client::setImBot(bool status)
 {
 	_imBot = status;
 }
+
+bool	Client::isBot() const
+{
+	return (_imBot);
+}
+

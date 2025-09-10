@@ -38,6 +38,7 @@ class	Client
 		void	setRealName(const std::string& realname);
 		void	setCapHandshaking(bool status);
 		void	setImBot(bool status);
+		bool	isBot() const;
 
 
 		void	sendPrivMessage(Client *sender, const std::string &message) const;

@@ -183,5 +183,9 @@ void	Server::sendWelcomeMessage(Client *client) const
 {
 	sendResponse(client, RPL_WELCOME, "");
 
-	
+	for (std::map<SocketFd, Client*>::const_iterator it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		if (it->second->isBot())
+			sendMessage(client->getSocketFd(), it->second->getNickname() + " bot is connected to the server\r\n");
+	}
 }
